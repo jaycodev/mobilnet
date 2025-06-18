@@ -1,0 +1,40 @@
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/timing.properties
+/logs/
+/*.log
+
+# Eclipse
+*.class
+*.swp
+.project
+.classpath
+.settings/
+.apt_generated/
+.factorypath
+.antlr_generated/
+
+# VS Code
+.vscode/
+
+# IntelliJ IDEA
+*.iml
+.idea/
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Tomcat / Jetty
+*.war
+*.ear
+*.tmp
+
+# Spring Boot devtools
+.spring-boot-devtools.properties
+
+# JSP compiled files (optional, if deployed to Tomcat directly)
+/work/
+/.metadata/
