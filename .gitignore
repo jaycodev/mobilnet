@@ -1,11 +1,22 @@
+# ---------------------
 # Maven
+# ---------------------
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 .mvn/timing.properties
+
+# Logs
 /logs/
 /*.log
 
-# Eclipse
+# ---------------------
+# IDEs
+# ---------------------
+
+## VS Code
+.vscode/
+
+## Eclipse / Spring Tool Suite
 *.class
 *.swp
 .project
@@ -14,27 +25,41 @@
 .apt_generated/
 .factorypath
 .antlr_generated/
+.springBeans
+.sts4-cache
 
-# VS Code
-.vscode/
-
-# IntelliJ IDEA
-*.iml
+## IntelliJ IDEA
 .idea/
+*.iws
+*.iml
+*.ipr
 out/
 
-# OS files
+## NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ---------------------
+# OS-specific
+# ---------------------
 .DS_Store
 Thumbs.db
 
-# Tomcat / Jetty
+# ---------------------
+# Tomcat / Jetty (JSP compilados)
+/work/
+/.metadata/
 *.war
 *.ear
 *.tmp
 
-# Spring Boot devtools
+# ---------------------
+# Spring Boot DevTools
 .spring-boot-devtools.properties
 
-# JSP compiled files (optional, if deployed to Tomcat directly)
-/work/
-/.metadata/
+# ---------------------
+# Documentos innecesarios
+HELP.md
