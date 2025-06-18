@@ -50,6 +50,7 @@ Thumbs.db
 
 # ---------------------
 # Tomcat / Jetty (JSP compilados)
+# ---------------------
 /work/
 /.metadata/
 *.war
@@ -58,8 +59,15 @@ Thumbs.db
 
 # ---------------------
 # Spring Boot DevTools
+# ---------------------
 .spring-boot-devtools.properties
 
 # ---------------------
+# Variables de entorno
+# ---------------------
+.env
+
+# ---------------------
 # Documentos innecesarios
+# ---------------------
 HELP.md
