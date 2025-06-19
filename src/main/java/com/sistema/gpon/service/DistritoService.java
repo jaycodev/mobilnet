@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.sistema.gpon.model.Distrito;
 
-
 public interface DistritoService {
     Distrito crearDistrito(Distrito distrito);
     List<Distrito> listarDistritos();
