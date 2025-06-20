@@ -5,7 +5,7 @@ USE registro_gpon_db;
 -- Tabla Rol
 CREATE TABLE Rol (
     IdRol INT PRIMARY KEY AUTO_INCREMENT,
-    Descripcion VARCHAR(100)
+    Descripcion VARCHAR(50)
 );
 INSERT INTO Rol(Descripcion) VALUES
 ('BackOffice'),
@@ -16,10 +16,10 @@ INSERT INTO Rol(Descripcion) VALUES
 CREATE TABLE Usuario (
     IdUsuario INT PRIMARY KEY AUTO_INCREMENT,
     IdRol INT,
-    Nombre VARCHAR(100),
-    Apellido VARCHAR(100),
-    Correo VARCHAR(100),
-    Contrasena VARCHAR(100),
+    Nombre VARCHAR(255),
+    Apellido VARCHAR(255),
+    Correo VARCHAR(255),
+    Contrasena VARCHAR(255),
     FOREIGN KEY (IdRol) REFERENCES Rol(IdRol)
 );
 
@@ -47,52 +47,52 @@ INSERT INTO Usuario (IdRol, Nombre, Apellido, Correo, Contrasena) VALUES
 
 -- Tabla Cliente
 CREATE TABLE Cliente (
-    DniCliente CHAR(8) PRIMARY KEY,
-    Ruc CHAR(11),
-    Nombre VARCHAR(100),
-    Apellido VARCHAR(100),
-    Telefono CHAR(9)
+    DniCliente int PRIMARY KEY,
+    Ruc VARCHAR(255),
+    Nombre VARCHAR(255),
+    Apellido VARCHAR(255),
+    Telefono varchar(255)
 );
 INSERT INTO Cliente (DniCliente, Ruc, Nombre, Apellido, Telefono) VALUES
-('12345678', '20123456789', 'Juan', 'Pérez', '987654321'),
-('23456789', '20456789123', 'María', 'Gómez', '912345678'),
-('34567890', '20567891234', 'Carlos', 'Ramírez', '923456789'),
-('45678901', '20678912345', 'Ana', 'Torres', '934567890'),
-('56789012', '20789123456', 'Luis', 'Martínez', '945678901'),
-('67890123', '20891234567', 'Lucía', 'Fernández', '956789012'),
-('78901234', '20912345678', 'Pedro', 'Sánchez', '967890123'),
-('89012345', '20123456780', 'Laura', 'Morales', '978901234'),
-('90123456', '20234567891', 'Jorge', 'Cruz', '989012345'),
-('01234567', '20345678912', 'Elena', 'Vega', '900123456'),
-('13579246', '20456789124', 'Diego', 'Castillo', '911234567'),
-('24681357', '20567891235', 'Sofía', 'Herrera', '922345678'),
-('35792468', '20678912346', 'Mateo', 'Flores', '933456789'),
-('46813579', '20789123457', 'Valentina', 'Rojas', '944567890'),
-('57924680', '20891234568', 'Andrés', 'Navarro', '955678901'),
-('68035791', '20912345679', 'Camila', 'Silva', '966789012'),
-('79146802', '20123456781', 'Sebastián', 'Ibarra', '977890123'),
-('80257913', '20234567892', 'Daniela', 'Paredes', '988901234'),
-('91368024', '20345678913', 'Gonzalo', 'Castañeda', '999012345'),
-('02479135', '20456789125', 'Natalia', 'Mendoza', '901123456');
+(12345678, '20123456789', 'Juan', 'Pérez', '987654321'),
+(23456789, '20456789123', 'María', 'Gómez', '912345678'),
+(34567890, '20567891234', 'Carlos', 'Ramírez', '923456789'),
+(45678901, '20678912345', 'Ana', 'Torres', '934567890'),
+(56789012, '20789123456', 'Luis', 'Martínez', '945678901'),
+(67890123, '20891234567', 'Lucía', 'Fernández', '956789012'),
+(78901234, '20912345678', 'Pedro', 'Sánchez', '967890123'),
+(89012345, '20123456780', 'Laura', 'Morales', '978901234'),
+(90123456, '20234567891', 'Jorge', 'Cruz', '989012345'),
+(01234567, '20345678912', 'Elena', 'Vega', '900123456'),
+(13579246, '20456789124', 'Diego', 'Castillo', '911234567'),
+(24681357, '20567891235', 'Sofía', 'Herrera', '922345678'),
+(35792468, '20678912346', 'Mateo', 'Flores', '933456789'),
+(46813579, '20789123457', 'Valentina', 'Rojas', '944567890'),
+(57924680, '20891234568', 'Andrés', 'Navarro', '955678901'),
+(68035791, '20912345679', 'Camila', 'Silva', '966789012'),
+(79146802, '20123456781', 'Sebastián', 'Ibarra', '977890123'),
+(80257913, '20234567892', 'Daniela', 'Paredes', '988901234'),
+(91368029, '20345678913', 'Gonzalo', 'Castañeda', '999012345'),
+(02479135, '20456789125', 'Natalia', 'Mendoza', '901123456');
 
 -- Tabla Plan
 CREATE TABLE Plan (
     IdPlan INT PRIMARY KEY AUTO_INCREMENT,
-    Descripcion VARCHAR(100)
+    Descripcion VARCHAR(255)
 );
 INSERT INTO Plan(Descripcion) VALUES ('Internet Fibra Optica 300Mbps');
 
 -- Tabla Promocion
 CREATE TABLE Promocion (
     IdPromocion INT PRIMARY KEY AUTO_INCREMENT,
-    Descripcion VARCHAR(100)
+    Descripcion VARCHAR(255)
 );
 INSERT INTO Promocion(Descripcion) VALUES ('Descuento cargo fijo 30% x 3meses');
 
 -- Tabla Distrito
 CREATE TABLE Distrito (
     IdDistrito INT PRIMARY KEY AUTO_INCREMENT,
-    NombreDistrito VARCHAR(100)
+    NombreDistrito VARCHAR(255)
 );
 INSERT INTO Distrito (NombreDistrito) VALUES
 ('Ancón'), ('Ate'), ('Barranco'), ('Breña'), ('Carabayllo'),
@@ -109,7 +109,7 @@ INSERT INTO Distrito (NombreDistrito) VALUES
 -- Tabla Sector
 CREATE TABLE Sector (
     IdSector INT PRIMARY KEY AUTO_INCREMENT,
-    NombreSector VARCHAR(100)
+    NombreSector VARCHAR(255)
 );
 INSERT INTO Sector (NombreSector) VALUES
 ('Cercado de Lima'), ('La Molina'), ('Miraflores'), ('San Borja'), ('San Isidro'),
@@ -122,7 +122,7 @@ INSERT INTO Sector (NombreSector) VALUES
 -- Tabla EstadoRegistro
 CREATE TABLE EstadoRegistro (
     IdEstado INT PRIMARY KEY AUTO_INCREMENT,
-    Descripcion VARCHAR(30)
+    Descripcion VARCHAR(255)
 );
 INSERT INTO EstadoRegistro(Descripcion) VALUES
 ('Pendiente instalacion'),
@@ -140,18 +140,18 @@ CREATE TABLE RegistroRUC10 (
     IdRegistro INT PRIMARY KEY AUTO_INCREMENT,
     IdUsuario INT,
     Asunto VARCHAR(255) DEFAULT '',
-    DniCliente CHAR(8),
-FechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    DniCliente int,
+FechaRegistro DATE ,
     IdPlan INT,
     IdPromocion INT,
     IdDistrito INT,
     IdSector INT,
-    IdSolicitud CHAR(10),
-    IdInstalacion CHAR(9),
+    IdSolicitud varchar(255),
+    IdInstalacion varchar(255),
     IdEstado INT,
-    IdCarrito CHAR(14),
+    IdCarrito varchar(255),
     FechaInstalacion DATE,
-    Observacion TEXT,
+    Observacion varchar(255),
     FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (DniCliente) REFERENCES Cliente(DniCliente),
     FOREIGN KEY (IdPlan) REFERENCES Plan(IdPlan),
