@@ -4,45 +4,45 @@ USE registro_gpon_db;
 
 CREATE TABLE Rol (
     IdRol INT PRIMARY KEY AUTO_INCREMENT,
-    Descripcion VARCHAR(100) NOT NULL
+    Descripcion VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Usuario (
     IdUsuario INT PRIMARY KEY AUTO_INCREMENT,
     IdRol INT NOT NULL,
-    Nombre VARCHAR(100) NOT NULL,
-    Apellido VARCHAR(100) NOT NULL,
-    Correo VARCHAR(100) NOT NULL,
-    Contrasena VARCHAR(100) NOT NULL,
+    Nombre VARCHAR(255) NOT NULL,
+    Apellido VARCHAR(255) NOT NULL,
+    Correo VARCHAR(255) NOT NULL,
+    Contrasena VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
     FOREIGN KEY (IdRol) REFERENCES Rol(IdRol)
 );
 
 CREATE TABLE Cliente (
     DniCliente VARCHAR(8) PRIMARY KEY,
     Ruc VARCHAR(11) NOT NULL,
-    Nombre VARCHAR(100) NOT NULL,
-    Apellido VARCHAR(100) NOT NULL,
+    Nombre VARCHAR(255) NOT NULL,
+    Apellido VARCHAR(255) NOT NULL,
     Telefono VARCHAR(9) NOT NULL
 );
 
 CREATE TABLE Plan (
     IdPlan INT PRIMARY KEY AUTO_INCREMENT,
-    Descripcion VARCHAR(100) NOT NULL
+    Descripcion VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Promocion (
     IdPromocion INT PRIMARY KEY AUTO_INCREMENT,
-    Descripcion VARCHAR(100) NOT NULL
+    Descripcion VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Distrito (
     IdDistrito INT PRIMARY KEY AUTO_INCREMENT,
-    NombreDistrito VARCHAR(100) NOT NULL
+    NombreDistrito VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Sector (
     IdSector INT PRIMARY KEY AUTO_INCREMENT,
-    NombreSector VARCHAR(100) NOT NULL
+    NombreSector VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE EstadoRegistro (
@@ -60,12 +60,12 @@ CREATE TABLE RegistroRUC10 (
     IdPromocion INT,
     IdDistrito INT NOT NULL,
     IdSector INT NOT NULL,
-    IdSolicitud VARCHAR(10) NOT NULL,
-    IdInstalacion VARCHAR(9) NOT NULL,
+    IdSolicitud INT NOT NULL,
+    IdInstalacion INT NOT NULL,
     IdEstado INT NOT NULL,
-    IdCarrito VARCHAR(14) NOT NULL,
+    IdCarrito INT NOT NULL,
     FechaInstalacion DATETIME NOT NULL,
-    Observacion TEXT,
+    Observacion VARCHAR(255),
     FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (DniCliente) REFERENCES Cliente(DniCliente),
     FOREIGN KEY (IdPlan) REFERENCES Plan(IdPlan),

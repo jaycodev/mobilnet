@@ -6,7 +6,7 @@ import com.sistema.gpon.service.RegistroRUC10Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sistema.gpon.model.RegistroRUC10;
-import com.sistema.gpon.repository.RegistroRUC10Repository;
+import com.sistema.gpon.Repository.RegistroRUC10Repository;
 import org.springframework.stereotype.Service;
 
 @Service

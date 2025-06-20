@@ -6,7 +6,7 @@ import com.sistema.gpon.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sistema.gpon.model.Usuario;
-import com.sistema.gpon.repository.UsuarioRepository;
+import com.sistema.gpon.Repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 @Service

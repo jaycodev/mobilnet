@@ -18,7 +18,7 @@ public class Distrito {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IdDistrito")
-	private Integer idDistrito;
+	private int idDistrito;
 
 	@Column(name = "NombreDistrito", nullable = false)
 	private String nombreDistrito;

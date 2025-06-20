@@ -15,7 +15,7 @@ public class Cliente {
 
 	@Id
 	@Column(name = "DniCliente")
-	private String dniCliente;
+	private int dniCliente;
 
 	@Column(name = "Ruc", nullable = false)
 	private String ruc;
