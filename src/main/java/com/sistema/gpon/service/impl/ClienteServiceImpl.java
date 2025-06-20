@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sistema.gpon.model.Cliente;
-import com.sistema.gpon.Repository.ClienteRepository;
+import com.sistema.gpon.repository.ClienteRepository;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {

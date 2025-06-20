@@ -6,7 +6,7 @@ import com.sistema.gpon.service.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sistema.gpon.model.Plan;
-import com.sistema.gpon.Repository.PlanRepository;
+import com.sistema.gpon.repository.PlanRepository;
 import org.springframework.stereotype.Service;
 
 @Service

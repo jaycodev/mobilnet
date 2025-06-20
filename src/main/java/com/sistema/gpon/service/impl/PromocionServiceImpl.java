@@ -6,7 +6,7 @@ import com.sistema.gpon.service.PromocionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sistema.gpon.model.Promocion;
-import com.sistema.gpon.Repository.PromocionRepository;
+import com.sistema.gpon.repository.PromocionRepository;
 import org.springframework.stereotype.Service;
 
 @Service
