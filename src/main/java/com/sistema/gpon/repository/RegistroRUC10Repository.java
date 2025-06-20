@@ -1,4 +1,4 @@
-package com.sistema.gpon.Repository;
+package com.sistema.gpon.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

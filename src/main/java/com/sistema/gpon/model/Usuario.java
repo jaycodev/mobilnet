@@ -20,7 +20,7 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IdUsuario")
-	private int idUsuario;
+	private Integer idUsuario;
 
 	@ManyToOne
 	@JoinColumn(name = "IdRol", nullable = false)

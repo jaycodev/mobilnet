@@ -6,7 +6,7 @@ import com.sistema.gpon.service.DistritoService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sistema.gpon.model.Distrito;
-import com.sistema.gpon.Repository.DistritoRepository;
+import com.sistema.gpon.repository.DistritoRepository;
 import org.springframework.stereotype.Service;
 
 @Service

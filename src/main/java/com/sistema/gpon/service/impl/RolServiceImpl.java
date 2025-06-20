@@ -6,7 +6,7 @@ import com.sistema.gpon.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sistema.gpon.model.Rol;
-import com.sistema.gpon.Repository.RolRepository;
+import com.sistema.gpon.repository.RolRepository;
 import org.springframework.stereotype.Service;
 
 @Service
