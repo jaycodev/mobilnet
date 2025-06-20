@@ -10,15 +10,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Plan")
+@Table(name = "EstadoRegistro")
 @Data
 @NoArgsConstructor
-public class Plan {
+public class EstadoRegistro {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "IdPlan")
-	private Integer idPlan;
+	@Column(name = "IdEstado")
+	private Integer idEstado;
 
 	@Column(name = "Descripcion", nullable = false)
 	private String descripcion;
