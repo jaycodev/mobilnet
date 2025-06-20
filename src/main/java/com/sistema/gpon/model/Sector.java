@@ -20,6 +20,6 @@ public class Sector {
 	@Column(name = "IdSector")
 	private int idSector;
 
-	@Column(name = "NombreSector")
+	@Column(name = "NombreSector", nullable = false)
 	private String nombreSector;
 }
