@@ -22,7 +22,7 @@ public class RegistroRUC10 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IdRegistro")
-	private Integer idRegistro;
+	private int idRegistro;
 
 	@ManyToOne
 	@JoinColumn(name = "IdUsuario")
@@ -55,16 +55,17 @@ public class RegistroRUC10 {
 	private Sector sector;
 
 	@Column(name = "IdSolicitud")
-	private Integer idSolicitud;
+	private String idSolicitud;
 
 	@Column(name = "IdInstalacion")
-	private Integer idInstalacion;
+	private String idInstalacion;
 
-	@Column(name = "Estado")
-	private String estado;
+	@ManyToOne
+	@JoinColumn(name = "IdEstado")
+	private Estado estado;
 
 	@Column(name = "IdCarrito")
-	private Integer idCarrito;
+	private String idCarrito;
 
 	@Column(name = "FechaInstalacion")
 	private LocalDate fechaInstalacion;

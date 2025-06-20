@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sistema.gpon.model.Cliente;
 
+
 public interface ClienteService {
     Cliente crearCliente(Cliente cliente);
     List<Cliente> listarClientes();
