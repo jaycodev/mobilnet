@@ -20,7 +20,6 @@ public class Rol {
 	@Column(name = "IdRol")
 	private int idRol;
 
-	@Column(name = "Descripcion", length = 50)
+	@Column(name = "Descripcion", nullable = false)
 	private String descripcion;
-
 }
