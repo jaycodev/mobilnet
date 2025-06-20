@@ -6,7 +6,7 @@ import com.sistema.gpon.service.SectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sistema.gpon.model.Sector;
-import com.sistema.gpon.repository.SectorRepository;
+import com.sistema.gpon.Repository.SectorRepository;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
     @GetMapping("/index")
-    public String index(Main main){
+    public String index(){
         return "main/index";
     }
 }

@@ -18,7 +18,7 @@ public class Sector {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IdSector")
-	private Integer idSector;
+	private int idSector;
 
 	@Column(name = "NombreSector", nullable = false)
 	private String nombreSector;
