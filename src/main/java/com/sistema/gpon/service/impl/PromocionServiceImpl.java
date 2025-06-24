@@ -3,11 +3,13 @@ package com.sistema.gpon.service.impl;
 import java.util.List;
 
 import com.sistema.gpon.service.PromocionService;
+import com.sistema.gpon.utils.ResultadoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sistema.gpon.model.Promocion;
 import com.sistema.gpon.repository.PromocionRepository;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class PromocionServiceImpl implements PromocionService {
@@ -16,32 +18,55 @@ public class PromocionServiceImpl implements PromocionService {
 	private PromocionRepository promocionRepository;
 
 	@Override
-	public Promocion crearPromocion(Promocion promocion) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResultadoResponse crearPromocion(Promocion promocion) {		
+		try {			
+			Promocion registrada = promocionRepository.save(promocion);
+			
+			String mensaje = String.format("Promocion numero %s registrada", registrada.getIdPromocion());		
+			return new ResultadoResponse(true, mensaje);
+			
+		}catch (Exception ex) {
+			ex.printStackTrace();
+			return new ResultadoResponse(false, "Error al registrar: " + ex.getMessage());
+		}		
 	}
 
 	@Override
 	public List<Promocion> listarPromociones() {
-		// TODO Auto-generated method stub
-		return null;
+		return promocionRepository.findAllByOrderByIdPromocionDesc();
 	}
 
 	@Override
 	public Promocion buscarPorId(Integer idPromocion) {
-		// TODO Auto-generated method stub
-		return null;
+		return promocionRepository.findById(idPromocion).orElseThrow();
 	}
 
 	@Override
-	public Promocion actualizarPromocion(Promocion promocion) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResultadoResponse actualizarPromocion(Promocion promocion) {
+		try {
+			Promocion actualizado = promocionRepository.save(promocion);
+
+			String mensaje = String.format("Promocion nro. %s actualizado", actualizado.getIdPromocion());
+			return new ResultadoResponse(true, mensaje);
+
+		} catch (Exception ex) {
+			return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
+		}		
 	}
 
 	@Override
 	public boolean eliminarPromocion(Integer idPromocion) {
-		// TODO Auto-generated method stub
-		return false;
+	    try {
+	        if (promocionRepository.existsById(idPromocion)) {
+	            promocionRepository.deleteById(idPromocion);
+	            return true;
+	        } else {
+	            return false;
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        return false; 
+	    }
 	}
+
 }
