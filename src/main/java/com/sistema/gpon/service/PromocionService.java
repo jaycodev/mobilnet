@@ -3,11 +3,12 @@ package com.sistema.gpon.service;
 import java.util.List;
 
 import com.sistema.gpon.model.Promocion;
+import com.sistema.gpon.utils.ResultadoResponse;
 
 public interface PromocionService {
-    Promocion crearPromocion(Promocion promocion);
+	ResultadoResponse crearPromocion(Promocion promocion);
     List<Promocion> listarPromociones();
     Promocion buscarPorId(Integer idPromocion);
-    Promocion actualizarPromocion(Promocion promocion);
+    ResultadoResponse actualizarPromocion(Promocion promocion);
     boolean eliminarPromocion(Integer idPromocion);
 }
