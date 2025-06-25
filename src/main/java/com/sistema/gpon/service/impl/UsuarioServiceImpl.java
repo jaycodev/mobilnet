@@ -15,16 +15,16 @@ import org.springframework.stereotype.Service;
 public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-	
+    private UsuarioRepository _usuarioRepository;
+
 	@Override
 	public ResultadoResponse crearUsuario(Usuario usuario) {
-		try {			
-			Usuario registrado = usuarioRepository.save(usuario);
-			
-			String mensaje = String.format("Usuario con numero %s registrado", registrado.getIdUsuario());		
+		try {
+			Usuario registrado = _usuarioRepository.save(usuario);
+
+			String mensaje = String.format("Usuario con numero %s registrado", registrado.getIdUsuario());
 			return new ResultadoResponse(true, mensaje);
-			
+
 		}catch (Exception ex) {
 			ex.printStackTrace();
 			return new ResultadoResponse(false, "Error al registrar: " + ex.getMessage());
@@ -33,39 +33,45 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public List<Usuario> listarUsuarios() {
-		return usuarioRepository.findAllByOrderByIdUsuarioDesc();
+		return _usuarioRepository.findAllByOrderByIdUsuarioDesc();
 	}
 
 	@Override
 	public Usuario buscarPorId(Integer idUsuario) {
-		return usuarioRepository.findById(idUsuario).orElseThrow();
+		return _usuarioRepository.findById(idUsuario).orElseThrow();
 	}
 
 	@Override
 	public ResultadoResponse modificarUsuario(Usuario usuario) {
 		try {
-			Usuario actualizado = usuarioRepository.save(usuario);
+			Usuario actualizado = _usuarioRepository.save(usuario);
 
 			String mensaje = String.format("Usuario con nro. %s actualizado", actualizado.getIdUsuario());
 			return new ResultadoResponse(true, mensaje);
 
 		} catch (Exception ex) {
 			return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
-		}	
+		}
 	}
 
 	@Override
 	public boolean eliminarUsuario(Integer idUsuario) {
 		try {
-	        if (usuarioRepository.existsById(idUsuario)) {
-	        	usuarioRepository.deleteById(idUsuario);
+	        if (_usuarioRepository.existsById(idUsuario)) {
+	        	_usuarioRepository.deleteById(idUsuario);
 	            return true;
 	        } else {
 	            return false;
 	        }
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
-	        return false; 
+	        return false;
 	    }
 	}
+
+	@Override
+	public List<Usuario> findByRol_Descripcion(String descripcion){
+      return _usuarioRepository.findByRol_Descripcion(descripcion);
+	};
+
 }

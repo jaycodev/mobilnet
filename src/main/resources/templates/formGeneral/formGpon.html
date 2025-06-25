@@ -4,18 +4,42 @@
 <div class="container mt-5" th:fragment="contenido">
 
     <div class="card shadow p-4">
-        <h3 class="mb-4">Registro por pasos</h3>
+        <h3 class="mb-4">Registro de VentaRUC10</h3>
 
         <form id="multiStepForm">
             <!-- Paso 1 -->
             <div class="form-step active">
+                <p><b>Datos de los trabajadores</b></p>
+                <hr />
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre completo</label>
-                    <input type="text" class="form-control" id="nombre" required />
+                    <label for="supervisorNombre" class="form-label"
+                    >Nombre del Supervisor:</label
+                    >
+                   <select class="form-select" id="supervisorNombre">
+                       <option value="-1" > selected </option>
+                       <option  th:each="x : ${Supervisor}" th:value="${x.idUsuario}" th:text="${x.nombre + ' ' + x.apellido}"> </option>
+                   </select>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" id="email" required />
+                    <label for="consultorNombre" class="form-label"
+                    >Nombre del Consultor:</label
+                    >
+                    <select class="form-select" id="consultorNombre">
+                        <option  value="-1"> selected </option>
+                        <option  th:each="x : ${Consultor}" th:value="${x.idUsuario}" th:text="${x.nombre + ' ' + x.apellido}"> </option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="trabajadorEmail" class="form-label"
+                    >Correo Electrónico:</label
+                    >
+                    <input
+                            type="email"
+                            class="form-control"
+                            id="trabajadorEmail"
+                            placeholder="..........................@gmail.com"
+                            required
+                    />
                 </div>
                 <button type="button" class="btn btn-primary next-step">
                     Siguiente
@@ -24,13 +48,20 @@
 
             <!-- Paso 2 -->
             <div class="form-step">
+                <p><b>Datos del cliente</b></p>
+                <hr />
                 <div class="mb-3">
-                    <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="tel" class="form-control" id="telefono" required />
+                    <label for="razonSocial" class="form-label">Razón Social:</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="razonSocial"
+                            required
+                    />
                 </div>
                 <div class="mb-3">
-                    <label for="direccion" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="direccion" required />
+                    <label for="ruc" class="form-label">RUC:</label>
+                    <input type="text" class="form-control" id="ruc" required minlength="11" maxlength="11" pattern="\d{11}" title="Ingrese 11 dígitos numéricos" />
                 </div>
                 <button type="button" class="btn btn-secondary prev-step">
                     Anterior
@@ -42,9 +73,171 @@
 
             <!-- Paso 3 -->
             <div class="form-step">
+                <p><b>Representante legal</b></p>
+                <hr />
                 <div class="mb-3">
-                    <label for="mensaje" class="form-label">Mensaje adicional</label>
-                    <textarea class="form-control" id="mensaje" rows="4"></textarea>
+                    <label for="repNombre" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" id="repNombre" required />
+                </div>
+                <div class="mb-3">
+                    <label for="repApellido" class="form-label">Apellido:</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="repApellido"
+                            required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="repDNI" class="form-label">DNI:</label>
+                    <input
+                            type="number"
+                            class="form-control"
+                            id="repDNI"
+                            required minlength="8" maxlength="8" pattern="\d{8}"
+
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="repCorreo" class="form-label">Correo:</label>
+                    <input
+                            type="email"
+                            class="form-control"
+                            id="repCorreo"
+                            placeholder=".............................@gmail.com"
+                            required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="repTelefono" class="form-label">Teléfono:</label>
+                    <input
+                            type="number"
+                            class="form-control"
+                            id="repTelefono"
+                            required minlength="9" maxlength="9" pattern="\d{9}"
+                    />
+                </div>
+                <button type="button" class="btn btn-secondary prev-step">
+                    Anterior
+                </button>
+                <button type="button" class="btn btn-primary next-step">
+                    Siguiente
+                </button>
+            </div>
+
+            <!-- Paso 4 -->
+            <div class="form-step">
+                <p><b>Contacto autorizado</b></p>
+                <hr />
+                <div class="mb-3">
+                    <label for="contactoNombre" class="form-label">Nombre:</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="contactoNombre"
+                            required minlength="9" maxlength="9" pattern="\d{9}"
+
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="contactoApellido" class="form-label">Apellido:</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="contactoApellido"
+                            required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="contactoDNI" class="form-label">DNI:</label>
+                    <input
+                            type="number"
+                            class="form-control"
+                            id="contactoDNI"
+                            required minlength="8" maxlength="8" pattern="\d{8}"
+
+
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="contactoCorreo" class="form-label">Correo:</label>
+                    <input
+                            type="email"
+                            class="form-control"
+                            id="contactoCorreo"
+                            placeholder="...........................@gmail.com"
+                            required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="contactoTelefono" class="form-label">Teléfono:</label>
+                    <input
+                            type="number"
+                            class="form-control"
+                            id="contactoTelefono"
+                            required minlength="9" maxlength="9" pattern="\d{9}"
+
+                    />
+                </div>
+                <button type="button" class="btn btn-secondary prev-step">
+                    Anterior
+                </button>
+                <button type="button" class="btn btn-primary next-step">
+                    Siguiente
+                </button>
+            </div>
+
+            <!-- Paso 5 -->
+            <div class="form-step">
+                <p><b>Servicio contratado</b></p>
+                <hr />
+                <div class="mb-3">
+                    <label for="planServicio" class="form-label">Plan:</label>
+                    <select class="form-select" id="planServicio">
+                        <option value="-1" > selected </option>
+                        <option  th:each="x : ${plam}" th:value="${x.idPlan}" th:text="${x.descripcion}"> </option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="promocionServicio" class="form-label"
+                    >Promoción:</label
+                    >
+                    <select class="form-select" id="promocionServicio">
+                        <option value="-1" > selected </option>
+                        <option  th:each="x : ${promocion}" th:value="${x.idPromocion}" th:text="${x.descripcion}"> </option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="direccionInstalacion" class="form-label"
+                    >Dirección de Instalación:</label
+                    >
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="direccionInstalacion"
+                            required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="rangoHorario" class="form-label"
+                    >Rango horario de instalación:</label
+                    >
+                    <select class="form-control" id="rangoHorario" required>
+                        <option value="">--SELECCIONA--</option>
+                        <option value="mañana">09:00 a 13:00 hr</option>
+                        <option value="tarde">13:00 a 18:00 hr</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="fechaInstalacion" class="form-label"
+                    >Fecha de Instalación:</label
+                    >
+                    <input
+                            type="date"
+                            class="form-control"
+                            id="fechaInstalacion"
+                            required
+                    />
                 </div>
                 <button type="button" class="btn btn-secondary prev-step">
                     Anterior
