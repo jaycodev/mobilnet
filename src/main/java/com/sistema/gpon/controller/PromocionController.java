@@ -2,6 +2,7 @@ package com.sistema.gpon.controller;
 
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,54 +27,56 @@ public class PromocionController {
 
     @Autowired
     private PromocionService promocionService;
-    
-    @GetMapping("/index")
-	public String listado(Model model) {
-		List<Promocion> lstPromocion = promocionService.listarPromociones();
-		model.addAttribute("lstPromocion", lstPromocion);
-		return "promociones/index";
-	}
-    
+
+    @GetMapping({"", "/"})
+    public String listado(HttpServletRequest request, Model model) {
+        model.addAttribute("uri", request.getRequestURI());
+
+        List<Promocion> lstPromocion = promocionService.listarPromociones();
+        model.addAttribute("lstPromocion", lstPromocion);
+        return "promociones/index";
+    }
+
     @GetMapping("/nuevo")
-	public String nuevo(Model model) {
-		model.addAttribute("promocion", new Promocion());
-		return "promociones/nuevo";
-	}
-    
+    public String nuevo(Model model) {
+        model.addAttribute("promocion", new Promocion());
+        return "promociones/nuevo";
+    }
+
     @PostMapping("/registrar")
-	public String registrar(@Validated @ModelAttribute Promocion Promocion, BindingResult bindingResults, Model model, RedirectAttributes flash) {
-		
-    	ResultadoResponse response = promocionService.crearPromocion(Promocion);
+    public String registrar(@Validated @ModelAttribute Promocion Promocion, BindingResult bindingResults, Model model, RedirectAttributes flash) {
 
-		if (!response.success) {
+        ResultadoResponse response = promocionService.crearPromocion(Promocion);
 
-			model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
-			return "inventarios/nuevo";
-		}
-		flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
-		return "redirect:/promociones/index";
-	}
+        if (!response.success) {
+
+            model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
+            return "inventarios/nuevo";
+        }
+        flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
+        return "redirect:/promociones";
+    }
 
     @GetMapping("/edicion/{id}")
-	public String edicion(@PathVariable Integer id, Model model) {
-		Promocion promocion = promocionService.buscarPorId(id);
-		model.addAttribute("promocion", promocion);
-		return "promociones/edicion";
-	}
-    
+    public String edicion(@PathVariable Integer id, Model model) {
+        Promocion promocion = promocionService.buscarPorId(id);
+        model.addAttribute("promocion", promocion);
+        return "promociones/edicion";
+    }
+
     @PostMapping("/guardar")
-	public String guardar(@Validated @ModelAttribute Promocion promocion, BindingResult bindingResult, Model model,
-			RedirectAttributes flash) {
-    	
-    	ResultadoResponse response = promocionService.actualizarPromocion(promocion);
+    public String guardar(@Validated @ModelAttribute Promocion promocion, BindingResult bindingResult, Model model,
+                          RedirectAttributes flash) {
 
-		if (!response.success) {
-			model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
-			return "inventarios/edicion";
-		}
+        ResultadoResponse response = promocionService.actualizarPromocion(promocion);
 
-		String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-		flash.addFlashAttribute("alert", toast);
-		return "redirect:/promociones/index";
-	}
+        if (!response.success) {
+            model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
+            return "inventarios/edicion";
+        }
+
+        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
+        flash.addFlashAttribute("alert", toast);
+        return "redirect:/promociones";
+    }
 }

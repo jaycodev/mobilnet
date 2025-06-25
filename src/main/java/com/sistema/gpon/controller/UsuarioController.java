@@ -2,6 +2,7 @@ package com.sistema.gpon.controller;
 
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,74 +28,75 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
-    
+
     private RolService rolesService;
-    
-    @GetMapping("/index")
-   	public String listado(Model model) {
-   		List<Usuario> lstUsuarios = usuarioService.listarUsuarios();
-   		model.addAttribute("lstUsuarios", lstUsuarios);
-   		return "usuarios/index";
-   	}
-    
-    
+
+    @GetMapping({"", "/"})
+    public String listado(HttpServletRequest request, Model model) {
+        model.addAttribute("uri", request.getRequestURI());
+
+        List<Usuario> lstUsuarios = usuarioService.listarUsuarios();
+        model.addAttribute("lstUsuarios", lstUsuarios);
+        return "usuarios/index";
+    }
+
     @GetMapping("/nuevo")
-   	public String nuevo(Model model) {
-   		model.addAttribute("roles",rolesService.listarRoles());
-   		model.addAttribute("usuarios", new Usuario());
-   		return "usuarios/nuevo";
-   	}
-       
-       @PostMapping("/registrar")
-   	public String registrar(@Validated @ModelAttribute Usuario usuarios, BindingResult bindingResults, Model model, RedirectAttributes flash) {
-   		
-       	if(bindingResults.hasErrors()) {
-       		model.addAttribute("roles",rolesService.listarRoles());
-       		model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion de la Promocion"));
-   			return "usuarios/nuevo";
-       	}
-       	
-       	ResultadoResponse response = usuarioService.crearUsuario(usuarios);
-       	
-       	if (!response.success) {
-       		model.addAttribute("roles",rolesService.listarRoles());
-   			model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
-   			return "usuarios/nuevo";
-   		}
-       		
-       	String toast = Alert.sweetToast(response.mensaje, "sucess", 5000);
-   		flash.addFlashAttribute("toast", toast);
-   		return "redirect:/usuarios/index";
-   	}
+    public String nuevo(Model model) {
+        model.addAttribute("roles", rolesService.listarRoles());
+        model.addAttribute("usuarios", new Usuario());
+        return "usuarios/nuevo";
+    }
 
-       @GetMapping("/edicion/{id}")
-   	public String edicion(@PathVariable Integer id, Model model) {
-    	model.addAttribute("roles",rolesService.listarRoles());
-   		Usuario usuario = usuarioService.buscarPorId(id);
-   		model.addAttribute("usuario", usuario);
-   		return "usuarios/edicion";
-   	}
-       
-       @PostMapping("/guardar")
-   	public String guardar(@Validated @ModelAttribute Usuario usuario, BindingResult bindingResult, Model model,
-   			RedirectAttributes flash) {
+    @PostMapping("/registrar")
+    public String registrar(@Validated @ModelAttribute Usuario usuarios, BindingResult bindingResults, Model model, RedirectAttributes flash) {
 
-   		if (bindingResult.hasErrors()) {
-   			model.addAttribute("roles",rolesService.listarRoles());
-   			model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion del Usuario"));
-   			return "usuarios/edicion";
-   		}
+        if (bindingResults.hasErrors()) {
+            model.addAttribute("roles", rolesService.listarRoles());
+            model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion de la Promocion"));
+            return "usuarios/nuevo";
+        }
 
-   		ResultadoResponse response = usuarioService.modificarUsuario(usuario);
+        ResultadoResponse response = usuarioService.crearUsuario(usuarios);
 
-   		if (!response.success) {
-   			model.addAttribute("roles",rolesService.listarRoles());
-   			model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
-   			return "usuarios/edicion";
-   		}
+        if (!response.success) {
+            model.addAttribute("roles", rolesService.listarRoles());
+            model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
+            return "usuarios/nuevo";
+        }
 
-   		String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-   		flash.addFlashAttribute("toast", toast);
-   		return "redirect:/usuarios/index";
-   	}
+        String toast = Alert.sweetToast(response.mensaje, "sucess", 5000);
+        flash.addFlashAttribute("toast", toast);
+        return "redirect:/usuarios";
+    }
+
+    @GetMapping("/edicion/{id}")
+    public String edicion(@PathVariable Integer id, Model model) {
+        model.addAttribute("roles", rolesService.listarRoles());
+        Usuario usuario = usuarioService.buscarPorId(id);
+        model.addAttribute("usuario", usuario);
+        return "usuarios/edicion";
+    }
+
+    @PostMapping("/guardar")
+    public String guardar(@Validated @ModelAttribute Usuario usuario, BindingResult bindingResult, Model model,
+                          RedirectAttributes flash) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("roles", rolesService.listarRoles());
+            model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion del Usuario"));
+            return "usuarios/edicion";
+        }
+
+        ResultadoResponse response = usuarioService.modificarUsuario(usuario);
+
+        if (!response.success) {
+            model.addAttribute("roles", rolesService.listarRoles());
+            model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
+            return "usuarios/edicion";
+        }
+
+        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
+        flash.addFlashAttribute("toast", toast);
+        return "redirect:/usuarios";
+    }
 }
