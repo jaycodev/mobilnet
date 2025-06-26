@@ -73,4 +73,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public List<Usuario> findByRol_Descripcion(String descripcion){
       return usuarioRepository.findByRol_Descripcion(descripcion);
 	};
+	
+	/*CODIGO AÑADIDO ELIMINAR SI DA ERROR*/
+	public Usuario Autenticacion(Usuario filter) {
+		
+		return usuarioRepository.findByCorreoAndContrasena(filter.getCorreo(), filter.getContrasena());
+	}
+	
 }
