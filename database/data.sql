@@ -85,18 +85,60 @@ INSERT INTO EstadoRegistro(Descripcion) VALUES
 ('Sin cobertura'),
 ('Deuda');
 
+
+INSERT INTO ContactoPrincipal (NombreContacto, Dni, Telefono, Correo) VALUES
+('Juan Pérez', '12345678', '987654321', 'juan.perez@example.com'),
+('María Gómez', '23456789', '912345678', 'maria.gomez@example.com'),
+('Carlos Ramírez', '34567890', '923456789', 'carlos.ramirez@example.com'),
+('Ana Torres', '45678901', '934567890', 'ana.torres@example.com'),
+('Luis Martínez', '56789012', '945678901', 'luis.martinez@example.com'),
+('Lucía Fernández', '67890123', '956789012', 'lucia.fernandez@example.com'),
+('Pedro Sánchez', '78901234', '967890123', 'pedro.sanchez@example.com'),
+('Laura Morales', '89012345', '978901234', 'laura.morales@example.com'),
+('Jorge Cruz', '90123456', '989012345', 'jorge.cruz@example.com'),
+('Elena Vega', '01234567', '900123456', 'elena.vega@example.com');
+
+INSERT INTO ContactoSecundario (NombreContacto, Dni, Telefono, Correo) VALUES
+('Rosa Ruiz', '12312312', '911223344', 'rosa.ruiz@example.com'),
+('Mario Silva', '23423423', '922334455', 'mario.silva@example.com'),
+('Diana López', '34534534', '933445566', 'diana.lopez@example.com'),
+('Ricardo Torres', '45645645', '944556677', 'ricardo.torres@example.com'),
+('Carmen Soto', '56756756', '955667788', 'carmen.soto@example.com');
+
+INSERT INTO Cronograma (UbicacionInstalacion, RangoInstalacion, FechaProgramada) VALUES
+('Av. La Marina 123, San Miguel', '8:00 AM - 10:00 AM', '2025-07-01'),
+('Jr. Los Olivos 456, Surco', '10:00 AM - 12:00 PM', '2025-07-02'),
+('Calle Ficticia 789, Miraflores', '1:00 PM - 3:00 PM', '2025-07-03'),
+('Pasaje Central 101, La Molina', '3:00 PM - 5:00 PM', '2025-07-04'),
+('Av. Siempre Viva 742, San Isidro', '8:00 AM - 10:00 AM', '2025-07-05');
+
 INSERT INTO RegistroRUC10 (
-    IdUsuario, Asunto, DniCliente, FechaRegistro, IdPlan, IdPromocion,
-    IdDistrito, IdSector, IdSolicitud, IdInstalacion, IdEstado,
-    IdCarrito, FechaInstalacion, Observacion
+    IdUsuarioConsulto, IdUsuarioSupervisor, DniCliente, FechaRegistro, Ruc,
+    IdContactoPrincipal, IdContactoSecundario, IdPlan, IdPromocion, IdCronograma,
+    IdDistrito, IdSector, IdEstado, IdSolicitud, IdInstalacion, IdCarrito,
+    Observacion
 ) VALUES
-(1, 'RUC 10 VENTA // 20123456789//JUAN PÉREZ', '12345678', '2025-06-19 09:15:00', 1, 1, 1, 1, '1QWERTYUI', '763952718', 1, 'CSE00130678226', '2025-06-23 14:00:00', ''),
-(2, 'RUC 10 VENTA // 20456789123//MARÍA GÓMEZ', '23456789', '2025-06-19 09:20:00', 1, 1, 2, 2, '1ASDFGHJK', '763952719', 3, 'CSE00130678227', '2025-06-23 14:30:00', ''),
-(3, 'RUC 10 VENTA // 20567891234//CARLOS RAMÍREZ', '34567890', '2025-06-19 09:25:00', 1, 1, 3, 3, '1ZXCVBNMA', '763952720', 4, 'CSE00130678228', '2025-06-23 15:00:00', ''),
-(4, 'RUC 10 VENTA // 20678912345//ANA TORRES', '45678901', '2025-06-19 09:30:00', 1, 1, 4, 4, '1QAZWSXED', '763952721', 2, 'CSE00130678229', '2025-06-23 15:30:00', ''),
-(5, 'RUC 10 VENTA // 20789123456//LUIS MARTÍNEZ', '56789012', '2025-06-19 09:35:00', 1, 1, 5, 5, '1EDCRFVTG', '763952722', 5, 'CSE00130678230', '2025-06-23 16:00:00', ''),
-(6, 'RUC 10 VENTA // 20891234567//LUCÍA FERNÁNDEZ', '67890123', '2025-06-19 09:40:00', 1, 1, 6, 6, '1TGBYHNUJ', '763952723', 6, 'CSE00130678231', '2025-06-23 16:30:00', ''),
-(7, 'RUC 10 VENTA // 20912345678//PEDRO SÁNCHEZ', '78901234', '2025-06-19 09:45:00', 1, 1, 7, 7, '1PLMOKNIJ', '763952724', 7, 'CSE00130678232', '2025-06-23 17:00:00', ''),
-(8, 'RUC 10 VENTA // 20123456780//LAURA MORALES', '89012345', '2025-06-19 09:50:00', 1, 1, 8, 8, '1MNBVCXZA', '763952725', 8, 'CSE00130678233', '2025-06-23 17:30:00', ''),
-(9, 'RUC 10 VENTA // 20234567891//JORGE CRUZ', '90123456', '2025-06-19 09:55:00', 1, 1, 9, 9, '1LOKMIJNU', '763952726', 9, 'CSE00130678234', '2025-06-23 18:00:00', ''),
-(10, 'RUC 10 VENTA // 20345678912//ELENA VEGA', '01234567', '2025-06-19 10:00:00', 1, 1, 10, 10, '1BVCXZAQW', '763952727', 1, 'CSE00130678235', '2025-06-23 18:30:00', '');
+-- Registro 1
+(2, 4, '12345678', '2025-06-19 09:15:00', '20123456789',
+ 1, 1, 1, 1, 1,
+ 1, 1, 1, '1QWERTYUI', '763952718', 'CSE00130678226',
+ 'Cliente confirmó instalación.'),
+
+-- Registro 2
+(5, 8, '23456789', '2025-06-19 09:20:00', '20456789123',
+ 2, 2, 1, 1, 2,
+ 2, 2, 1, '1ASDFGHJK', '763952719', 'CSE00130678227',
+ 'Cliente pidió instalación urgente.'),
+
+-- Registro 3
+(7, 12, '34567890', '2025-06-19 09:25:00', '20567891234',
+ 3, 3, 1, 1, 3,
+ 3, 3, 1, '1ZXCVBNMA', '763952720', 'CSE00130678228',
+ 'Dirección confirmada por teléfono.'),
+
+-- Registro 4
+(10, 15, '45678901', '2025-06-19 09:30:00', '20678912345',
+ 4, 4, 1, 1, 4,
+ 4, 4, 1, '1QAZWSXED', '763952721', 'CSE00130678229',
+ '')
+;

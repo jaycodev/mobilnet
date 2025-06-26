@@ -50,26 +50,58 @@ CREATE TABLE EstadoRegistro (
     Descripcion VARCHAR(30) NOT NULL
 );
 
+CREATE TABLE ContactoPrincipal (
+    IdContactoPrincipal INT PRIMARY KEY AUTO_INCREMENT,
+    NombreContacto VARCHAR(30) NOT NULL,
+    Dni VARCHAR(8) NOT NULL,
+    Correo VARCHAR(30) NOT NULL,
+    Telefono VARCHAR(9) NOT NULL
+);
+
+CREATE TABLE ContactoSecundario (
+    IdContactoSecundario INT PRIMARY KEY AUTO_INCREMENT,
+    NombreContacto VARCHAR(30) NOT NULL,
+    Dni VARCHAR(8) NOT NULL,
+    Correo VARCHAR(30) NOT NULL,
+    Telefono VARCHAR(9) NOT NULL
+);
+
+CREATE TABLE Cronograma (
+    IdCronograma INT PRIMARY KEY AUTO_INCREMENT,
+    UbicacionInstalacion VARCHAR(100),
+    RangoInstalacion VARCHAR(100),
+    FechaProgramada DATE
+);
+
+
 CREATE TABLE RegistroRUC10 (
     IdRegistro INT PRIMARY KEY AUTO_INCREMENT,
-    IdUsuario INT NOT NULL,
-    Asunto VARCHAR(255) DEFAULT '',
+    IdUsuarioConsulto INT NOT NULL,
+    IdUsuarioSupervisor INT NOT NULL,
     DniCliente VARCHAR(8) NOT NULL,
     FechaRegistro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    Ruc VARCHAR(11) NOT NULL,
+    IdContactoPrincipal INT NOT NULL,
+    IdContactoSecundario INT NOT NULL,
     IdPlan INT NOT NULL,
     IdPromocion INT,
+    IdCronograma INT NOT NULL,
     IdDistrito INT NOT NULL,
     IdSector INT NOT NULL,
+    IdEstado INT NOT NULL,
     IdSolicitud VARCHAR(255) NOT NULL,
     IdInstalacion VARCHAR(255) NOT NULL,
-    IdEstado INT NOT NULL,
     IdCarrito VARCHAR(255) NOT NULL,
-    FechaInstalacion DATETIME NOT NULL,
     Observacion VARCHAR(255),
-    FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario),
+
+    FOREIGN KEY (IdUsuarioConsulto) REFERENCES Usuario(IdUsuario),
+    FOREIGN KEY (IdUsuarioSupervisor) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (DniCliente) REFERENCES Cliente(DniCliente),
+    FOREIGN KEY (IdContactoPrincipal) REFERENCES ContactoPrincipal(IdContactoPrincipal),
+    FOREIGN KEY (IdContactoSecundario) REFERENCES ContactoSecundario(IdContactoSecundario),
     FOREIGN KEY (IdPlan) REFERENCES Plan(IdPlan),
     FOREIGN KEY (IdPromocion) REFERENCES Promocion(IdPromocion),
+    FOREIGN KEY (IdCronograma) REFERENCES Cronograma(IdCronograma),
     FOREIGN KEY (IdDistrito) REFERENCES Distrito(IdDistrito),
     FOREIGN KEY (IdSector) REFERENCES Sector(IdSector),
     FOREIGN KEY (IdEstado) REFERENCES EstadoRegistro(IdEstado)
