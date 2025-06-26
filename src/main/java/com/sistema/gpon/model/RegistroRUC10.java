@@ -1,76 +1,66 @@
 package com.sistema.gpon.model;
 
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Entity
-@Table(name = "RegistroRUC10")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class RegistroRUC10 {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "IdRegistro")
 	private Integer idRegistro;
 
 	@ManyToOne
-	@JoinColumn(name = "IdUsuario", nullable = false)
-	private Usuario usuario;
-
-	@Column(name = "Asunto")
-	private String asunto;
+	@JoinColumn(name = "idUsuarioConsulto", nullable = false)
+	private Usuario usuarioConsulto;
 
 	@ManyToOne
-	@JoinColumn(name = "DniCliente", nullable = false)
+	@JoinColumn(name = "idUsuarioSupervisor", nullable = false)
+	private Usuario usuarioSupervisor;
+
+	@ManyToOne
+	@JoinColumn(name = "dniCliente", referencedColumnName = "dniCliente", nullable = false)
 	private Cliente cliente;
 
-	@Column(name = "FechaRegistro", nullable = false)
-	private LocalDateTime fechaRegistro;
+	@ManyToOne
+	@JoinColumn(name = "idContactoPrincipal", nullable = false)
+	private ContactoPrincipal contactoPrincipal;
 
 	@ManyToOne
-	@JoinColumn(name = "IdPlan", nullable = false)
+	@JoinColumn(name = "idContactoSecundario", nullable = false)
+	private ContactoSecundario contactoSecundario;
+
+	@ManyToOne
+	@JoinColumn(name = "idPlan", nullable = false)
 	private Plan plan;
 
 	@ManyToOne
-	@JoinColumn(name = "IdPromocion")
+	@JoinColumn(name = "idPromocion")
 	private Promocion promocion;
 
 	@ManyToOne
-	@JoinColumn(name = "IdDistrito", nullable = false)
-	private Distrito distrito;
+	@JoinColumn(name = "idCronograma", nullable = false)
+	private Cronograma cronograma;
 
 	@ManyToOne
-	@JoinColumn(name = "IdSector", nullable = false)
-	private Sector sector;
-
-	@Column(name = "IdSolicitud", nullable = false)
-	private String idSolicitud;
-
-	@Column(name = "IdInstalacion", nullable = false)
-	private String idInstalacion;
-
-	@ManyToOne
-	@JoinColumn(name = "IdEstado", nullable = false)
+	@JoinColumn(name = "idEstado", nullable = false)
 	private EstadoRegistro estado;
 
-	@Column(name = "IdCarrito", nullable = false)
+	@Column(nullable = false)
+	private String idSolicitud;
+
+	@Column(nullable = false)
+	private String idInstalacion;
+
+	@Column(nullable = false)
 	private String idCarrito;
 
-	@Column(name = "FechaInstalacion", nullable = false)
-	private LocalDateTime fechaInstalacion;
-
-	@Column(name = "Observacion")
 	private String observacion;
-}
 
+
+}
