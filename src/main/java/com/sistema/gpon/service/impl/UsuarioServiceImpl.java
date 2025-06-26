@@ -15,12 +15,12 @@ import org.springframework.stereotype.Service;
 public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
-    private UsuarioRepository _usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
 	@Override
 	public ResultadoResponse crearUsuario(Usuario usuario) {
 		try {
-			Usuario registrado = _usuarioRepository.save(usuario);
+			Usuario registrado = usuarioRepository.save(usuario);
 
 			String mensaje = String.format("Usuario con numero %s registrado", registrado.getIdUsuario());
 			return new ResultadoResponse(true, mensaje);
@@ -33,18 +33,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public List<Usuario> listarUsuarios() {
-		return _usuarioRepository.findAllByOrderByIdUsuarioDesc();
+		return usuarioRepository.findAllByOrderByIdUsuarioDesc();
 	}
 
 	@Override
 	public Usuario buscarPorId(Integer idUsuario) {
-		return _usuarioRepository.findById(idUsuario).orElseThrow();
+		return usuarioRepository.findById(idUsuario).orElseThrow();
 	}
 
 	@Override
 	public ResultadoResponse modificarUsuario(Usuario usuario) {
 		try {
-			Usuario actualizado = _usuarioRepository.save(usuario);
+			Usuario actualizado = usuarioRepository.save(usuario);
 
 			String mensaje = String.format("Usuario con nro. %s actualizado", actualizado.getIdUsuario());
 			return new ResultadoResponse(true, mensaje);
@@ -57,8 +57,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public boolean eliminarUsuario(Integer idUsuario) {
 		try {
-	        if (_usuarioRepository.existsById(idUsuario)) {
-	        	_usuarioRepository.deleteById(idUsuario);
+	        if (usuarioRepository.existsById(idUsuario)) {
+	        	usuarioRepository.deleteById(idUsuario);
 	            return true;
 	        } else {
 	            return false;
@@ -71,7 +71,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public List<Usuario> findByRol_Descripcion(String descripcion){
-      return _usuarioRepository.findByRol_Descripcion(descripcion);
+      return usuarioRepository.findByRol_Descripcion(descripcion);
 	};
-
 }
