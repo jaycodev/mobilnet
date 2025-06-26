@@ -24,7 +24,7 @@ public class SectorServiceImpl implements SectorService {
 	@Override
 	public List<Sector> listarSectores() {
 		// TODO Auto-generated method stub
-		return null;
+		return sectorRepository.findAll();
 	}
 
 	@Override

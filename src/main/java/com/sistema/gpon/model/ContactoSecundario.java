@@ -12,17 +12,18 @@ public class ContactoSecundario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IdContactoSecundario")
     private Integer idContactoSecundario;
 
-    @Column(nullable = false, length = 30)
+    @Column(name = "NombreContacto",nullable = false, length = 30)
     private String nombreContacto;
 
-    @Column(nullable = false, length = 8)
+    @Column(name = "Dni",nullable = false, length = 8)
     private String dni;
 
-    @Column(nullable = false, length = 30)
+    @Column(name = "Correo",nullable = false, length = 30)
     private String correo;
 
-    @Column(nullable = false, length = 9)
+    @Column(name = "Telefono",nullable = false, length = 9)
     private String telefono;
 }
