@@ -3,6 +3,7 @@ USE registro_gpon_db;
 INSERT INTO Rol(Descripcion) VALUES
 ('BackOffice'),
 ('Consultor'),
+('Supervisor'),
 ('Administrador');
 
 INSERT INTO Usuario (IdRol, Nombre, Apellido, Correo, Contrasena) VALUES
@@ -14,18 +15,18 @@ INSERT INTO Usuario (IdRol, Nombre, Apellido, Correo, Contrasena) VALUES
 (1, 'Lucía', 'Fernández', 'lucia.fernandez@example.com', 'lucia12'),
 (2, 'Pedro', 'Sánchez', 'pedro.sanchez@example.com', 'pedro123'),
 (3, 'Laura', 'Morales', 'laura.morales@example.com', 'lauram!23'),
-(1, 'Jorge', 'Cruz', 'jorge.cruz@example.com', 'jorge2023'),
+(4, 'Jorge', 'Cruz', 'jorge.cruz@example.com', 'jorge2023'),
 (2, 'Elena', 'Vega', 'elena.vega@example.com', 'elena456'),
 (1, 'Diego', 'Castillo', 'diego.castillo@example.com', 'castilloD'),
 (3, 'Sofía', 'Herrera', 'sofia.herrera@example.com', 'sofiaH23'),
 (2, 'Mateo', 'Flores', 'mateo.flores@example.com', 'flores@12'),
 (1, 'Valentina', 'Rojas', 'valentina.rojas@example.com', 'valenR2025'),
 (3, 'Andrés', 'Navarro', 'andres.navarro@example.com', 'navarro12'),
-(2, 'Camila', 'Silva', 'camila.silva@example.com', 'camilaS'),
+(4, 'Camila', 'Silva', 'camila.silva@example.com', 'camilaS'),
 (1, 'Sebastián', 'Ibarra', 'sebastian.ibarra@example.com', 'sibarra!'),
 (2, 'Daniela', 'Paredes', 'daniela.paredes@example.com', 'danielaP'),
 (3, 'Gonzalo', 'Castañeda', 'gonzalo.castaneda@example.com', 'gcast2024'),
-(1, 'Natalia', 'Mendoza', 'natalia.mendoza@example.com', 'nataliaM');
+(4, 'Natalia', 'Mendoza', 'natalia.mendoza@example.com', 'nataliaM');
 
 INSERT INTO Cliente (DniCliente, Ruc, Nombre, Apellido, Telefono) VALUES
 ('12345678', '20123456789', 'Juan', 'Pérez', '987654321'),

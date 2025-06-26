@@ -16,15 +16,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-	
+
 	@Override
 	public ResultadoResponse crearUsuario(Usuario usuario) {
-		try {			
+		try {
 			Usuario registrado = usuarioRepository.save(usuario);
-			
-			String mensaje = String.format("Usuario con numero %s registrado", registrado.getIdUsuario());		
+
+			String mensaje = String.format("Usuario con numero %s registrado", registrado.getIdUsuario());
 			return new ResultadoResponse(true, mensaje);
-			
+
 		}catch (Exception ex) {
 			ex.printStackTrace();
 			return new ResultadoResponse(false, "Error al registrar: " + ex.getMessage());
@@ -51,7 +51,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 		} catch (Exception ex) {
 			return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
-		}	
+		}
 	}
 
 	@Override
@@ -65,7 +65,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 	        }
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
-	        return false; 
+	        return false;
 	    }
 	}
+
+	@Override
+	public List<Usuario> findByRol_Descripcion(String descripcion){
+      return usuarioRepository.findByRol_Descripcion(descripcion);
+	};
 }
