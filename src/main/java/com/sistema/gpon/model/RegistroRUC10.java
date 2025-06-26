@@ -51,15 +51,16 @@ public class RegistroRUC10 {
 	@JoinColumn(name = "idEstado", nullable = false)
 	private EstadoRegistro estado;
 
-	@Column(nullable = false)
+	@Column(name = "IdSolicitud")
 	private String idSolicitud;
 
-	@Column(nullable = false)
+	@Column(name = "IdInstalacion")
 	private String idInstalacion;
 
-	@Column(nullable = false)
+	@Column(name = "IdCarrito")
 	private String idCarrito;
 
+	@Column(name = "Observacion")
 	private String observacion;
 
 
