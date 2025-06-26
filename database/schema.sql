@@ -49,7 +49,6 @@ CREATE TABLE EstadoRegistro (
     IdEstado INT PRIMARY KEY AUTO_INCREMENT,
     Descripcion VARCHAR(30) NOT NULL
 );
-
 CREATE TABLE ContactoPrincipal (
     IdContactoPrincipal INT PRIMARY KEY AUTO_INCREMENT,
     NombreContacto VARCHAR(30) NOT NULL,
@@ -70,28 +69,24 @@ CREATE TABLE Cronograma (
     IdCronograma INT PRIMARY KEY AUTO_INCREMENT,
     UbicacionInstalacion VARCHAR(100),
     RangoInstalacion VARCHAR(100),
-    FechaProgramada DATE
+    FechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FechaInstalacion DATETIME
 );
-
 
 CREATE TABLE RegistroRUC10 (
     IdRegistro INT PRIMARY KEY AUTO_INCREMENT,
     IdUsuarioConsulto INT NOT NULL,
     IdUsuarioSupervisor INT NOT NULL,
     DniCliente VARCHAR(8) NOT NULL,
-    FechaRegistro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    Ruc VARCHAR(11) NOT NULL,
     IdContactoPrincipal INT NOT NULL,
     IdContactoSecundario INT NOT NULL,
     IdPlan INT NOT NULL,
     IdPromocion INT,
     IdCronograma INT NOT NULL,
-    IdDistrito INT NOT NULL,
-    IdSector INT NOT NULL,
-    IdEstado INT NOT NULL,
-    IdSolicitud VARCHAR(255) NOT NULL,
-    IdInstalacion VARCHAR(255) NOT NULL,
-    IdCarrito VARCHAR(255) NOT NULL,
+    IdEstado INT NOT NULL DEFAULT 1,
+    IdSolicitud VARCHAR(255) NOT NULL DEFAULT '0',
+    IdInstalacion VARCHAR(255) NOT NULL DEFAULT '0',
+    IdCarrito VARCHAR(255) NOT NULL DEFAULT '0',
     Observacion VARCHAR(255),
 
     FOREIGN KEY (IdUsuarioConsulto) REFERENCES Usuario(IdUsuario),
@@ -102,7 +97,5 @@ CREATE TABLE RegistroRUC10 (
     FOREIGN KEY (IdPlan) REFERENCES Plan(IdPlan),
     FOREIGN KEY (IdPromocion) REFERENCES Promocion(IdPromocion),
     FOREIGN KEY (IdCronograma) REFERENCES Cronograma(IdCronograma),
-    FOREIGN KEY (IdDistrito) REFERENCES Distrito(IdDistrito),
-    FOREIGN KEY (IdSector) REFERENCES Sector(IdSector),
     FOREIGN KEY (IdEstado) REFERENCES EstadoRegistro(IdEstado)
 );
