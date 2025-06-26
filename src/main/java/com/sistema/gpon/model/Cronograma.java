@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -17,7 +18,20 @@ public class Cronograma {
     private Integer idCronograma;
 
     private String ubicacionInstalacion;
+
     private String rangoInstalacion;
 
-    private LocalDate fechaProgramada;
+    private LocalDateTime fechaRegistro ;
+    private LocalDateTime fechaInstalacion ;
+
+    @PrePersist
+    public void setFechasPorDefecto() {
+        if (fechaRegistro == null) {
+            fechaRegistro = LocalDateTime.now();
+        }
+        if (fechaInstalacion == null) {
+            fechaInstalacion = fechaRegistro.plusDays(4);
+        }
+    }
+
 }

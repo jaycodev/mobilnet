@@ -27,11 +27,6 @@ public class RegistroRUC10 {
 	@JoinColumn(name = "dniCliente", referencedColumnName = "dniCliente", nullable = false)
 	private Cliente cliente;
 
-	private LocalDateTime fechaRegistro;
-
-	@Column(nullable = false, length = 11)
-	private String ruc;
-
 	@ManyToOne
 	@JoinColumn(name = "idContactoPrincipal", nullable = false)
 	private ContactoPrincipal contactoPrincipal;
@@ -53,14 +48,6 @@ public class RegistroRUC10 {
 	private Cronograma cronograma;
 
 	@ManyToOne
-	@JoinColumn(name = "idDistrito", nullable = false)
-	private Distrito distrito;
-
-	@ManyToOne
-	@JoinColumn(name = "idSector", nullable = false)
-	private Sector sector;
-
-	@ManyToOne
 	@JoinColumn(name = "idEstado", nullable = false)
 	private EstadoRegistro estado;
 
@@ -75,10 +62,5 @@ public class RegistroRUC10 {
 
 	private String observacion;
 
-	@PrePersist
-	public void setDefaultFechaRegistro() {
-		if (fechaRegistro == null) {
-			fechaRegistro = LocalDateTime.now();
-		}
-	}
+
 }
