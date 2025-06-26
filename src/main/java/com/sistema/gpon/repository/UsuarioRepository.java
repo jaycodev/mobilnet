@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	List<Usuario> findAllByOrderByIdUsuarioDesc();
 	List<Usuario> findByRol_Descripcion(String descripcion);
+	
+	/*CODIGO AÑADIDO ELIMINAR SI DA ERROR*/
+	Usuario findByCorreoAndContrasena(String correo, String contrasena);
 }
