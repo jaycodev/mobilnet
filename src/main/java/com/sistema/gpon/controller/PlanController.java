@@ -1,5 +1,6 @@
 package com.sistema.gpon.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +15,10 @@ public class PlanController {
 
     @Autowired
     private PlanService planService;
-    @GetMapping("/index")
-    public String formGpon(Model model){
 
+    @GetMapping({"", "/"})
+    public String index(HttpServletRequest request, Model model) {
+        model.addAttribute("uri", request.getRequestURI());
         return "planes/index";
     }
 }
