@@ -26,7 +26,6 @@ public class PlanServiceImpl implements PlanService {
 		return planRepository.findAll();
 	};
 
-
 	@Override
 	public List<Plan> listarPlanes() {
 		// TODO Auto-generated method stub
