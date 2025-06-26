@@ -1,83 +1,175 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layoutBase('Registro RUC10', 'Nuevo', ~{::contenido})">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layoutBase('Registro VentaRUC10', 'Nuevo', ~{::contenido})">
 <th:block th:fragment="contenido">
     <div class="card shadow-sm p-4">
         <h5 class="mb-4">
-            <i class="fa-solid fa-id-card me-1"></i>
-            Registrar RUC10
+            <i class="fa-solid fa-file-signature me-1"></i>
+            Registro de VentaRUC10
         </h5>
+
         <form id="multiStepForm">
             <!-- Paso 1 -->
             <div class="form-step active">
+                <h6 class="mb-3">Datos de los trabajadores</h6>
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">
-                        Nombre(s)
-                        <span class="text-danger">*</span>
-                    </label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese un(os) nombre(s)" required />
+                    <label for="supervisorNombre" class="form-label">Supervisor <span class="text-danger">*</span></label>
+                    <select class="form-select" id="supervisorNombre" required>
+                        <option value="-1">Seleccionar</option>
+                        <option th:each="x : ${Supervisor}" th:value="${x.idUsuario}" th:text="${x.nombre + ' ' + x.apellido}"></option>
+                    </select>
                 </div>
-
                 <div class="mb-3">
-                    <label for="email" class="form-label">
-                        Correo electrónico
-                        <span class="text-danger">*</span>
-                    </label>
-                    <input type="email" class="form-control" id="email" placeholder="Ingrese un correo electrónico" required />
+                    <label for="consultorNombre" class="form-label">Consultor <span class="text-danger">*</span></label>
+                    <select class="form-select" id="consultorNombre" required>
+                        <option value="-1">Seleccionar</option>
+                        <option th:each="x : ${Consultor}" th:value="${x.idUsuario}" th:text="${x.nombre + ' ' + x.apellido}"></option>
+                    </select>
                 </div>
-
+                <div class="mb-3">
+                    <label for="trabajadorEmail" class="form-label">Correo Electrónico <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="trabajadorEmail" placeholder="correo@ejemplo.com" required />
+                </div>
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-primary next-step mb-0">
-                        Siguiente
-                        <i class="fas fa-arrow-right ms-1"></i>
+                        Siguiente <i class="fas fa-arrow-right ms-1"></i>
                     </button>
                 </div>
             </div>
 
             <!-- Paso 2 -->
             <div class="form-step">
+                <h6 class="mb-3">Datos del cliente</h6>
                 <div class="mb-3">
-                    <label for="telefono" class="form-label">
-                        Teléfono
-                        <span class="text-danger">*</span>
-                    </label>
-                    <input type="tel" class="form-control" id="telefono" placeholder="Ingrese un teléfono" required />
+                    <label for="razonSocial" class="form-label">Razón Social <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="razonSocial" required />
                 </div>
-
                 <div class="mb-3">
-                    <label for="direccion" class="form-label">
-                        Dirección
-                        <span class="text-danger">*</span>
-                    </label>
-                    <input type="text" class="form-control" id="direccion" placeholder="Ingrese una dirección"  required />
+                    <label for="ruc" class="form-label">RUC <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="ruc" required minlength="11" maxlength="11" pattern="\d{11}" title="Ingrese 11 dígitos numéricos" />
                 </div>
-
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-secondary prev-step me-1 mb-0">
-                        <i class="fas fa-arrow-left me-1"></i>
-                        Anterior
+                        <i class="fas fa-arrow-left me-1"></i> Anterior
                     </button>
                     <button type="button" class="btn btn-primary next-step mb-0">
-                        Siguiente
-                        <i class="fas fa-arrow-right ms-1"></i>
+                        Siguiente <i class="fas fa-arrow-right ms-1"></i>
                     </button>
                 </div>
             </div>
 
             <!-- Paso 3 -->
             <div class="form-step">
-                <div class="mb-3">
-                    <label for="mensaje" class="form-label">Mensaje adicional</label>
-                    <textarea class="form-control" id="mensaje" rows="4" placeholder="Escriba aquí un mensaje adicional..."></textarea>
+                <h6 class="mb-3">Representante legal</h6>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="repNombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="repNombre" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="repApellido" class="form-label">Apellido <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="repApellido" required />
+                    </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="repDNI" class="form-label">DNI <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="repDNI" required minlength="8" maxlength="8" pattern="\d{8}" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="repCorreo" class="form-label">Correo <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="repCorreo" placeholder="correo@ejemplo.com" required />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="repTelefono" class="form-label">Teléfono <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="repTelefono" required minlength="9" maxlength="9" pattern="\d{9}" />
+                    </div>
+                </div>
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-secondary prev-step me-1 mb-0">
-                        <i class="fas fa-arrow-left me-1"></i>
-                        Anterior
+                        <i class="fas fa-arrow-left me-1"></i> Anterior
                     </button>
-                    <button type="submit" class="btn btn-primary mb-0">
-                        <i class="fas fa-paper-plane me-1"></i>
-                        Enviar
+                    <button type="button" class="btn btn-primary next-step mb-0">
+                        Siguiente <i class="fas fa-arrow-right ms-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Paso 4 -->
+            <div class="form-step">
+                <h6 class="mb-3">Contacto autorizado</h6>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="contactoNombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="contactoNombre" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="contactoApellido" class="form-label">Apellido <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="contactoApellido" required />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="contactoDNI" class="form-label">DNI <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="contactoDNI" required minlength="8" maxlength="8" pattern="\d{8}" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="contactoCorreo" class="form-label">Correo <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="contactoCorreo" required />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="contactoTelefono" class="form-label">Teléfono <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="contactoTelefono" required minlength="9" maxlength="9" pattern="\d{9}" />
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary prev-step me-1 mb-0">
+                        <i class="fas fa-arrow-left me-1"></i> Anterior
+                    </button>
+                    <button type="button" class="btn btn-primary next-step mb-0">
+                        Siguiente <i class="fas fa-arrow-right ms-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Paso 5 -->
+            <div class="form-step">
+                <h6 class="mb-3">Servicio contratado</h6>
+                <div class="mb-3">
+                    <label for="planServicio" class="form-label">Plan <span class="text-danger">*</span></label>
+                    <select class="form-select" id="planServicio" required>
+                        <option value="-1">Seleccionar</option>
+                        <option th:each="x : ${plam}" th:value="${x.idPlan}" th:text="${x.descripcion}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="promocionServicio" class="form-label">Promoción</label>
+                    <select class="form-select" id="promocionServicio">
+                        <option value="-1">Seleccionar</option>
+                        <option th:each="x : ${promocion}" th:value="${x.idPromocion}" th:text="${x.descripcion}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="direccionInstalacion" class="form-label">Dirección de Instalación <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="direccionInstalacion" required />
+                </div>
+                <div class="mb-3">
+                    <label for="rangoHorario" class="form-label">Rango horario <span class="text-danger">*</span></label>
+                    <select class="form-select" id="rangoHorario" required>
+                        <option value="">--SELECCIONA--</option>
+                        <option value="mañana">09:00 a 13:00 hr</option>
+                        <option value="tarde">13:00 a 18:00 hr</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="fechaInstalacion" class="form-label">Fecha de Instalación <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="fechaInstalacion" required />
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary prev-step me-1 mb-0">
+                        <i class="fas fa-arrow-left me-1"></i> Anterior
+                    </button>
+                    <button type="submit" class="btn btn-success mb-0">
+                        <i class="fas fa-paper-plane me-1"></i> Enviar
                     </button>
                 </div>
             </div>
@@ -89,45 +181,43 @@
         let currentStep = 0;
 
         document.querySelectorAll(".next-step").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            if (validarPaso(currentStep)) {
-              steps[currentStep].classList.remove("active");
-              currentStep++;
-              steps[currentStep].classList.add("active");
-            }
-          });
+            btn.addEventListener("click", () => {
+                if (validarPaso(currentStep)) {
+                    steps[currentStep].classList.remove("active");
+                    currentStep++;
+                    steps[currentStep].classList.add("active");
+                }
+            });
         });
 
         document.querySelectorAll(".prev-step").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            steps[currentStep].classList.remove("active");
-            currentStep--;
-            steps[currentStep].classList.add("active");
-          });
+            btn.addEventListener("click", () => {
+                steps[currentStep].classList.remove("active");
+                currentStep--;
+                steps[currentStep].classList.add("active");
+            });
         });
 
-        document
-          .getElementById("multiStepForm")
-          .addEventListener("submit", function (e) {
+        document.getElementById("multiStepForm").addEventListener("submit", function (e) {
             e.preventDefault();
             alert("Formulario enviado correctamente 🎉");
             this.reset();
             steps[currentStep].classList.remove("active");
             currentStep = 0;
             steps[currentStep].classList.add("active");
-          });
+        });
 
         function validarPaso(paso) {
-          const inputs = steps[paso].querySelectorAll("input, textarea");
-          for (let input of inputs) {
-            if (!input.checkValidity()) {
-              input.classList.add("is-invalid");
-              return false;
-            } else {
-              input.classList.remove("is-invalid");
+            const inputs = steps[paso].querySelectorAll("input, select, textarea");
+            for (let input of inputs) {
+                if (!input.checkValidity()) {
+                    input.classList.add("is-invalid");
+                    return false;
+                } else {
+                    input.classList.remove("is-invalid");
+                }
             }
-          }
-          return true;
+            return true;
         }
     </script>
 </th:block>
