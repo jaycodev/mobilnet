@@ -24,15 +24,19 @@ public class RucDTO {
     //estos dos se deben de unir para formar lugarInstalcion
     private String nombreDistrito;
     private String nombreSector;
-    private String referencia;
+    private String departamento;
+    private String provincia;
     private String rangoInstalacion;
+    private String numero;
+    private String interior;
+    private String referencia;
 
     // Datos del registro
       private Integer idUsuarioConsulto;
       private Integer idUsuarioSupervisor;
       private Integer idPlan;
       private Integer idPromocion;
-      private String observacion;
+    private String observacion;
 
     // Datos del cliente
       private String dniCliente;

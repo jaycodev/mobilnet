@@ -46,8 +46,6 @@ public class RegistroRUC10Controller {
     @Autowired
     private CronogramaImpl _CronogramaService;
 
-    @Autowired
-    private  RegistroRUC10ServiceImpl _RegistroRUC10Service;
 
     @Autowired
     private  EstadoRegistroImpl _EstadoRegistro;
@@ -125,7 +123,15 @@ public class RegistroRUC10Controller {
             contactoSecundario = _ContactoSecundarioService.creaContactoSec(contactoSecundario);
 
             Cronograma cronograma= new Cronograma();
-            cronograma.setUbicacionInstalacion(ruc10DTO.getNombreDistrito() + " - " + ruc10DTO.getNombreSector() + " - " + ruc10DTO.getReferencia());
+            cronograma.setUbicacionInstalacion(
+                    ruc10DTO.getNombreDistrito() + " " +         // Ej: JIRON PARURO
+                            "NRO." + ruc10DTO.getNumero() + " " +        // Ej: NRO.1132
+                            "DPTO/INT " + ruc10DTO.getInterior() + " " + // Ej: DPTO/INT 114
+                            ruc10DTO.getObservacion() + " " +            // Ej: PISO 1 URB.AZCONA
+                            "(" +
+                            "LIMA-" + ruc10DTO.getDepartamento() + "-" + ruc10DTO.getProvincia() +
+                            ")"
+            );
             cronograma.setRangoInstalacion(ruc10DTO.getRangoInstalacion());
             cronograma = _CronogramaService.crearCronograma(cronograma);
 
@@ -163,4 +169,9 @@ public class RegistroRUC10Controller {
         return "redirect:/menu";
     }
 
+    @GetMapping("/listar")
+    public String listar(Model model){
+        model.addAttribute("listaruc",_registroRUC10Service.listarRegistros());
+        return "registros/listar";
+    }
 }
