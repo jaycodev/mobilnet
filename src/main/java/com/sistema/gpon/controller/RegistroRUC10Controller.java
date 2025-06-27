@@ -50,7 +50,7 @@ public class RegistroRUC10Controller {
     @Autowired
     private  RegistroRUC10ServiceImpl _RegistroRUC10Service;
 
-    @GetMapping({"/index", "/"})
+    @GetMapping({"", "/"})
     public String index(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
@@ -63,6 +63,7 @@ public class RegistroRUC10Controller {
 
         return "registros/index";
     }
+
     @PostMapping({"/create"})
     @Transactional
     public String create(HttpServletRequest request, Model model , @ModelAttribute RucDTO newRucDTO , RedirectAttributes flash) {
