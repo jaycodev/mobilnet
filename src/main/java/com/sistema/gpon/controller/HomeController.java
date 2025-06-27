@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class HomeController {
 
-    @GetMapping({"", "/"})
+    @GetMapping({"", "/","/menu"})
     public String index(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
         return "home/dashboard";

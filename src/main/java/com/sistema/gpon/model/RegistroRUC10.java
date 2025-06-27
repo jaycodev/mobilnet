@@ -16,19 +16,20 @@ public class RegistroRUC10 {
 	private Integer idRegistro;
 
 	@ManyToOne
-	@JoinColumn(name = "idUsuarioConsulto", nullable = false)
+	@JoinColumn(name = "IdUsuarioConsulto", nullable = false)
 	private Usuario usuarioConsulto;
 
 	@ManyToOne
-	@JoinColumn(name = "idUsuarioSupervisor", nullable = false)
+	@JoinColumn(name = "IdUsuarioSupervisor", nullable = false)
 	private Usuario usuarioSupervisor;
 
 	@ManyToOne
-	@JoinColumn(name = "dniCliente", referencedColumnName = "dniCliente", nullable = false)
-	private Cliente cliente;
+	@JoinColumn(name = "DniCliente",
+//			 referencedColumnName = "DniCliente",
+			nullable = false)	private Cliente cliente;
 
 	@ManyToOne
-	@JoinColumn(name = "idContactoPrincipal", nullable = false)
+	@JoinColumn(name = "IdContactoPrincipal", nullable = false)
 	private ContactoPrincipal contactoPrincipal;
 
 	@ManyToOne
@@ -36,29 +37,29 @@ public class RegistroRUC10 {
 	private ContactoSecundario contactoSecundario;
 
 	@ManyToOne
-	@JoinColumn(name = "idPlan", nullable = false)
+	@JoinColumn(name = "IdPlan", nullable = false)
 	private Plan plan;
 
 	@ManyToOne
-	@JoinColumn(name = "idPromocion")
+	@JoinColumn(name = "IdPromocion")
 	private Promocion promocion;
 
 	@ManyToOne
-	@JoinColumn(name = "idCronograma", nullable = false)
+	@JoinColumn(name = "IdCronograma")
 	private Cronograma cronograma;
 
 	@ManyToOne
-	@JoinColumn(name = "idEstado", nullable = false)
+	@JoinColumn(name = "IdEstado")
 	private EstadoRegistro estado;
 
 	@Column(name = "IdSolicitud")
-	private String idSolicitud;
+	private String idSolicitud = "ninguno";
 
 	@Column(name = "IdInstalacion")
-	private String idInstalacion;
+	private String idInstalacion = "ninguno";
 
-	@Column(name = "IdCarrito")
-	private String idCarrito;
+	@Column(name = "IdCarrito" )
+	private String idCarrito = "ninguno";
 
 	@Column(name = "Observacion")
 	private String observacion;

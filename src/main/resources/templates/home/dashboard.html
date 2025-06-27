@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layoutBase('Dashboard', 'Dashboard', ~{::contenido})">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layoutBase('Dashboard', 'Dashboard', ~{::contenido})}">
 <th:block th:fragment="contenido">
     <div class="row">
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -428,6 +428,6 @@
     </footer>
 </th:block>
 <div th:if="${alert}">
-<div th:utext="${alert}"></div>
+    <div th:utext="${alert}"></div>
 </div>
 </html>
