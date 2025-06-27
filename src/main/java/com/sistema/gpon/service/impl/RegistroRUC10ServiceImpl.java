@@ -18,7 +18,7 @@ public class RegistroRUC10ServiceImpl implements RegistroRUC10Service {
 	@Override
 	public RegistroRUC10 crearRegistro(RegistroRUC10 registro) {
 		// TODO Auto-generated method stub
-		return null;
+		return registroRUC10Repository.save(registro);
 	}
 
 	@Override

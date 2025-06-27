@@ -478,5 +478,7 @@
 	<script src="/js/argon-dashboard.min.js?v=2.1.0"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
-
+<div th:if="${alert}">
+	<div th:utext="${alert}"></div>
+</div>
 </html>

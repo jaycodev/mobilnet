@@ -18,6 +18,11 @@ public class ClienteServiceImpl implements ClienteService {
     private ClienteRepository clienteRepository;
 
     @Override
+    public Cliente crearClientenew(Cliente cliente) {
+        return clienteRepository.save(cliente);
+    }
+
+    @Override
     public ResultadoResponse crearCliente(Cliente cliente) {
         try {
             Cliente registrado = clienteRepository.save(cliente);
@@ -38,7 +43,12 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente buscarPorDni(String dni) {
-        return clienteRepository.findById(dni).orElseThrow();
+        return clienteRepository.findById(dni).orElseThrow(null);
+    }
+
+    @Override
+    public Cliente modificarClientenew(Cliente cliente) {
+        return clienteRepository.save(cliente);
     }
 
     @Override
