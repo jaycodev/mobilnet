@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layoutBase('registros', 'Listado', ~{::contenido})}">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layoutBase('registros', 'Listado', ~{::contenido})}">
 <th:block th:fragment="contenido">
     <div class="card shadow-sm p-4">
         <h5 class="mb-4">
@@ -162,36 +163,81 @@
             <div class="form-step">
                 <h6 class="mb-3">Cronograma</h6>
                 <div class="row">
+                    <!-- Ubicación: Departamento, Provincia, Distrito, Sector -->
                     <div class="col-md-6 mb-3">
-                        <label for="Distrito" class="form-label">Distrito <span class="text-danger">*</span></label>
-                        <select class="form-select" id="Distrito" th:field="*{nombreDistrito}" name="nombreDistrito" >
-                            <option th:value="-1" disabled selected>Seleccionar</option>
-                            <option th:each="x : ${distrito}" th:value="${x.nombreDistrito}" th:text="${x.nombreDistrito}"></option>
-                        </select>                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label for="Sector" class="form-label">Sector <span class="text-danger">*</span></label>
-                        <select class="form-select" id="Sector" th:field="*{nombreSector}" name="nombreSector" >
-                            <option th:value="-1" disabled selected>Seleccionar</option>
-                            <option th:each="x : ${sector}" th:value="${x.idSector}" th:text="${x.nombreSector}"></option>
-                        </select>                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="referencia" class="form-label">Referencia <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="*{referencia}" name="referencia"  id="referencia" required />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="rangoHorario" class="form-label">Rango horario <span class="text-danger">*</span></label>
-                        <select class="form-select" id="rangoHorario" th:field="*{rangoInstalacion}" name="rangoInstalacion" required>
-                            <option value="">--SELECCIONA--</option>
-                            <option value="mañana">09:00 a 13:00 hr</option>
-                            <option value="tarde">13:00 a 18:00 hr</option>
+                        <!-- Departamento -->
+                        <label for="departamento" class="form-label">Departamento <span class="text-danger">*</span></label>
+                        <select class="form-select" id="departamento" name="departamento" th:field="*{departamento}" required>
+                            <option value="-1" disabled selected>Seleccionar</option>
+                            <option value="Lima">Lima</option>
+                            <option value="Cusco">Cusco</option>
+                            <option value="Arequipa">Arequipa</option>
                         </select>
                     </div>
+
                     <div class="col-md-6 mb-3">
-                        <label for="Observaciones" class="form-label">Observaciones <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="*{observacion}" name="observacion"  id="Observaciones" required />
+                        <!-- Provincia -->
+                        <label for="provincia" class="form-label">Provincia <span class="text-danger">*</span></label>
+                        <select class="form-select" id="provincia" name="provincia" th:field="*{provincia}" required>
+                            <option value="-1" disabled selected>Seleccionar</option>
+                            <option value="Lima">Lima</option>
+                            <option value="Urubamba">Urubamba</option>
+                            <option value="Caylloma">Caylloma</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <!-- Distrito -->
+                        <label for="distrito" class="form-label">Distrito <span class="text-danger">*</span></label>
+                        <select class="form-select" id="distrito" name="nombreDistrito" th:field="*{nombreDistrito}" required>
+                            <option th:value="-1" disabled selected>Seleccionar</option>
+                            <option th:each="x : ${distrito}" th:value="${x.nombreDistrito}" th:text="${x.nombreDistrito}"></option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <!-- Sector -->
+                        <label for="sector" class="form-label">Sector <span class="text-danger">*</span></label>
+                        <select class="form-select" id="sector" name="nombreSector" th:field="*{nombreSector}" required>
+                            <option th:value="-1" disabled selected>Seleccionar</option>
+                            <option th:each="x : ${sector}" th:value="${x.idSector}" th:text="${x.nombreSector}"></option>
+                        </select>
+                    </div>
+
+                    <!-- Dirección: Referencia, N°, Interior o Departamento -->
+                    <div class="col-md-6 mb-3">
+                        <label for="referencia" class="form-label">Referencia <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="referencia" name="referencia" th:field="*{referencia}" required />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="numero" class="form-label">N° <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="numero" name="numero" th:field="*{numero}" required />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="interior" class="form-label">Interior o Departamento <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="interior" name="interior" th:field="*{interior}" required />
+                    </div>
+
+                    <!-- Rango Horario -->
+                    <div class="col-md-6 mb-3">
+                        <label for="rangoHorario" class="form-label">Rango horario <span class="text-danger">*</span></label>
+                        <select class="form-select" id="rangoHorario" name="rangoInstalacion" th:field="*{rangoInstalacion}" required>
+                            <option value="">--SELECCIONA--</option>
+                            <option value="09:00 a 13:00 hr">09:00 a 13:00 hr</option>
+                            <option value="13:00 a 18:00 hr">13:00 a 18:00 hr</option>
+                        </select>
+                    </div>
+
+                    <!-- Observaciones -->
+                    <div class="col-md-6 mb-3">
+                        <label for="observacion" class="form-label">Observaciones <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="observacion" name="observacion" th:field="*{observacion}" required />
                     </div>
                 </div>
+
+                <!-- Botones -->
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-secondary prev-step me-1 mb-0">
                         <i class="fas fa-arrow-left me-1"></i> Anterior
@@ -200,7 +246,6 @@
                         <i class="fas fa-check me-1"></i> Registrar
                     </button>
                 </div>
-
             </div>
         </form>
 
