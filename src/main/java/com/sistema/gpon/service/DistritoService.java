@@ -10,4 +10,5 @@ public interface DistritoService {
     Distrito buscarPorId(Integer idDistrito);
     Distrito actualizarDistrito(Distrito distrito);
     boolean eliminarDistrito(Integer idDistrito);
+
 }

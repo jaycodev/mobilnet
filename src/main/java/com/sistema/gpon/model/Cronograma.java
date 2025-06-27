@@ -15,13 +15,19 @@ public class Cronograma {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IdCronograma")
     private Integer idCronograma;
 
+    @Column(name = "UbicacionInstalacion")
     private String ubicacionInstalacion;
 
+    @Column(name = "RangoInstalacion")
     private String rangoInstalacion;
 
+    @Column(name = "FechaRegistro")
     private LocalDateTime fechaRegistro ;
+
+    @Column(name = "FechaInstalacion")
     private LocalDateTime fechaInstalacion ;
 
     @PrePersist

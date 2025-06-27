@@ -24,7 +24,7 @@ public class DistritoServiceImpl implements DistritoService {
 	@Override
 	public List<Distrito> listarDistritos() {
 		// TODO Auto-generated method stub
-		return null;
+		return distritoRepository.findAll();
 	}
 
 	@Override
