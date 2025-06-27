@@ -102,7 +102,7 @@ public class RegistroRUC10Controller {
             cliente.setTelefono(newRucDTO.getTelefonoCliente());
             cliente.setNombre(newRucDTO.getNombreCliente());
             cliente.setApellido(newRucDTO.getApellidoCliente());
-            cliente = _ClienteService.crearCliente(cliente);
+            /* cliente = _ClienteService.crearCliente(cliente); */
 
             RegistroRUC10 rucDTO= new RegistroRUC10();
             rucDTO.setUsuarioConsulto(_usuarioService.buscarPorId(newRucDTO.getIdUsuarioConsulto()));
