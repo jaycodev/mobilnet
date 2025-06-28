@@ -1,8 +1,11 @@
-package com.sistema.gpon.DTO;
+package com.sistema.gpon.model;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class RucDTO {
 
     // Datos del contacto principal
@@ -21,20 +24,19 @@ public class RucDTO {
     //estos dos se deben de unir para formar lugarInstalcion
     private String nombreDistrito;
     private String nombreSector;
-    private String referencia;
+    private String departamento;
+    private String provincia;
     private String rangoInstalacion;
+    private String numero;
+    private String interior;
+    private String referencia;
 
     // Datos del registro
       private Integer idUsuarioConsulto;
       private Integer idUsuarioSupervisor;
-//    private String dniCliente;
       private Integer idPlan;
       private Integer idPromocion;
-      private Integer idEstado=1;
-//    private String idSolicitud;
-//    private String idInstalacion;
-//    private String idCarrito;
-      private String observacion;
+    private String observacion;
 
     // Datos del cliente
       private String dniCliente;
@@ -42,4 +44,5 @@ public class RucDTO {
       private String nombreCliente;
       private String apellidoCliente;
       private String telefonoCliente;
+
 }
