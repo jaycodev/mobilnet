@@ -37,4 +37,8 @@ public class Usuario {
 
 	@Column(name = "Contrasena", nullable = false)
 	private String contrasena;
+	
+	@Column(name = "Estado", nullable = false)
+	private String estado;
+
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.sistema.gpon.model.Promocion;
 import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.service.RolService;
 import com.sistema.gpon.service.UsuarioService;
@@ -28,7 +27,8 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
-
+    
+    @Autowired
     private RolService rolesService;
 
     @GetMapping({"", "/"})
@@ -43,7 +43,7 @@ public class UsuarioController {
     @GetMapping("/nuevo")
     public String nuevo(Model model) {
         model.addAttribute("roles", rolesService.listarRoles());
-        model.addAttribute("usuarios", new Usuario());
+        model.addAttribute("usuario", new Usuario());
         return "usuarios/nuevo";
     }
 
@@ -64,8 +64,8 @@ public class UsuarioController {
             return "usuarios/nuevo";
         }
 
-        String toast = Alert.sweetToast(response.mensaje, "sucess", 5000);
-        flash.addFlashAttribute("toast", toast);
+        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
+        flash.addFlashAttribute("alert", toast);
         return "redirect:/usuarios";
     }
 
@@ -96,7 +96,18 @@ public class UsuarioController {
         }
 
         String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-        flash.addFlashAttribute("toast", toast);
+        flash.addFlashAttribute("alert", toast);
+        return "redirect:/usuarios";
+    }
+    
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable Integer id, RedirectAttributes flash) {
+        boolean eliminado = usuarioService.eliminarUsuario(id);
+        if (eliminado) {
+            flash.addFlashAttribute("alert", Alert.sweetToast("Usuario eliminado correctamente", "success", 3000));
+        } else {
+            flash.addFlashAttribute("alert", Alert.sweetAlertError("No se pudo eliminar al Usuario."));
+        }
         return "redirect:/usuarios";
     }
 }
