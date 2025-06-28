@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layoutBase('Promociones', 'Nueva', ~{::contenido})">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layoutBase('Promociones', 'Nueva', ~{::contenido})}">
 <th:block th:fragment="contenido">
+
     <div class="card shadow-sm p-4">
-        <h5 class="mb-4">
-            <i class="fa-solid fa-gift me-1"></i>
-            Nueva promoción
+        <h5 class="mb-4 text-primary fw-bold">
+            <i class="fa-solid fa-gift me-2"></i>
+            Nueva Promoción
         </h5>
-        <form th:action="@{/promociones/registrar}" method="post" th:object="${promocion}">
-            <div class="mb-3">
-                <label for="descripcion" class="form-label">
-                    Descripción
-                    <span class="text-danger">*</span>
+
+        <form th:action="@{/promociones/registrar}" method="post" th:object="${promocion}" class="row g-3 needs-validation">
+
+            <!-- Descripción -->
+            <div class="col-md-12 mb-4">
+                <label for="descripcion" class="form-label fw-bold">
+                    Descripción <span class="text-danger">*</span>
                 </label>
-                <input type="text" id="descripcion" th:field="*{descripcion}" class="form-control"
-                       placeholder="Ingrese una descripción de la promoción" required />
+                <input type="text"
+                       id="descripcion"
+                       th:field="*{descripcion}"
+                       class="form-control shadow-sm"
+                       placeholder="Ej. 2x1 en instalación fibra"
+                       required />
             </div>
-            <div class="d-flex justify-content-end">
-                <a href="/promociones" class="btn btn-secondary me-1 mb-0">
-                    <i class="fas fa-times me-1"></i>
-                    Cancelar
+
+            <!-- Botones -->
+            <div class="col-12 d-flex justify-content-end mt-2">
+                <a th:href="@{/promociones}" class="btn btn-outline-secondary me-2">
+                    <i class="fas fa-times me-1"></i> Cancelar
                 </a>
-                <button type="submit" class="btn btn-primary mb-0">
-                    <i class="fas fa-plus me-1"></i>
-                    Registrar
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-plus me-1"></i> Registrar
                 </button>
             </div>
         </form>
     </div>
+
 </th:block>
 </html>

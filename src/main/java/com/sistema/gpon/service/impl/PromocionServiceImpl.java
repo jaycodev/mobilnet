@@ -22,7 +22,7 @@ public class PromocionServiceImpl implements PromocionService {
 		try {			
 			Promocion registrada = promocionRepository.save(promocion);
 			
-			String mensaje = String.format("Promocion numero %s registrada", registrada.getIdPromocion());		
+			String mensaje = String.format("Promocion nueva registrada correctamente", registrada);		
 			return new ResultadoResponse(true, mensaje);
 			
 		}catch (Exception ex) {
@@ -46,7 +46,7 @@ public class PromocionServiceImpl implements PromocionService {
 		try {
 			Promocion actualizado = promocionRepository.save(promocion);
 
-			String mensaje = String.format("Promocion nro. %s actualizado", actualizado.getIdPromocion());
+			String mensaje = String.format("Promocion actualizada correctamente", actualizado.getIdPromocion());
 			return new ResultadoResponse(true, mensaje);
 
 		} catch (Exception ex) {

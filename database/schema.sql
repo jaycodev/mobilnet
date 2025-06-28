@@ -14,8 +14,11 @@ CREATE TABLE Usuario (
     Apellido VARCHAR(255) NOT NULL,
     Correo VARCHAR(255) NOT NULL,
     Contrasena VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+    Estado ENUM('activo', 'inhabilitado') DEFAULT 'activo',
     FOREIGN KEY (IdRol) REFERENCES Rol(IdRol)
 );
+ALTER TABLE Usuario MODIFY Estado VARCHAR(20) DEFAULT 'activo';
+
 
 CREATE TABLE Cliente (
     DniCliente VARCHAR(8) PRIMARY KEY,
