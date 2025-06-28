@@ -11,6 +11,5 @@ public interface UsuarioService {
     Usuario buscarPorId(Integer idUsuario);
     ResultadoResponse modificarUsuario(Usuario usuario);
     boolean eliminarUsuario(Integer idUsuario);
-    List<Usuario> findByRol_Descripcion(String descripcion);
-    
+    List<Usuario> findByRol_Descripcion(String descripcion); 
 }

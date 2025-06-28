@@ -16,13 +16,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
+    
+   
 	@Override
 	public ResultadoResponse crearUsuario(Usuario usuario) {
 		try {
+			
+			 if (usuario.getEstado() == null || usuario.getEstado().isBlank()) {
+		            usuario.setEstado("activo");
+		        }
+			 
 			Usuario registrado = usuarioRepository.save(usuario);
 
-			String mensaje = String.format("Usuario con numero %s registrado", registrado.getIdUsuario());
+			String mensaje = String.format("Usuario con numero %s registrado correctamente", registrado.getIdUsuario());
 			return new ResultadoResponse(true, mensaje);
 
 		}catch (Exception ex) {
@@ -33,13 +39,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public List<Usuario> listarUsuarios() {
-		return usuarioRepository.findAllByOrderByIdUsuarioDesc();
+	    return usuarioRepository.findByEstadoOrderByIdUsuarioDesc("activo");
 	}
 
-	@Override
-	public Usuario buscarPorId(Integer idUsuario) {
-		return usuarioRepository.findById(idUsuario).orElseThrow();
-	}
 
 	@Override
 	public ResultadoResponse modificarUsuario(Usuario usuario) {
@@ -56,18 +58,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public boolean eliminarUsuario(Integer idUsuario) {
-		try {
-	        if (usuarioRepository.existsById(idUsuario)) {
-	        	usuarioRepository.deleteById(idUsuario);
+	    try {
+	        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+	        if (usuario != null) {
+	            usuario.setEstado("inhabilitado");
+	            usuarioRepository.save(usuario);
 	            return true;
-	        } else {
-	            return false;
 	        }
+	        return false;
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	        return false;
 	    }
 	}
+
 
 	@Override
 	public List<Usuario> findByRol_Descripcion(String descripcion){
@@ -78,6 +82,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public Usuario Autenticacion(Usuario filter) {
 		
 		return usuarioRepository.findByCorreoAndContrasena(filter.getCorreo(), filter.getContrasena());
+	}
+
+	@Override
+	public Usuario buscarPorId(Integer idUsuario) {
+		return usuarioRepository.findById(idUsuario).orElseThrow();
 	}
 	
 }
