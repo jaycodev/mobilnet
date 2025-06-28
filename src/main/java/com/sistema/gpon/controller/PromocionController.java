@@ -79,4 +79,17 @@ public class PromocionController {
         flash.addFlashAttribute("alert", toast);
         return "redirect:/promociones";
     }
+    
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable Integer id, RedirectAttributes flash) {
+        boolean eliminado = promocionService.eliminarPromocion(id);
+        if (eliminado) {
+            flash.addFlashAttribute("alert", Alert.sweetToast("Promoción eliminada correctamente", "success", 3000));
+        } else {
+            flash.addFlashAttribute("alert", Alert.sweetAlertError("No se pudo eliminar la promoción."));
+        }
+        return "redirect:/promociones";
+    }
+
+    
 }
