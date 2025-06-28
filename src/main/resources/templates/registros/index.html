@@ -1,252 +1,91 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layoutBase('Registro VentaRUC10', 'Nuevo', ~{::contenido})">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layoutBase('registros', 'Listado', ~{::contenido})}">
+
 <th:block th:fragment="contenido">
-    <div class="card shadow-sm p-4">
-        <h5 class="mb-4">
-            <i class="fa-solid fa-id-card me-1"></i>
-            Registro de VentaRUC10
-        </h5>
-
-        <form id="multiStepForm" method="post" th:object="${ruc10DTO}" th:action="@{/registros/create}">
-            <!-- Paso 1: Datos de los trabajadores -->
-            <div class="form-step active">
-                <h6 class="mb-3">Datos de los trabajadores</h6>
-                <div class="mb-3">
-                    <label for="supervisorNombre" class="form-label">Supervisor <span class="text-danger">*</span></label>
-                    <select class="form-select" id="supervisorNombre" required th:field="*{idUsuarioSupervisor}">
-                        <option th:value="" disabled selected>Seleccionar</option>
-                        <option th:each="x : ${Supervisor}" th:value="${x.idUsuario}" th:text="${x.nombre + ' ' + x.apellido}"></option>
-                    </select>
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+                    <h5>
+                        <i class="fa-solid fa-gift me-1"></i>
+                        Tabla RUC10
+                    </h5>
+                    <a th:href="@{/registros/nuevo}" class="btn btn-primary btn-sm mb-0">
+                        <i class="fas fa-plus me-1"></i>
+                        Nueva
+                    </a>
                 </div>
-                <div class="mb-3">
-                    <label for="consultorNombre" class="form-label">Consultor <span class="text-danger">*</span></label>
-                    <select class="form-select" id="consultorNombre" required th:field="*{idUsuarioConsulto}">
-                        <option th:value="" disabled selected>Seleccionar</option>
-                        <option th:each="x : ${Consultor}" th:value="${x.idUsuario}" th:text="${x.nombre + ' ' + x.apellido}"></option>
-                    </select>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary next-step mb-0">
-                        Siguiente <i class="fas fa-arrow-right ms-1"></i>
-                    </button>
+                <div class="card-body px-4 pt-0 pb-2"> <!-- AQUI se agrega px-4 para espacio lateral -->
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0 text-center"> <!-- AQUI text-center -->
+                            <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Consultor</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Supervisor</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Cliente</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Plan</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Promoción</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estado</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">IdSolicitud</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">IdInstalacion</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">IdCarrito</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Observación</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="x : ${listaruc}">
+                                <td><p class="text-sm text-dark mb-0" th:text="${x.idRegistro}"></p></td>
+                                <td><p class="text-sm text-dark mb-0" th:text="${x.usuarioConsulto.nombre}"></p></td>
+                                <td><p class="text-sm text-dark mb-0" th:text="${x.usuarioSupervisor.nombre + ' ' + x.usuarioSupervisor.apellido}"></p></td>
+                                <td><p class="text-sm text-dark mb-0" th:text="${x.cliente.nombre + ' ' + x.cliente.apellido}"></p></td>
+                                <td><p class="text-sm text-dark mb-0" th:text="${x.plan.descripcion}"></p></td>
+                                <td><p class="text-sm text-dark mb-0" th:text="${x.promocion.descripcion}"></p></td>
+                                <td><p class="text-sm text-dark mb-0" th:text="${x.estado.descripcion}"></p></td>
+                                <td><p class="text-sm text-dark mb-0" th:text="${x.idSolicitud}"></p></td>
+                                <td><p class="text-sm text-dark mb-0" th:text="${x.idInstalacion}"></p></td>
+                                <td><p class="text-sm text-dark mb-0" th:text="${x.idCarrito}"></p></td>
+                                <td><p class="text-sm text-dark mb-0" th:text="${x.observacion}"></p></td>
+                                <td>
+                                    <a class="btn btn-sm btn-primary me-1 mb-0" title="Editar">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-danger me-1 mb-0" title="Eliminar"
+                                       onclick="return confirm('¿Seguro que quieres eliminar este registro?');">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-info me-1 mb-0" title="Ver Cronograma">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-secondary me-1 mb-0" title="Ver DNI Cliente">
+                                        <i class="fa-solid fa-id-card"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-warning me-1 mb-0" title="Contacto Principal">
+                                        <i class="fa-solid fa-user"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-warning mb-0" title="Contacto Secundario">
+                                        <i class="fa-solid fa-user-pen"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(listaruc)}">
+                                <td colspan="12" class="text-center text-muted py-4">
+                                    No hay registros disponibles.
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
-            <!-- Paso 2: Datos del cliente -->
-            <div class="form-step">
-                <h6 class="mb-3">Datos del cliente</h6>
-                  <div class="mb-3">
-                      <label for="dniCLiente" class="form-label">DNI <span class="text-danger">*</span></label>
-                      <input type="number" class="form-control" id="dniCLiente" required th:field="*{dniCliente}"/>
-                  </div>
-                  <div class="mb-3">
-                      <label for="Nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="Nombre" required th:field="*{nombreCliente}" />
-                  </div>
-                  <div class="mb-3">
-                      <label for="Apellido" class="form-label">Apellido <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="Apellido" required th:field="*{apellidoCliente}"/>
-                  </div>
-                  <div class="mb-3">
-                      <label for="Telefono" class="form-label">Teléfono <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="Telefono" required th:field="*{telefonoCliente}"/>
-                  </div>
-                  <div class="mb-3">
-                      <label for="ruc" class="form-label">RUC <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="ruc" th:field="*{rucCliente}" required minlength="11" maxlength="11" pattern="\d{11}" title="Ingrese 11 dígitos numéricos" />
-                  </div>
-                  <div class="d-flex justify-content-end">
-                      <button type="button" class="btn btn-secondary prev-step me-1 mb-0">
-                          <i class="fas fa-arrow-left me-1"></i> Anterior
-                      </button>
-                      <button type="button" class="btn btn-primary next-step mb-0">
-                          Siguiente <i class="fas fa-arrow-right ms-1"></i>
-                      </button>
-                  </div>
-            </div>
-
-            <!-- Paso 3: Representante legal -->
-            <div class="form-step">
-                <h6 class="mb-3">Representante legal</h6>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="repNombre" class="form-label">Nombre Contacto <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="repNombre" required th:field="*{nombreContacto}"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label for="repDNI" class="form-label">DNI <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" id="repDNI" th:field="*{dniContacto}" required minlength="8" maxlength="8" pattern="\d{8}" />
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="repCorreo" class="form-label">Correo <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" id="repCorreo" th:field="*{correoContacto}" placeholder="correo@ejemplo.com" required />
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="repTelefono" class="form-label">Teléfono <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" id="repTelefono" th:field="*{telefonoContacto}" required minlength="9" maxlength="9" pattern="\d{9}" />
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-secondary prev-step me-1 mb-0">
-                        <i class="fas fa-arrow-left me-1"></i> Anterior
-                    </button>
-                    <button type="button" class="btn btn-primary next-step mb-0">
-                        Siguiente <i class="fas fa-arrow-right ms-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Paso 4: Contacto autorizado -->
-            <div class="form-step">
-                <h6 class="mb-3">Contacto autorizado</h6>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="contactoNombre" class="form-label">Nombre Completo <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="*{nombreContactoSec}" id="contactoNombre" required />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label for="contactoDNI" class="form-label">DNI <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" th:field="*{dniContactoSec}" id="contactoDNI" required minlength="8" maxlength="8" pattern="\d{8}" />
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="contactoCorreo" class="form-label">Correo <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" th:field="*{correoContactoSec}" id="contactoCorreo" required />
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="contactoTelefono" class="form-label">Teléfono <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" th:field="*{telefonoContactoSec}" id="contactoTelefono" required minlength="9" maxlength="9" pattern="\d{9}" />
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-secondary prev-step me-1 mb-0">
-                        <i class="fas fa-arrow-left me-1"></i> Anterior
-                    </button>
-                    <button type="button" class="btn btn-primary next-step mb-0">
-                        Siguiente <i class="fas fa-arrow-right ms-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Paso 5: Servicio contratado -->
-            <div class="form-step">
-                <h6 class="mb-3">Servicio contratado</h6>
-                <div class="mb-3">
-                    <label for="planServicio" class="form-label">Plan <span class="text-danger">*</span></label>
-                    <select class="form-select" id="planServicio" required th:field="*{idPlan}" >
-                        <option th:value="" disabled selected>Seleccionar</option>
-                        <option th:each="x : ${plam}" th:value="${x.idPlan}" th:text="${x.descripcion}"></option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="promocionServicio" class="form-label">Promoción</label>
-                    <select class="form-select" id="promocionServicio" th:field="*{idPromocion}" >
-                        <option th:value="" disabled selected>Seleccionar</option>
-                        <option th:each="x : ${promocion}" th:value="${x.idPromocion}" th:text="${x.descripcion}"></option>
-                    </select>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-secondary prev-step me-1 mb-0">
-                        <i class="fas fa-arrow-left me-1"></i> Anterior
-                    </button>
-                    <button type="button" class="btn btn-primary next-step mb-0">
-                        Siguiente <i class="fas fa-arrow-right ms-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Paso 6: Cronograma -->
-            <div class="form-step">
-                <h6 class="mb-3">Cronograma</h6>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="Distrito" class="form-label">Distrito <span class="text-danger">*</span></label>
-                        <select class="form-select" id="Distrito" th:field="*{nombreDistrito}" >
-                            <option th:value="" disabled selected>Seleccionar</option>
-                            <option th:each="x : ${distrito}" th:value="${x.nombreDistrito}" th:text="${x.nombreDistrito}"></option>
-                        </select>                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label for="Sector" class="form-label">Sector <span class="text-danger">*</span></label>
-                        <select class="form-select" id="Sector" th:field="*{nombreSector}" >
-                            <option th:value="" disabled selected>Seleccionar</option>
-                            <option th:each="x : ${sector}" th:value="${x.idSector}" th:text="${x.nombreSector}"></option>
-                        </select>                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="referencia" class="form-label">Referencia <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="*{referencia}"  id="referencia" required />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="rangoHorario" class="form-label">Rango horario <span class="text-danger">*</span></label>
-                        <select class="form-select" id="rangoHorario" th:field="*{rangoInstalacion}"  required>
-                            <option value="">--SELECCIONA--</option>
-                            <option value="mañana">09:00 a 13:00 hr</option>
-                            <option value="tarde">13:00 a 18:00 hr</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="Observaciones" class="form-label">Observaciones <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" th:field="*{observacion}"  id="Observaciones" required />
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-secondary prev-step me-1 mb-0">
-                        <i class="fas fa-arrow-left me-1"></i> Anterior
-                    </button>
-                    <button type="submit" class="btn btn-success mb-0">
-                        <i class="fas fa-paper-plane me-1"></i> Enviar
-                    </button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
-
-    <script>
-        const steps = document.querySelectorAll(".form-step");
-        let currentStep = 0;
-
-        document.querySelectorAll(".next-step").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                if (validarPaso(currentStep)) {
-                    steps[currentStep].classList.remove("active");
-                    currentStep++;
-                    steps[currentStep].classList.add("active");
-                }
-            });
-        });
-
-        document.querySelectorAll(".prev-step").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                steps[currentStep].classList.remove("active");
-                currentStep--;
-                steps[currentStep].classList.add("active");
-            });
-        });
-
-        document.getElementById("multiStepForm").addEventListener("submit", function (e) {
-            e.preventDefault();
-            alert("Formulario enviado correctamente 🎉");
-            this.reset();
-            steps[currentStep].classList.remove("active");
-            currentStep = 0;
-            steps[currentStep].classList.add("active");
-        });
-
-        function validarPaso(paso) {
-            const inputs = steps[paso].querySelectorAll("input, select, textarea");
-            for (let input of inputs) {
-                if (!input.checkValidity()) {
-                    input.classList.add("is-invalid");
-                    return false;
-                } else {
-                    input.classList.remove("is-invalid");
-                }
-            }
-            return true;
-        }
-    </script>
 </th:block>
+
+<div th:if="${alert}">
+    <div th:utext="${alert}"></div>
+</div>
+
 </html>
