@@ -50,11 +50,16 @@ public class RegistroRUC10Controller {
     @Autowired
     private  EstadoRegistroImpl _EstadoRegistro;
 
-
-    @GetMapping({"", "/" ,"index"})
-    public String index(HttpServletRequest request, Model model) {
+    @GetMapping({"", "/"})
+    public String index(HttpServletRequest request,Model model){
         model.addAttribute("uri", request.getRequestURI());
 
+        model.addAttribute("listaruc",_registroRUC10Service.listarRegistros());
+        return "registros/index";
+    }
+
+    @GetMapping("/nuevo")
+    public String nuevo( Model model) {
         model.addAttribute("Consultor", _usuarioService.findByRol_Descripcion("Consultor"));
         model.addAttribute("Supervisor", _usuarioService.findByRol_Descripcion("Supervisor"));
         model.addAttribute("promocion", _promocionService.listarPromociones());
@@ -63,7 +68,7 @@ public class RegistroRUC10Controller {
         model.addAttribute("distrito" , _disDistritoService.listarDistritos());
         model.addAttribute("ruc10DTO" , new RucDTO());
 
-        return "registros/index";
+        return "registros/nuevo";
     }
 
     @PostMapping("/create")
@@ -167,11 +172,5 @@ public class RegistroRUC10Controller {
         }
 
         return "redirect:/menu";
-    }
-
-    @GetMapping("/listar")
-    public String listar(Model model){
-        model.addAttribute("listaruc",_registroRUC10Service.listarRegistros());
-        return "registros/listar";
     }
 }
