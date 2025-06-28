@@ -58,7 +58,7 @@
 				<div th:if="${session.mostrarRegistro}">
 					<li class="nav-item">
 						<a class="nav-link" th:classappend="${uri == '/registros' ? 'active' : ''}"
-							th:href="@{/registros}">
+							th:href="@{/registros/listar}">
 							<div
 								class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
 								<i class="fa-solid fa-id-card text-dark text-sm opacity-10"></i>
@@ -478,5 +478,7 @@
 	<script src="/js/argon-dashboard.min.js?v=2.1.0"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
-
+<div th:if="${alert}">
+	<div th:utext="${alert}"></div>
+</div>
 </html>
