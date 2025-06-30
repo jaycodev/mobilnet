@@ -7,6 +7,7 @@ import com.sistema.gpon.service.impl.UsuarioServiceImpl;
 import com.sistema.gpon.utils.Alert;
 import com.sistema.gpon.utils.ResultadoResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import javax.swing.text.Document;
@@ -110,7 +111,9 @@ public class CuentaController {
     }
 
     @GetMapping("/perfil")
-    public String perfil(HttpSession session, Model model, RedirectAttributes flash) {
+    public String perfil(HttpServletRequest request, HttpSession session, Model model, RedirectAttributes flash) {
+        model.addAttribute("uri", request.getRequestURI());
+
         Integer idUsuario = (Integer) session.getAttribute("idUsuario");
 
         if (idUsuario == null) {
@@ -135,7 +138,6 @@ public class CuentaController {
                                    @RequestParam(required = false) String nuevaContrasena,
                                    HttpSession session,
                                    RedirectAttributes flash) {
-
         Integer idUsuario = (Integer) session.getAttribute("idUsuario");
 
         if (idUsuario == null) {
@@ -170,6 +172,4 @@ public class CuentaController {
         flash.addFlashAttribute("alert", Alert.sweetToast("Perfil actualizado correctamente", "success", 3000));
         return "redirect:/cuenta/perfil";
     }
-
-
 }
