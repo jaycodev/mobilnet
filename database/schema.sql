@@ -14,11 +14,9 @@ CREATE TABLE Usuario (
     Apellido VARCHAR(255) NOT NULL,
     Correo VARCHAR(255) NOT NULL,
     Contrasena VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-    Estado ENUM('activo', 'inhabilitado') DEFAULT 'activo',
+    Estado VARCHAR(20) DEFAULT 'activo',
     FOREIGN KEY (IdRol) REFERENCES Rol(IdRol)
 );
-ALTER TABLE Usuario MODIFY Estado VARCHAR(20) DEFAULT 'activo';
-
 
 CREATE TABLE Cliente (
     DniCliente VARCHAR(8) PRIMARY KEY,
@@ -52,6 +50,7 @@ CREATE TABLE EstadoRegistro (
     IdEstado INT PRIMARY KEY AUTO_INCREMENT,
     Descripcion VARCHAR(30) NOT NULL
 );
+
 CREATE TABLE ContactoPrincipal (
     IdContactoPrincipal INT PRIMARY KEY AUTO_INCREMENT,
     NombreContacto VARCHAR(30) NOT NULL,
@@ -87,11 +86,10 @@ CREATE TABLE RegistroRUC10 (
     IdPromocion INT,
     IdCronograma INT NOT NULL,
     IdEstado INT DEFAULT 1,
-   IdSolicitud VARCHAR(255) DEFAULT 'ninguno',
-     IdInstalacion VARCHAR(255)  DEFAULT 'ninguno',
-     IdCarrito VARCHAR(255)  DEFAULT 'ninguno',
-     Observacion VARCHAR(255),
-
+	IdSolicitud VARCHAR(255) DEFAULT 'ninguno',
+	IdInstalacion VARCHAR(255)  DEFAULT 'ninguno',
+	IdCarrito VARCHAR(255)  DEFAULT 'ninguno',
+	Observacion VARCHAR(255),
     FOREIGN KEY (IdUsuarioConsulto) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (IdUsuarioSupervisor) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (DniCliente) REFERENCES Cliente(DniCliente),
