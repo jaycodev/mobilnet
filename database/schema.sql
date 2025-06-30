@@ -14,7 +14,7 @@ CREATE TABLE Usuario (
     Apellido VARCHAR(255) NOT NULL,
     Correo VARCHAR(255) NOT NULL,
     Contrasena VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-    Estado VARCHAR(20) DEFAULT 'activo',
+    Estado BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (IdRol) REFERENCES Rol(IdRol)
 );
 
@@ -33,8 +33,12 @@ CREATE TABLE Plan (
 
 CREATE TABLE Promocion (
     IdPromocion INT PRIMARY KEY AUTO_INCREMENT,
-    Descripcion VARCHAR(255) NOT NULL
+    Descripcion VARCHAR(255) NOT NULL,
+    Estado BOOLEAN NOT NULL DEFAULT TRUE
 );
+
+
+
 
 CREATE TABLE Distrito (
     IdDistrito INT PRIMARY KEY AUTO_INCREMENT,

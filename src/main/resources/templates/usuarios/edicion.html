@@ -15,14 +15,6 @@
             <input type="hidden" th:field="*{idUsuario}" />
             <input type="hidden" th:field="*{estado}" />
 
-            <!-- Estado visualizado como badge -->
-            <div class="col-12 mb-3">
-                <label class="form-label fw-bold">Estado del usuario:</label><br />
-                <span th:text="${usuario.estado}"
-                      th:classappend="${usuario.estado == 'activo'} ? 'badge bg-success' : 'badge bg-secondary'">
-                </span>
-            </div>
-
             <!-- Nombre -->
             <div class="col-md-6 mb-4">
                 <label for="nombre" class="form-label fw-bold">Nombre <span class="text-danger">*</span></label>
