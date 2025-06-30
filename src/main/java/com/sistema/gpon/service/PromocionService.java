@@ -11,4 +11,5 @@ public interface PromocionService {
     Promocion buscarPorId(Integer idPromocion);
     ResultadoResponse actualizarPromocion(Promocion promocion);
     boolean eliminarPromocion(Integer idPromocion);
+    ResultadoResponse cambiarEstado(Integer Id);
 }

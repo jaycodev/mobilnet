@@ -19,7 +19,12 @@ public class PromocionServiceImpl implements PromocionService {
 
 	@Override
 	public ResultadoResponse crearPromocion(Promocion promocion) {		
-		try {			
+		try {	
+			
+			if (promocion.getEstado() == null || promocion.getEstado() == false) {
+				promocion.setEstado(true);
+	        }
+			
 			Promocion registrada = promocionRepository.save(promocion);
 			
 			String mensaje = String.format("Promocion nueva registrada correctamente", registrada);		
@@ -67,6 +72,29 @@ public class PromocionServiceImpl implements PromocionService {
 	        ex.printStackTrace();
 	        return false; 
 	    }
+	}
+	
+	public Promocion getOne(Integer id) {
+		return promocionRepository.findById(id).orElseThrow();
+	}
+
+	@Override
+	public ResultadoResponse cambiarEstado(Integer id) {
+		Promocion promo = this.getOne(id);
+		String accion = promo.getEstado() ? "desactivado" : "activado";
+
+		promo.setEstado(!promo.getEstado());
+
+		try {
+			Promocion registrada = promocionRepository.save(promo);
+
+			String mensaje = String.format("Promocion con código %s %s", registrada.getIdPromocion(), accion);
+			return new ResultadoResponse(true, mensaje);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return new ResultadoResponse(false, "Error al cambiar de estado: " + ex.getMessage());
+		}
 	}
 
 }
