@@ -5,6 +5,7 @@ import com.sistema.gpon.repository.UsuarioRepository;
 import com.sistema.gpon.service.UsuarioService;
 import com.sistema.gpon.service.impl.UsuarioServiceImpl;
 import com.sistema.gpon.utils.Alert;
+import com.sistema.gpon.utils.ResultadoResponse;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -127,4 +128,48 @@ public class CuentaController {
         model.addAttribute("usuario", usuario);
         return "cuenta/perfil";
     }
+    
+    @PostMapping("/actualizar")
+    public String actualizarPerfil(@ModelAttribute Usuario formUsuario,
+                                   @RequestParam String contrasenaActual,
+                                   @RequestParam(required = false) String nuevaContrasena,
+                                   HttpSession session,
+                                   RedirectAttributes flash) {
+
+        Integer idUsuario = (Integer) session.getAttribute("idUsuario");
+
+        if (idUsuario == null) {
+            flash.addFlashAttribute("errorInicio", Alert.sweetAlertError("Debe iniciar sesión para actualizar el perfil"));
+            return "redirect:/cuenta/login";
+        }
+
+        Usuario usuarioExistente = usuarioService.buscarPorId(idUsuario);
+
+        if (usuarioExistente == null) {
+            flash.addFlashAttribute("errorInicio", Alert.sweetAlertError("No se encontró el usuario"));
+            return "redirect:/cuenta/login";
+        }
+
+        if (!usuarioExistente.getContrasena().equals(contrasenaActual)) {
+            flash.addFlashAttribute("alert", Alert.sweetAlertError("La contraseña actual es incorrecta"));
+            return "redirect:/cuenta/perfil";
+        }
+
+        usuarioExistente.setCorreo(formUsuario.getCorreo());
+        if (nuevaContrasena != null && !nuevaContrasena.isBlank()) {
+            usuarioExistente.setContrasena(nuevaContrasena);
+        }
+
+        ResultadoResponse resultado = usuarioService.modificarUsuario(usuarioExistente);
+
+        if (!resultado.success) {
+            flash.addFlashAttribute("alert", Alert.sweetAlertError(resultado.mensaje));
+            return "redirect:/cuenta/perfil";
+        }
+
+        flash.addFlashAttribute("alert", Alert.sweetToast("Perfil actualizado correctamente", "success", 3000));
+        return "redirect:/cuenta/perfil";
+    }
+
+
 }
