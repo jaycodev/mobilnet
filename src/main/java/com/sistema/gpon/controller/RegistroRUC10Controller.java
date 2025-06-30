@@ -4,6 +4,7 @@ import com.sistema.gpon.model.RucDTO;
 import com.sistema.gpon.model.*;
 import com.sistema.gpon.service.impl.*;
 import com.sistema.gpon.utils.Alert;
+import com.sistema.gpon.utils.ResultadoResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/registros")
@@ -54,9 +57,18 @@ public class RegistroRUC10Controller {
     public String index(HttpServletRequest request,Model model){
         model.addAttribute("uri", request.getRequestURI());
 
-        model.addAttribute("listaruc",_registroRUC10Service.listarRegistros());
+        model.addAttribute("listaruc",_registroRUC10Service.listarRegistrosActivos(1));
+//        model.addAttribute("listaruc",_registroRUC10Service.listarRegistros());
         return "registros/index";
     }
+
+    @PostMapping("/filtrar")
+    public String filtrar(HttpServletRequest request, Model model, @RequestParam("estado") int estado) {
+        model.addAttribute("uri", request.getRequestURI());
+        model.addAttribute("listaruc", _registroRUC10Service.listarRegistrosActivos(estado));
+        return "registros/index";
+    }
+
 
     @GetMapping("/nuevo")
     public String nuevo( Model model) {
@@ -172,50 +184,59 @@ public class RegistroRUC10Controller {
 
         }
 
-        return "redirect:/";
+        return "redirect:/registros";
     }
 
-
-
-
-
-
-
     @GetMapping("/actualizar/{id}")
-    public String Actualizar( @PathVariable int id,Model model) {
+    public String Actualizar(@PathVariable int id, Model model) {
         model.addAttribute("Consultor", _usuarioService.findByRol_Descripcion("Consultor"));
         model.addAttribute("Supervisor", _usuarioService.findByRol_Descripcion("Supervisor"));
         model.addAttribute("promocion", _promocionService.listarPromociones());
         model.addAttribute("plam", _planService.listarTodoPlanes());
-        model.addAttribute("sector" , _seSectorService.listarSectores() );
-        model.addAttribute("distrito" , _disDistritoService.listarDistritos());
+        model.addAttribute("sector", _seSectorService.listarSectores());
+        model.addAttribute("distrito", _disDistritoService.listarDistritos());
 
-        RegistroRUC10 registroRUC10=_registroRUC10Service.buscarPorId(id);
+        RegistroRUC10 registroRUC10 = _registroRUC10Service.buscarPorId(id);
         Cronograma cronograma = _CronogramaService.buscarPorId(registroRUC10.getCronograma().getIdCronograma());
-        Cliente cliente=_ClienteService.buscarPorDni(registroRUC10.getCliente().getDniCliente());
-        ContactoPrincipal contactoPrincipal=_ContactoPrincipalService.buscarPorId(registroRUC10.getContactoPrincipal().getIdContactoPrincipal());
-        ContactoSecundario contactoSecundario=_ContactoSecundarioService.buscarPorId(registroRUC10.getContactoSecundario().getIdContactoSecundario());
-        Usuario consultor= _usuarioService.buscarPorId(registroRUC10.getUsuarioConsulto().getIdUsuario());
-        Usuario supervisor= _usuarioService.buscarPorId(registroRUC10.getUsuarioSupervisor().getIdUsuario());
-        Plan plan= _planService.buscarPorId(registroRUC10.getPlan().getIdPlan());
-        Promocion promocion=_promocionService.buscarPorId(registroRUC10.getPromocion().getIdPromocion());
+        Cliente cliente = _ClienteService.buscarPorDni(registroRUC10.getCliente().getDniCliente());
+        ContactoPrincipal contactoPrincipal = _ContactoPrincipalService.buscarPorId(registroRUC10.getContactoPrincipal().getIdContactoPrincipal());
+        ContactoSecundario contactoSecundario = _ContactoSecundarioService.buscarPorId(registroRUC10.getContactoSecundario().getIdContactoSecundario());
+        Usuario consultor = _usuarioService.buscarPorId(registroRUC10.getUsuarioConsulto().getIdUsuario());
+        Usuario supervisor = _usuarioService.buscarPorId(registroRUC10.getUsuarioSupervisor().getIdUsuario());
+        Plan plan = _planService.buscarPorId(registroRUC10.getPlan().getIdPlan());
+        Promocion promocion = _promocionService.buscarPorId(registroRUC10.getPromocion().getIdPromocion());
 
 
-        RucDTOUpdate ruc10DTO= new RucDTOUpdate(contactoPrincipal.getNombreContacto(),contactoPrincipal.getDni(),
-                contactoPrincipal.getCorreo(),contactoPrincipal.getTelefono(),contactoSecundario.getNombreContacto(),
-                contactoSecundario.getDni(),contactoSecundario.getCorreo(),contactoSecundario.getTelefono(),cronograma.getRangoInstalacion(),cronograma.getUbicacionInstalacion(),
-                cronograma.getFechaInstalacion(),consultor.getIdUsuario(),supervisor.getIdUsuario(),plan.getIdPlan(),promocion.getIdPromocion(),registroRUC10.getObservacion(),cliente.getDniCliente(),
-                cliente.getRuc(),cliente.getNombre(),cliente.getApellido(),cliente.getTelefono());
 
-//                fecha instalacion , direccion de instalacion ,
-        model.addAttribute("ruc10DTO" , new RucDTO());
+        RucDTOUpdate ruc10DTO = new RucDTOUpdate(
+                registroRUC10.getIdRegistro(),
+                contactoPrincipal.getNombreContacto(), contactoPrincipal.getDni(),
+                contactoPrincipal.getCorreo(), contactoPrincipal.getTelefono(),
+                contactoSecundario.getNombreContacto(), contactoSecundario.getDni(),
+                contactoSecundario.getCorreo(), contactoSecundario.getTelefono(),
+                cronograma.getRangoInstalacion(), cronograma.getUbicacionInstalacion(),
+                cronograma.getFechaInstalacion(), // ✅ sin formatear
+                consultor.getIdUsuario(), supervisor.getIdUsuario(),
+                plan.getIdPlan(), promocion.getIdPromocion(),
+                registroRUC10.getObservacion(), cliente.getDniCliente(),
+                cliente.getRuc(), cliente.getNombre(), cliente.getApellido(),
+                cliente.getTelefono()
+        );
+        ruc10DTO.setFechaInstalacion(cronograma.getFechaInstalacion());
+        // 🔍 Verifica si llega el valor correctamente
+        System.out.println("📅 Fecha de instalación: " + cronograma.getFechaInstalacion());
+
+        model.addAttribute("ruc10DTOActualizar", ruc10DTO);
 
         return "registros/actualizar";
     }
 
+
+
+
     @PostMapping("/save")
     @Transactional
-    public String save(HttpServletRequest request, Model model , @ModelAttribute RucDTO ruc10DTO , RedirectAttributes flash) {
+    public String save(HttpServletRequest request, Model model , @ModelAttribute RucDTOUpdate ruc10DTO , RedirectAttributes flash) {
         model.addAttribute("uri", request.getRequestURI());
 
         model.addAttribute("Consultor", _usuarioService.findByRol_Descripcion("Consultor"));
@@ -237,9 +258,10 @@ public class RegistroRUC10Controller {
             System.out.println("Correo Contacto Secundario: " + ruc10DTO.getCorreoContactoSec());
             System.out.println("Teléfono Contacto Secundario: " + ruc10DTO.getTelefonoContactoSec());
 
-            System.out.println("Ubicación Distrito: " + ruc10DTO.getNombreDistrito());
-            System.out.println("Ubicación Sector: " + ruc10DTO.getNombreSector());
-            System.out.println("Referencia: " + ruc10DTO.getReferencia());
+//            System.out.println("Ubicación Distrito: " + ruc10DTO.getNombreDistrito());
+//            System.out.println("Ubicación Sector: " + ruc10DTO.getNombreSector());
+//            System.out.println("Referencia: " + ruc10DTO.getReferencia());
+            System.out.println("Referencia: " + ruc10DTO.getLugarInstalacion());
             System.out.println("Rango de Instalación: " + ruc10DTO.getRangoInstalacion());
 
             System.out.println("DNI Cliente: " + ruc10DTO.getDniCliente());
@@ -255,7 +277,11 @@ public class RegistroRUC10Controller {
             System.out.println("Observación: " + ruc10DTO.getObservacion());
             System.out.println("=============================================");
 
+
+            RegistroRUC10 registroRUC10=_registroRUC10Service.buscarPorId(ruc10DTO.getIdRegistro());
+
             ContactoPrincipal contactoPrincipal=new ContactoPrincipal();
+            contactoPrincipal.setIdContactoPrincipal(registroRUC10.getContactoPrincipal().getIdContactoPrincipal());
             contactoPrincipal.setNombreContacto(ruc10DTO.getNombreContacto());
             contactoPrincipal.setDni(ruc10DTO.getDniContacto());
             contactoPrincipal.setCorreo(ruc10DTO.getCorreoContacto());
@@ -263,6 +289,7 @@ public class RegistroRUC10Controller {
             contactoPrincipal = _ContactoPrincipalService.crearContactoPrin(contactoPrincipal);
 
             ContactoSecundario contactoSecundario=new ContactoSecundario();
+            contactoSecundario.setIdContactoSecundario(registroRUC10.getContactoSecundario().getIdContactoSecundario());
             contactoSecundario.setNombreContacto(ruc10DTO.getNombreContactoSec());
             contactoSecundario.setDni(ruc10DTO.getDniContactoSec());
             contactoSecundario.setCorreo(ruc10DTO.getCorreoContactoSec());
@@ -270,19 +297,14 @@ public class RegistroRUC10Controller {
             contactoSecundario = _ContactoSecundarioService.creaContactoSec(contactoSecundario);
 
             Cronograma cronograma= new Cronograma();
-            cronograma.setUbicacionInstalacion(
-                    ruc10DTO.getNombreDistrito() + " " +         // Ej: JIRON PARURO
-                            "NRO." + ruc10DTO.getNumero() + " " +        // Ej: NRO.1132
-                            "DPTO/INT " + ruc10DTO.getInterior() + " " + // Ej: DPTO/INT 114
-                            ruc10DTO.getObservacion() + " " +            // Ej: PISO 1 URB.AZCONA
-                            "(" +
-                            "LIMA-" + ruc10DTO.getDepartamento() + "-" + ruc10DTO.getProvincia() +
-                            ")"
-            );
+            cronograma.setIdCronograma(registroRUC10.getCronograma().getIdCronograma());
+            cronograma.setUbicacionInstalacion(ruc10DTO.getLugarInstalacion());
             cronograma.setRangoInstalacion(ruc10DTO.getRangoInstalacion());
+            cronograma.setFechaInstalacion(ruc10DTO.getFechaInstalacion());
             cronograma = _CronogramaService.crearCronograma(cronograma);
 
             Cliente cliente= new Cliente();
+            cliente.setDniCliente(registroRUC10.getCliente().getDniCliente());
             cliente.setDniCliente(ruc10DTO.getDniCliente());
             cliente.setRuc(ruc10DTO.getRucCliente());
             cliente.setTelefono(ruc10DTO.getTelefonoCliente());
@@ -291,6 +313,7 @@ public class RegistroRUC10Controller {
             cliente = _ClienteService.crearClientenew(cliente);
 
             RegistroRUC10 rucDTO= new RegistroRUC10();
+            rucDTO.setIdRegistro(registroRUC10.getIdRegistro());
             rucDTO.setUsuarioConsulto(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioConsulto()));
             rucDTO.setUsuarioSupervisor(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioSupervisor()));
             rucDTO.setContactoPrincipal(contactoPrincipal);
@@ -304,7 +327,7 @@ public class RegistroRUC10Controller {
             _registroRUC10Service.crearRegistro(rucDTO);
 
 //            flash.addFlashAttribute("alert", Alert.sweetAlertSuccess("Se ingreso correctamente el registro"));
-            flash.addFlashAttribute("alert", Alert.sweetToast("Se creo correctamente la venta", "success", 5000));
+            flash.addFlashAttribute("alert", Alert.sweetToast("Se Actualizo correctamente la venta", "success", 5000));
 
         }catch (Exception e){
             e.printStackTrace();
@@ -314,6 +337,20 @@ public class RegistroRUC10Controller {
 
         }
 
-        return "redirect:/";
+        return "redirect:/registros";
     }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable int id , RedirectAttributes flash){
+
+        ResultadoResponse response= _registroRUC10Service.cambiarEstado(id);
+        flash.addFlashAttribute("alert", Alert.sweetToast("Registro eliminada correctamente", "success", 3000));
+
+
+
+        return "redirect:/registros";
+    }
+
+
+
 }

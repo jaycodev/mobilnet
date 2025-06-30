@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RucDTOUpdate {
+    private Integer idRegistro;
 
     // Datos del contacto principal
     private String nombreContacto;
@@ -39,7 +41,9 @@ public class RucDTOUpdate {
 //    private String departamento;
 //    private String provincia;
       private String lugarInstalacion;
-      private LocalDateTime fechaInstalacion;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate  fechaInstalacion;
 
     // Datos del registro
       private Integer idUsuarioConsulto;

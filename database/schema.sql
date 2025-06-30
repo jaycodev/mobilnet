@@ -72,8 +72,8 @@ CREATE TABLE Cronograma (
     IdCronograma INT PRIMARY KEY AUTO_INCREMENT,
     UbicacionInstalacion VARCHAR(100),
     RangoInstalacion VARCHAR(100),
-    FechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FechaInstalacion DATETIME
+    FechaRegistro DATE ,
+    FechaInstalacion DATE
 );
 
 CREATE TABLE RegistroRUC10 (
@@ -91,6 +91,7 @@ CREATE TABLE RegistroRUC10 (
      IdInstalacion VARCHAR(255)  DEFAULT 'ninguno',
      IdCarrito VARCHAR(255)  DEFAULT 'ninguno',
      Observacion VARCHAR(255),
+     activo int default 1,
 
     FOREIGN KEY (IdUsuarioConsulto) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (IdUsuarioSupervisor) REFERENCES Usuario(IdUsuario),
