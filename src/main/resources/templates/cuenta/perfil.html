@@ -1,140 +1,115 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layoutBase('Cuenta', 'Perfil', ~{::contenido})">
 <th:block th:fragment="contenido">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header pb-0">
-                    <div class="d-flex align-items-center">
-                        <p class="mb-0">Editar perfil</p>
-                        <button class="btn btn-primary btn-sm ms-auto">Configuración</button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <p class="text-sm">Información del usuario</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Nombre de usuario</label>
-                                <input class="form-control" type="text" value="lucky.jesse">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Correo electrónico</label>
-                                <input class="form-control" type="email" value="jesse@example.com">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Nombre</label>
-                                <input class="form-control" type="text" value="Jesse">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Apellido</label>
-                                <input class="form-control" type="text" value="Lucky">
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="horizontal dark">
-                    <p class="text-sm">Información de contacto</p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Dirección</label>
-                                <input class="form-control" type="text" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Ciudad</label>
-                                <input class="form-control" type="text" value="New York">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">País</label>
-                                <input class="form-control" type="text" value="United States">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Código postal</label>
-                                <input class="form-control" type="text" value="437300">
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="horizontal dark">
-                    <p class="text-sm">Sobre mí</p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Sobre mí</label>
-                                <input class="form-control" type="text" value="Un hermoso panel para Bootstrap 5. Es gratuito y de código abierto.">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card card-profile">
-                <img src="../assets/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top">
-                <div class="row justify-content-center">
-                    <div class="col-4 col-lg-4 order-lg-2">
-                        <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
-                            <a href="javascript:;">
-                                <img src="../assets/img/team-2.jpg" class="rounded-circle img-fluid border border-2 border-white">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
-                    <div class="d-flex justify-content-between">
-                        <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Conectar</a>
-                        <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i class="ni ni-collection"></i></a>
-                        <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Mensaje</a>
-                        <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i class="ni ni-email-83"></i></a>
-                    </div>
-                </div>
-                <div class="card-body pt-0">
-                    <div class="row">
-                        <div class="col">
-                            <div class="d-flex justify-content-center">
-                                <div class="d-grid text-center">
-                                    <span class="text-lg font-weight-bolder">22</span>
-                                    <span class="text-sm opacity-8">Amigos</span>
-                                </div>
-                                <div class="d-grid text-center mx-4">
-                                    <span class="text-lg font-weight-bolder">10</span>
-                                    <span class="text-sm opacity-8">Fotos</span>
-                                </div>
-                                <div class="d-grid text-center">
-                                    <span class="text-lg font-weight-bolder">89</span>
-                                    <span class="text-sm opacity-8">Comentarios</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center mt-4">
-                        <h5>
-                            Mark Davis<span class="font-weight-light">, 35</span>
-                        </h5>
-                        <div class="h6 font-weight-300">
-                            <i class="ni location_pin mr-2"></i>Bucarest, Rumania
-                        </div>
-                        <div class="h6 mt-4">
-                            <i class="ni business_briefcase-24 mr-2"></i>Gerente de Soluciones - Creative Tim
-                        </div>
-                        <div>
-                            <i class="ni education_hat mr-2"></i>Universidad de Ciencias Informáticas
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-md-8">
+			<form th:action="@{/cuenta/actualizar}" th:object="${usuario}" method="post">
+				<div class="card">
+					<div class="card-header pb-0">
+						<div class="d-flex align-items-center">
+							<p class="mb-0">Editar perfil</p>
+							<button type="submit" class="btn btn-primary btn-sm ms-auto">Guardar Cambios</button>
+						</div>
+					</div>
+					<div class="card-body">
+						<p class="text-sm">Información del usuario</p>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="form-control-label">Nombre</label>
+									<input class="form-control" type="text" th:field="*{nombre}" readonly disabled>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="form-control-label">Apellido</label>
+									<input class="form-control" type="text" th:field="*{apellido}" readonly disabled>
+								</div>
+							</div>
+							<div class="col-md-12 mt-3">
+								<div class="form-group">
+									<label class="form-control-label">Correo electrónico</label>
+									<input class="form-control" type="email" th:field="*{correo}" required>
+								</div>
+							</div>
+
+							<div class="col-md-12 mt-3">
+								<div class="form-group">
+									<label class="form-control-label">Contraseña actual <span
+											class="text-danger">*</span></label>
+									<div class="input-group">
+										<input class="form-control" type="password" name="contrasenaActual"
+											id="contrasenaActual" required>
+										<span class="input-group-text p-0">
+											<button type="button" class="btn btn-outline-secondary h-100 px-3 mb-0 border-0 d-flex align-items-center justify-content-center"
+												onclick="toggleVisibility('contrasenaActual')">
+												<i class="fa fa-eye"></i>
+											</button>
+										</span>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="col-md-12 mt-3">
+								<div class="form-group">
+									<label class="form-control-label">Nueva contraseña (opcional)</label>
+
+									<div class="input-group">
+										<input class="form-control" type="password" name="nuevaContrasena"
+											id="nuevaContrasena">
+										<span class="input-group-text p-0">
+											<button type="button" class="btn btn-outline-secondary h-100 px-3 mb-0 border-0 d-flex align-items-center justify-content-center"
+												onclick="toggleVisibility('nuevaContrasena')">
+												<i class="fa fa-eye"></i>
+											</button>
+										</span>
+									</div>
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<!-- Perfil lateral opcional -->
+		<div class="col-md-4">
+			<div class="card card-profile">
+				<img src="../assets/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top">
+				<div class="row justify-content-center">
+					<div class="col-4 col-lg-4 order-lg-2">
+						<div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
+							<a href="javascript:;">
+								<img src="../assets/img/team-2.jpg"
+									class="rounded-circle img-fluid border border-2 border-white">
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="card-body pt-0">
+					<div class="text-center mt-4">
+						<h5 th:text="${usuario.nombre} + ' ' + ${usuario.apellido}"></h5>
+						<div class="h6 font-weight-300" th:text="${usuario.correo}"></div>
+						<div class="h6 mt-4">
+							<i class="ni business_briefcase-24 mr-2"></i>
+							<span th:text="${usuario.rol.descripcion}">Rol</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		function toggleVisibility(inputId) {
+			const input = document.getElementById(inputId);
+			input.type = input.type === "password" ? "text" : "password";
+		}
+	</script>
+
 </th:block>
+
 </html>
