@@ -40,5 +40,4 @@ public class Usuario {
 	
 	@Column(name = "Estado", nullable = false)
 	private String estado;
-
 }

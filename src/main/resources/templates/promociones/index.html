@@ -7,9 +7,10 @@
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                     <h5>
                         <i class="fa-solid fa-gift me-1"></i>
-                        Tabla promociones
+                        Lista de promociones
                     </h5>
-                    <a th:href="@{/promociones/nuevo}" class="btn btn-primary btn-sm mb-0">
+
+                    <a th:href="@{/promociones/nuevo}" class="btn btn-primary mb-0">
                         <i class="fas fa-plus me-1"></i>
                         Nueva
                     </a>
@@ -28,7 +29,7 @@
                             <tbody>
                                 <tr th:each="promo, iterStat : ${lstPromocion}">
                                     <td class="ps-4">
-                                        <p class="text-sm text-dark mb-0" th:text="${iterStat.count}"></p>
+                                        <span class="badge border text-dark" th:text="${iterStat.count}"></span>
                                     </td>
                                     <td class="ps-0">
                                         <p class="text-sm text-dark mb-0" th:text="${promo.descripcion}"></p>
@@ -71,8 +72,8 @@
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Confirmar'
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = '/promociones/eliminar/' + id;
