@@ -14,6 +14,12 @@
 	<link id="pagestyle" href="/css/argon-dashboard.css?v=2.1.0" rel="stylesheet" />
 	<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!--   TABLARESPONSIVA_PAGINACION-->
+<!--	<script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>-->
+<!--	<script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>-->
+
+
 	<style>
 		.form-step {
 			display: none;
@@ -24,6 +30,36 @@
 		}
 	</style>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+	function confirmarCambioEstado(checkbox) {
+        const form = checkbox.form;
+        const activo = checkbox.checked; // true si se activó, false si se desactivó
+
+        if (!activo) {
+            // Si se va a desactivar, pedir confirmación
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Estás por desactivar este registro.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, desactivar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                } else {
+                    checkbox.checked = true; // volver a activarlo si cancela
+                }
+            });
+        } else {
+            // Si se activa, no se necesita confirmación
+            form.submit();
+        }
+    }
+</script>
 
 <body class="g-sidenav-show   bg-gray-100">
 	<div class="min-height-300 bg-dark position-absolute w-100"></div>

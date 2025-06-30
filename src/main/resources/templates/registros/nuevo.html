@@ -170,8 +170,7 @@
                         <select class="form-select" id="departamento" name="departamento" th:field="*{departamento}" required>
                             <option value="-1" disabled selected>Seleccionar</option>
                             <option value="Lima">Lima</option>
-                            <option value="Cusco">Cusco</option>
-                            <option value="Arequipa">Arequipa</option>
+
                         </select>
                     </div>
 
@@ -181,8 +180,7 @@
                         <select class="form-select" id="provincia" name="provincia" th:field="*{provincia}" required>
                             <option value="-1" disabled selected>Seleccionar</option>
                             <option value="Lima">Lima</option>
-                            <option value="Urubamba">Urubamba</option>
-                            <option value="Caylloma">Caylloma</option>
+
                         </select>
                     </div>
 
@@ -225,8 +223,8 @@
                         <label for="rangoHorario" class="form-label">Rango horario <span class="text-danger">*</span></label>
                         <select class="form-select" id="rangoHorario" name="rangoInstalacion" th:field="*{rangoInstalacion}" required>
                             <option value="">--SELECCIONA--</option>
-                            <option value="09:00 a 13:00 hr">09:00 a 13:00 hr</option>
-                            <option value="13:00 a 18:00 hr">13:00 a 18:00 hr</option>
+                            <option value="manana">09:00 a 13:00 hr</option>
+                            <option value="tarde">13:00 a 18:00 hr</option>
                         </select>
                     </div>
 
