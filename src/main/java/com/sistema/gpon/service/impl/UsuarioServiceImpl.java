@@ -42,9 +42,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	    return usuarioRepository.findAllOrderByEstadoAndIdUsuarioDesc();
 	}
 
-
-
-
 	@Override
 	public ResultadoResponse modificarUsuario(Usuario usuario) {
 		try {

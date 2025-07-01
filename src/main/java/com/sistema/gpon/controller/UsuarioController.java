@@ -2,6 +2,8 @@ package com.sistema.gpon.controller;
 
 import java.util.List;
 
+import com.sistema.gpon.dtos.UsuarioFilter;
+import com.sistema.gpon.model.Rol;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.sistema.gpon.dtos.UsuarioFilter;
-import com.sistema.gpon.model.Rol;
+
 import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.service.RolService;
 import com.sistema.gpon.service.UsuarioService;
@@ -32,7 +33,7 @@ public class UsuarioController {
 	@Autowired
 	private RolService rolesService;
 
-	@GetMapping({ "", "/" })
+	@GetMapping({"", "/"})
 	public String listado(HttpServletRequest request, Model model) {
 		model.addAttribute("uri", request.getRequestURI());
 
@@ -51,7 +52,7 @@ public class UsuarioController {
 		List<Rol> lstRoles = rolesService.listarRoles();
 
 		model.addAttribute("lstRoles", lstRoles);
-		model.addAttribute("filtro", filtro); 
+		model.addAttribute("filtro", filtro);
 		model.addAttribute("lstUsuarios", lstUsuarios);
 
 		return "usuarios/index";
@@ -65,8 +66,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/registrar")
-	public String registrar(@Validated @ModelAttribute Usuario usuarios, BindingResult bindingResults, Model model,
-			RedirectAttributes flash) {
+	public String registrar(@Validated @ModelAttribute Usuario usuarios, BindingResult bindingResults, Model model, RedirectAttributes flash) {
 
 		if (bindingResults.hasErrors()) {
 			model.addAttribute("roles", rolesService.listarRoles());
@@ -97,7 +97,7 @@ public class UsuarioController {
 
 	@PostMapping("/guardar")
 	public String guardar(@Validated @ModelAttribute Usuario usuario, BindingResult bindingResult, Model model,
-			RedirectAttributes flash) {
+						  RedirectAttributes flash) {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("roles", rolesService.listarRoles());
