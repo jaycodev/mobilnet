@@ -3,6 +3,7 @@ package com.sistema.gpon.service.impl;
 import java.util.List;
 
 import com.sistema.gpon.model.Promocion;
+import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.service.ClienteService;
 import com.sistema.gpon.utils.ResultadoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ClienteServiceImpl implements ClienteService {
         try {
             Cliente registrado = clienteRepository.save(cliente);
 
-            String mensaje = String.format("Cliente con DNI %s creado", registrado.getDniCliente());
+            String mensaje = String.format("Cliente con DNI: %s creado", registrado.getDniCliente());
             return new ResultadoResponse(true, mensaje);
 
         } catch (Exception ex) {
@@ -42,7 +43,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Cliente buscarPorDni(String dni) {
+    public Cliente buscarPorId(String dni) {
         return clienteRepository.findById(dni).orElseThrow(null);
     }
 
@@ -56,7 +57,7 @@ public class ClienteServiceImpl implements ClienteService {
         try {
             Cliente actualizado = clienteRepository.save(cliente);
 
-            String mensaje = String.format("Cliente con DNI %s actualizado", actualizado.getDniCliente());
+            String mensaje = String.format("Cliente con DNI: %s actualizado", actualizado.getDniCliente());
             return new ResultadoResponse(true, mensaje);
 
         } catch (Exception ex) {
@@ -65,17 +66,28 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public boolean eliminarCliente(String dni) {
+    public ResultadoResponse cambiarEstado(String id) {
+        Cliente cliente = this.buscarPorId(id);
+        Boolean accion = cliente.getEstado() ? false : true;
+        String texto;
+
+        if (accion == true) {
+            texto = "ha sido activado";
+        } else {
+            texto = "ha sido inactivado";
+        }
+
+        cliente.setEstado(!cliente.getEstado());
+
         try {
-            if (clienteRepository.existsById(dni)) {
-                clienteRepository.deleteById(dni);
-                return true;
-            } else {
-                return false;
-            }
+            Cliente registrado = clienteRepository.save(cliente);
+
+            String mensaje = String.format("Cliente con DNI: %s %s", registrado.getDniCliente(), texto);
+            return new ResultadoResponse(true, mensaje);
+
         } catch (Exception ex) {
             ex.printStackTrace();
-            return false;
+            return new ResultadoResponse(false, "Error al cambiar de estado: " + ex.getMessage());
         }
     }
 }
