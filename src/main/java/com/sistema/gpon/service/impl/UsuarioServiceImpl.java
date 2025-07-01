@@ -17,7 +17,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-    
    
 	@Override
 	public ResultadoResponse crearUsuario(Usuario usuario) {
@@ -80,12 +79,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public List<Usuario> findByRol_Descripcion(String descripcion){
       return usuarioRepository.findByRol_Descripcion(descripcion);
 	};
-	
-	/*CODIGO AÑADIDO ELIMINAR SI DA ERROR*/
-	public Usuario Autenticacion(Usuario filter) {
-		
-		return usuarioRepository.findByCorreoAndContrasena(filter.getCorreo(), filter.getContrasena());
-	}
 
 	@Override
 	public Usuario buscarPorId(Integer idUsuario) {
@@ -123,4 +116,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuarioRepository.findAllWithFilter(filtro.getIdRol());
 	}
 	
+  @Override
+	public Usuario autenticacion(Usuario filter) {
+		
+		return usuarioRepository.findByCorreoAndContrasena(filter.getCorreo(), filter.getContrasena());
+	}
 }
