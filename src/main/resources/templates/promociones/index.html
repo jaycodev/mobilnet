@@ -1,66 +1,77 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layoutBase('Promociones', 'Listado', ~{::contenido})">
 <th:block th:fragment="contenido">
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                    <h5>
-                        <i class="fa-solid fa-gift me-1"></i>
-                        Lista de promociones
-                    </h5>
+	<div class="row">
+		<div class="col-12">
+			<div class="card mb-4">
+				<div class="card-header pb-0 d-flex justify-content-between align-items-center">
+					<h5>
+						<i class="fa-solid fa-gift me-1"></i>
+						Tabla promociones
+					</h5>
+					<a th:href="@{/promociones/nuevo}" class="btn btn-primary btn-sm mb-0">
+						<i class="fas fa-plus me-1"></i>
+						Nueva
+					</a>
+				</div>
 
-                    <a th:href="@{/promociones/nuevo}" class="btn btn-primary mb-0">
-                        <i class="fas fa-plus me-1"></i>
-                        Nueva
-                    </a>
-                </div>
+				<div class="card-body px-0 pt-0 pb-2">
+					<div class="table-responsive p-0">
+						<table class="table align-items-center mb-0">
+							<thead>
+								<tr>
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Descripción</th>
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0 text-center">Estado</th>
+									<th class="text-secondary opacity-7"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="promo, iterStat : ${lstPromocion}">
+									<td class="ps-4">
+										<p class="text-sm text-dark mb-0" th:text="${iterStat.count}"></p>
+									</td>
+									<td class="ps-0">
+										<p class="text-sm text-dark mb-0" th:text="${promo.descripcion}"></p>
+									</td>
+									<td class="ps-0 text-center">
+										<form method="post" th:action="@{/promociones/cambiar-estado/{id}(id=${promo.idPromocion})}">
+											<div class="d-flex align-items-center justify-content-center gap-2">
+												<span class="text-sm">Inactivo</span>
+												<div class="form-switch">
+													<input class="form-check-input" type="checkbox"
+														th:checked="${promo.estado}" onchange="this.form.submit()">
+												</div>
+												<span class="text-sm">Activo</span>
+											</div>
+										</form>
+									</td>
+									<td class="ps-0">
+										<a th:href="@{'/promociones/edicion/' + ${promo.idPromocion}}"
+											class="btn btn-sm text-primary me-1 mb-0" title="Editar">
+											<i class="fa-solid fa-pen"></i>
+										</a>
 
-                <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Descripción</th>
-                                    <th class="text-secondary opacity-7"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="promo, iterStat : ${lstPromocion}">
-                                    <td class="ps-4">
-                                        <span class="badge border text-dark" th:text="${iterStat.count}"></span>
-                                    </td>
-                                    <td class="ps-0">
-                                        <p class="text-sm text-dark mb-0" th:text="${promo.descripcion}"></p>
-                                    </td>
-                                    <td class="ps-0">
-                                        <a th:href="@{'/promociones/edicion/' + ${promo.idPromocion}}"
-                                           class="btn btn-sm text-primary me-1 mb-0" title="Editar">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </a>
+										<a href="javascript:void(0);" class="btn btn-sm text-danger mb-0"
+											th:onclick="'confirmarEliminacion(' + ${promo.idPromocion} + ')'"
+											title="Eliminar">
+											<i class="fas fa-trash-alt"></i>
+										</a>
+									</td>
+								</tr>
+								<tr th:if="${#lists.isEmpty(lstPromocion)}">
+									<td colspan="3" class="text-center text-muted py-4">
+										No hay promociones registradas.
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 
-                                        <a href="javascript:void(0);"
-                                           class="btn btn-sm text-danger mb-0"
-                                           th:onclick="'confirmarEliminacion(' + ${promo.idPromocion} + ')'"
-                                           title="Eliminar">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr th:if="${#lists.isEmpty(lstPromocion)}">
-                                    <td colspan="3" class="text-center text-muted py-4">
-                                        No hay promociones registradas.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
@@ -82,7 +93,7 @@
         }
     </script>
 
-    <!-- Mostrar alertas -->
-    <div th:utext="${alert}"></div>
+	<!-- Mostrar alertas -->
+	<div th:utext="${alert}"></div>
 </th:block>
 </html>

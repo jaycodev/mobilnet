@@ -14,7 +14,7 @@ CREATE TABLE Usuario (
     Apellido VARCHAR(255) NOT NULL,
     Correo VARCHAR(255) NOT NULL,
     Contrasena VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-    Estado VARCHAR(20) DEFAULT 'activo',
+    Estado BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (IdRol) REFERENCES Rol(IdRol)
 );
 
@@ -33,8 +33,12 @@ CREATE TABLE Plan (
 
 CREATE TABLE Promocion (
     IdPromocion INT PRIMARY KEY AUTO_INCREMENT,
-    Descripcion VARCHAR(255) NOT NULL
+    Descripcion VARCHAR(255) NOT NULL,
+    Estado BOOLEAN NOT NULL DEFAULT TRUE
 );
+
+
+
 
 CREATE TABLE Distrito (
     IdDistrito INT PRIMARY KEY AUTO_INCREMENT,
@@ -71,8 +75,8 @@ CREATE TABLE Cronograma (
     IdCronograma INT PRIMARY KEY AUTO_INCREMENT,
     UbicacionInstalacion VARCHAR(100),
     RangoInstalacion VARCHAR(100),
-    FechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FechaInstalacion DATETIME
+    FechaRegistro DATE ,
+    FechaInstalacion DATE
 );
 
 CREATE TABLE RegistroRUC10 (
@@ -86,10 +90,11 @@ CREATE TABLE RegistroRUC10 (
     IdPromocion INT,
     IdCronograma INT NOT NULL,
     IdEstado INT DEFAULT 1,
-	IdSolicitud VARCHAR(255) DEFAULT 'ninguno',
-	IdInstalacion VARCHAR(255)  DEFAULT 'ninguno',
-	IdCarrito VARCHAR(255)  DEFAULT 'ninguno',
-	Observacion VARCHAR(255),
+    IdSolicitud VARCHAR(255) DEFAULT 'ninguno',
+    IdInstalacion VARCHAR(255)  DEFAULT 'ninguno',
+    IdCarrito VARCHAR(255)  DEFAULT 'ninguno',
+    Observacion VARCHAR(255),
+    activo int default 1,
     FOREIGN KEY (IdUsuarioConsulto) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (IdUsuarioSupervisor) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (DniCliente) REFERENCES Cliente(DniCliente),
