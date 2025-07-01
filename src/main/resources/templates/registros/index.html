@@ -1,69 +1,84 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layoutBase('Registros', 'Listado', ~{::contenido})">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layoutBase('Registros RUC1O', 'Listado', ~{::contenido})">
 <th:block th:fragment="contenido">
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                     <h5>
-                        <i class="fa-solid fa-gift me-1"></i>
-                        Lista de registros RUC10
+                        <i class="fa-solid fa-id-card me-1"></i>
+                        Lista de registros
                     </h5>
 
-                    <div class="d-flex align-items-center gap-2">
-                        <!-- Formulario de Filtro -->
-                        <form method="post" th:action="@{/registros/filtrar}">
-                            <select name="estado" th:name="estado"
-                                    class="form-select form-select-sm"
-                                    style="width: 200px;"
-                            onchange="this.form.submit()">
+                    <a th:href="@{/registros/nuevo}" class="btn btn-primary mb-0">
+                        <i class="fas fa-plus me-1"></i>
+                        Nuevo
+                    </a>
+                </div>
+
+                <form method="post" th:action="@{/registros/filtrar}">
+                    <div class="row g-2 px-4 pt-3">
+                        <select name="estado" th:name="estado" class="form-select form-select-sm" style="width: 200px;" onchange="this.form.submit()">
                             <option value="-1" selected disabled>--SELECCIONAR--</option>
                             <option value="1" th:selected="${param.estado == 1}">Activos</option>
                             <option value="0" th:selected="${param.estado == 0}">Inactivos</option>
-                            </select>
-                        </form>
-
-
-                        <!-- Botón Nuevo -->
-                        <a th:href="@{/registros/nuevo}" class="btn btn-primary btn-sm mb-0">
-                            <i class="fas fa-plus me-1"></i>
-                            Nueva
-                        </a>
+                        </select>
                     </div>
-                </div>
+                </form>
 
-                <div class="card-body px-4 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0 text-center">
-                            <thead>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <table id="tabla-registros" class="table align-items-center mb-0">
+                        <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Consultor</th>
-                                <th>Supervisor</th>
-                                <th>Cliente</th>
-                                <th>Plan</th>
-                                <th>Promoción</th>
-                                <th>Estado</th>
-                                <th>IdSolicitud</th>
-                                <th>IdInstalación</th>
-                                <th>IdCarrito</th>
-                                <th>Observación</th>
-                                <th>Acciones</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Consultor</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Supervisor</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Cliente</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Plan</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Promoción</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Estado</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">IdSolicitud</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">IdInstalación</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">IdCarrito</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Observación</th>
+                                <th class="text-secondary opacity-7"></th>
                             </tr>
-                            </thead>
-                            <tbody>
+                        </thead>
+                        <tbody>
                             <tr th:each="x : ${listaruc}">
-                                <td><p th:text="${x.idRegistro}"></p></td>
-                                <td><p th:text="${x.usuarioConsulto.nombre + ' ' + x.usuarioConsulto.apellido}"></p></td>
-                                <td><p th:text="${x.usuarioSupervisor.nombre + ' ' + x.usuarioSupervisor.apellido}"></p></td>
-                                <td><p th:text="${x.cliente.nombre + ' ' + x.cliente.apellido}"></p></td>
-                                <td><p th:text="${x.plan.descripcion}"></p></td>
-                                <td><p th:text="${x.promocion.descripcion}"></p></td>
-                                <td><p th:text="${x.estado.descripcion}"></p></td>
-                                <td><p th:text="${x.idSolicitud}"></p></td>
-                                <td><p th:text="${x.idInstalacion}"></p></td>
-                                <td><p th:text="${x.idCarrito}"></p></td>
-                                <td><p th:text="${x.observacion}"></p></td>
+                                <td class="ps-4">
+                                    <span class="badge badge-sm border text-dark" th:text="${x.idRegistro}"></span>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${x.usuarioConsulto.nombre + ' ' + x.usuarioConsulto.apellido}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${x.usuarioSupervisor.nombre + ' ' + x.usuarioSupervisor.apellido}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${x.cliente.nombre + ' ' + x.cliente.apellido}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${x.plan.descripcion}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${x.promocion.descripcion}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${x.estado.descripcion}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${x.idSolicitud}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${x.idInstalacion}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${x.idCarrito}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${x.observacion}"></p>
+                                </td>
                                 <td>
                                     <div class="d-flex align-items-center gap-1">
                                         <!-- Botón Editar -->
@@ -101,25 +116,25 @@
                                     </div>
                                 </td>
                             </tr>
-
                             <tr th:if="${#lists.isEmpty(listaruc)}">
-                                <td colspan="12" class="text-center text-muted py-4">
+                                <td colspan="3" class="text-center text-muted py-4">
                                     No hay registros disponibles.
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+
+    <div th:replace="fragments/datatable-script :: datatableScript('tabla-registros')"></div>
+
+    <!-- Alertas y notificaciones -->
+    <div th:if="${alert}">
+        <div th:utext="${alert}"></div>
+    </div>
+
+    <div th:if="${toast}" th:utext="${toast}"></div>
 </th:block>
-
-<!-- Alertas y notificaciones -->
-<div th:if="${alert}">
-    <div th:utext="${alert}"></div>
-</div>
-<div th:if="${toast}" th:utext="${toast}"></div>
-
 </html>

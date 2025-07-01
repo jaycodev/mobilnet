@@ -37,9 +37,6 @@ CREATE TABLE Promocion (
     Estado BOOLEAN NOT NULL DEFAULT TRUE
 );
 
-
-
-
 CREATE TABLE Distrito (
     IdDistrito INT PRIMARY KEY AUTO_INCREMENT,
     NombreDistrito VARCHAR(255) NOT NULL

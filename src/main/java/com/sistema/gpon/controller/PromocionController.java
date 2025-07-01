@@ -79,7 +79,7 @@ public class PromocionController {
         flash.addFlashAttribute("alert", toast);
         return "redirect:/promociones";
     }
-    
+
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Integer id, RedirectAttributes flash) {
         boolean eliminado = promocionService.eliminarPromocion(id);
@@ -92,13 +92,12 @@ public class PromocionController {
     }
 
     @PostMapping("/cambiar-estado/{id}")
-	public String cambiarEstado(@PathVariable Integer id, RedirectAttributes flash) {
+    public String cambiarEstado(@PathVariable Integer id, RedirectAttributes flash) {
 
-		ResultadoResponse response = promocionService.cambiarEstado(id);
-		
-		String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-		flash.addFlashAttribute("alert", toast);
-		return "redirect:/promociones";
-	}
-    
+        ResultadoResponse response = promocionService.cambiarEstado(id);
+
+        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
+        flash.addFlashAttribute("alert", toast);
+        return "redirect:/promociones";
+    }
 }

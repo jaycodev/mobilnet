@@ -10,7 +10,6 @@ import com.sistema.gpon.model.Promocion;
 import com.sistema.gpon.repository.PromocionRepository;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class PromocionServiceImpl implements PromocionService {
 	
@@ -96,5 +95,4 @@ public class PromocionServiceImpl implements PromocionService {
 			return new ResultadoResponse(false, "Error al cambiar de estado: " + ex.getMessage());
 		}
 	}
-
 }
