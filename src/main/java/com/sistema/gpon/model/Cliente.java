@@ -28,4 +28,7 @@ public class Cliente {
 
 	@Column(name = "Telefono", nullable = false)
 	private String telefono;
+
+	@Column(name = "Estado", nullable = false)
+	private Boolean estado;
 }

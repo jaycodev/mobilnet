@@ -57,7 +57,7 @@ public class ClienteController {
 
     @GetMapping("/edicion/{id}")
     public String edicion(@PathVariable String id, Model model) {
-        Cliente cliente = clienteService.buscarPorDni(id);
+        Cliente cliente = clienteService.buscarPorId(id);
         model.addAttribute("cliente", cliente);
 
         return "clientes/edicion";
@@ -75,6 +75,16 @@ public class ClienteController {
         String toast = Alert.sweetToast(response.mensaje, "success", 5000);
         flash.addFlashAttribute("alert", toast);
 
+        return "redirect:/clientes";
+    }
+
+    @PostMapping("/cambiar-estado/{id}")
+    public String cambiarEstado(@PathVariable String id, RedirectAttributes flash) {
+
+        ResultadoResponse response = clienteService.cambiarEstado(id);
+
+        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
+        flash.addFlashAttribute("alert", toast);
         return "redirect:/clientes";
     }
 }
