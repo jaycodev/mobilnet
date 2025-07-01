@@ -64,5 +64,7 @@ public class RegistroRUC10 {
 	@Column(name = "Observacion")
 	private String observacion;
 
+	@Column(name = "activo")
+	private int activo =1;
 
 }

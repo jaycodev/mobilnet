@@ -69,5 +69,26 @@ public class Alert {
 				""";
 		return String.format(scriptText, title, text, imageUrl);
 	}
+	public static String sweetAlertConfirm(String title, String text, String confirmButtonText, String cancelButtonText, String confirmUrl) {
+		String scriptText = """
+		<script>
+		    Swal.fire({
+		        title: '%s',
+		        text: '%s',
+		        icon: 'warning',
+		        showCancelButton: true,
+		        confirmButtonColor: '#3085d6',
+		        cancelButtonColor: '#d33',
+		        confirmButtonText: '%s',
+		        cancelButtonText: '%s'
+		    }).then((result) => {
+		        if (result.isConfirmed) {
+		            window.location.href = '%s';
+		        }
+		    });
+		</script>
+	""";
+		return String.format(scriptText, title, text, confirmButtonText, cancelButtonText, confirmUrl);
+	}
 
 }

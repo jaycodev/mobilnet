@@ -39,5 +39,5 @@ public class Usuario {
 	private String contrasena;
 	
 	@Column(name = "Estado", nullable = false)
-	private String estado;
+	private Boolean estado;
 }
