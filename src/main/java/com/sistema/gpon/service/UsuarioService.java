@@ -15,4 +15,5 @@ public interface UsuarioService {
     boolean eliminarUsuario(Integer idUsuario);
     List<Usuario> findByRol_Descripcion(String descripcion); 
     ResultadoResponse cambiarEstado(Integer Id);
+    Usuario autenticacion(Usuario filter);
 }

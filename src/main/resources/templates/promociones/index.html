@@ -74,28 +74,27 @@
 		</div>
 	</div>
 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script>
-		function confirmarEliminacion(id) {
-			Swal.fire({
-				title: '¿Estás seguro?',
-				text: "Esta acción eliminará la promoción permanentemente.",
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#d33',
-				cancelButtonColor: '#3085d6',
-				confirmButtonText: 'Sí, eliminar',
-				cancelButtonText: 'Cancelar'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					window.location.href = '/promociones/eliminar/' + id;
-				}
-			});
-		}
-	</script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmarEliminacion(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Esta acción eliminará la promoción permanentemente.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Confirmar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/promociones/eliminar/' + id;
+                }
+            });
+        }
+    </script>
 
 	<!-- Mostrar alertas -->
 	<div th:utext="${alert}"></div>
 </th:block>
-
 </html>
