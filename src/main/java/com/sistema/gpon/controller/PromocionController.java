@@ -91,5 +91,14 @@ public class PromocionController {
         return "redirect:/promociones";
     }
 
+    @PostMapping("/cambiar-estado/{id}")
+	public String cambiarEstado(@PathVariable Integer id, RedirectAttributes flash) {
+
+		ResultadoResponse response = promocionService.cambiarEstado(id);
+		
+		String toast = Alert.sweetToast(response.mensaje, "success", 5000);
+		flash.addFlashAttribute("alert", toast);
+		return "redirect:/promociones";
+	}
     
 }
