@@ -198,7 +198,7 @@ public class RegistroRUC10Controller {
 
         RegistroRUC10 registroRUC10 = _registroRUC10Service.buscarPorId(id);
         Cronograma cronograma = _CronogramaService.buscarPorId(registroRUC10.getCronograma().getIdCronograma());
-        Cliente cliente = _ClienteService.buscarPorDni(registroRUC10.getCliente().getDniCliente());
+        Cliente cliente = _ClienteService.buscarPorId(registroRUC10.getCliente().getDniCliente());
         ContactoPrincipal contactoPrincipal = _ContactoPrincipalService.buscarPorId(registroRUC10.getContactoPrincipal().getIdContactoPrincipal());
         ContactoSecundario contactoSecundario = _ContactoSecundarioService.buscarPorId(registroRUC10.getContactoSecundario().getIdContactoSecundario());
         Usuario consultor = _usuarioService.buscarPorId(registroRUC10.getUsuarioConsulto().getIdUsuario());
