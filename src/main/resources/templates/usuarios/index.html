@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layoutBase('Usuarios', 'Listado', ~{::contenido})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layoutBase('Usuarios', 'Listado', ~{::contenido})">
 <th:block th:fragment="contenido">
     <div class="row">
         <div class="col-12">
