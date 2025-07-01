@@ -9,8 +9,8 @@ public interface ClienteService {
     Cliente crearClientenew(Cliente cliente);
     ResultadoResponse crearCliente(Cliente cliente);
     List<Cliente> listarClientes();
-    Cliente buscarPorDni(String dni);
+    Cliente buscarPorId(String id);
     Cliente modificarClientenew(Cliente cliente);
     ResultadoResponse modificarCliente(Cliente cliente);
-    boolean eliminarCliente(String dni);
+    ResultadoResponse cambiarEstado(String id);
 }

@@ -23,7 +23,8 @@ CREATE TABLE Cliente (
     Ruc VARCHAR(11) NOT NULL,
     Nombre VARCHAR(255) NOT NULL,
     Apellido VARCHAR(255) NOT NULL,
-    Telefono VARCHAR(9) NOT NULL
+    Telefono VARCHAR(9) NOT NULL,
+    Estado BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE Plan (
