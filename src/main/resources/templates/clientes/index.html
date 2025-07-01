@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layoutBase('Clientes', 'Listado', ~{::contenido})">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/layout :: layoutBase('Clientes', 'Listado', ~{::contenido}, ~{::scripts})">
+
 <th:block th:fragment="contenido">
     <div class="row">
         <div class="col-12">
@@ -14,6 +16,19 @@
                         <i class="fas fa-plus me-1"></i>
                         Nuevo
                     </a>
+                </div>
+
+                <div class="px-4 pt-3">
+                    <div class="d-flex gap-2">
+                        <button id="btn-exportar-pdf" class="btn btn-danger btn-sm mb-0">
+                            <i class="fa-solid fa-file-pdf me-1"></i>
+                            PDF
+                        </button>
+                        <button id="btn-exportar-excel" class="btn btn-success btn-sm mb-0">
+                            <i class="fa-solid fa-file-excel me-1"></i>
+                            Excel
+                        </button>
+                    </div>
                 </div>
 
                 <div class="card-body px-0 pt-0 pb-2">
@@ -69,6 +84,186 @@
             </div>
         </div>
     </div>
-    <div th:replace="fragments/datatable-script :: datatableScript('tabla-clientes')"></div>
+</th:block>
+
+<th:block th:fragment="scripts">
+    <th:block th:replace="fragments/datatable-script :: datatableScript('tabla-clientes')"/>
+
+    <!-- jsPDF + autoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- ExcelJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+
+    <script>
+        // ===================== Export to PDF =====================
+        document.getElementById('btn-exportar-pdf').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const table = $('#tabla-clientes').DataTable();
+            const headers = [];
+            const data = [];
+
+            $('#tabla-clientes thead th').each(function (index) {
+                if (index < $('#tabla-clientes thead th').length - 1) {
+                    headers.push($(this).text().trim());
+                }
+            });
+
+            table.rows({ search: 'applied' }).every(function () {
+                const row = this.data();
+                const rowData = [];
+                for (let i = 0; i < row.length - 1; i++) {
+                    rowData.push($(row[i]).text() || row[i]);
+                }
+                data.push(rowData);
+            });
+
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const margin = 15;
+
+            const now = new Date();
+            const dateText = now.toLocaleDateString('es-PE', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            }).replace('.', '');
+
+            const timeText = now.toLocaleTimeString('es-PE', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            }).toLowerCase();
+
+            doc.setFontSize(11);
+            doc.setTextColor('#000000');
+            doc.text(dateText, margin, 15);
+            doc.text(timeText, pageWidth - margin, 15, { align: 'right' });
+
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text('Lista de clientes', pageWidth / 2, 15, { align: 'center' });
+
+            doc.autoTable({
+                head: [headers],
+                body: data,
+                startY: 22,
+                headStyles: {
+                    fillColor: '#344767',
+                    textColor: '#ffffff',
+                    valign: 'middle',
+                    fontStyle: 'bold',
+                    lineColor: '#2c3e50',
+                    lineWidth: 0.2
+                },
+                styles: {
+                    fontSize: 9,
+                    cellPadding: 3,
+                    textColor: '#000000',
+                    lineColor: '#cccccc',
+                    lineWidth: 0.1
+                },
+                theme: 'grid'
+            });
+
+            doc.save('clientes.pdf');
+        });
+        // =================== End Export to PDF ===================
+
+        // ===================== Export to Excel =====================
+        document.getElementById('btn-exportar-excel').addEventListener('click', async () => {
+            const table = $('#tabla-clientes').DataTable();
+            const headers = [];
+            const data = [];
+
+            $('#tabla-clientes thead th').each(function (i) {
+                if (i < $('#tabla-clientes thead th').length - 1) {
+                    headers.push($(this).text().trim());
+                }
+            });
+
+            table.rows({ search: 'applied' }).every(function () {
+                const row = this.data();
+                const rowData = [];
+                for (let i = 0; i < row.length - 1; i++) {
+                    rowData.push($(row[i]).text().trim() || row[i]);
+                }
+                data.push(rowData);
+            });
+
+            const workbook = new ExcelJS.Workbook();
+            const sheet = workbook.addWorksheet('Clientes');
+
+            const now = new Date();
+            const dateText = now.toLocaleDateString('es-PE', {
+                day: 'numeric', month: 'short', year: 'numeric'
+            }).replace('.', '');
+            const timeText = now.toLocaleTimeString('es-PE', {
+                hour: 'numeric', minute: '2-digit', hour12: true
+            }).toLowerCase();
+
+            sheet.mergeCells('C1', 'D1');
+            sheet.getCell('A1').value = `${dateText}`;
+            sheet.getCell('C1').value = 'Lista de clientes';
+            sheet.getCell('F1').value = `${timeText}`;
+
+            sheet.getCell('A1').font = { bold: true };
+            sheet.getCell('C1').font = { bold: true, size: 14 };
+            sheet.getCell('C1').alignment = { horizontal: 'center' };
+            sheet.getCell('F1').font = { bold: true };
+            sheet.getCell('F1').alignment = { horizontal: 'right' };
+
+            sheet.addRow([]);
+            const headerRow = sheet.addRow(headers);
+
+            headerRow.eachCell((cell) => {
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FF344767' }
+                };
+                cell.font = { color: { argb: 'FFFFFFFF' }, bold: true };
+                cell.alignment = { vertical: 'middle', horizontal: 'center' };
+                cell.border = {
+                    top: { style: 'thin', color: { argb: 'FF2C3E50' } },
+                    bottom: { style: 'thin', color: { argb: 'FF2C3E50' } },
+                    left: { style: 'thin', color: { argb: 'FF2C3E50' } },
+                    right: { style: 'thin', color: { argb: 'FF2C3E50' } }
+                };
+            });
+
+            data.forEach(rowData => {
+                const row = sheet.addRow(rowData);
+                row.eachCell(cell => {
+                    cell.font = { color: { argb: 'FF000000' } };
+                    cell.alignment = { vertical: 'middle', horizontal: 'left' };
+                    cell.border = {
+                        top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+                        bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+                        left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+                        right: { style: 'thin', color: { argb: 'FFCCCCCC' } }
+                    };
+                });
+            });
+
+            sheet.columns.forEach(column => {
+                let maxLength = 10;
+                column.eachCell({ includeEmpty: true }, cell => {
+                    const len = cell.value ? cell.value.toString().length : 0;
+                    if (len > maxLength) maxLength = len;
+                });
+                column.width = maxLength + 2;
+            });
+
+            const buffer = await workbook.xlsx.writeBuffer();
+            const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'clientes.xlsx';
+            link.click();
+        });
+        // ================== End Export to Excel ==================
+    </script>
 </th:block>
 </html>

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layoutBase('Planes', 'Listado', ~{::contenido})">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/layout :: layoutBase('Planes', 'Listado', ~{::contenido}, ~{})">
+
 <th:block th:fragment="contenido">
     <div class="row">
         <div class="col-12">
@@ -14,6 +16,20 @@
                         Nuevo
                     </a>
                 </div>
+
+                <div class="px-4 pt-3">
+                    <div class="d-flex gap-2">
+                        <button id="btn-exportar-pdf" class="btn btn-danger btn-sm mb-0">
+                            <i class="fa-solid fa-file-pdf me-1"></i>
+                            PDF
+                        </button>
+                        <button id="btn-exportar-excel" class="btn btn-success btn-sm mb-0">
+                            <i class="fa-solid fa-file-excel me-1"></i>
+                            Excel
+                        </button>
+                    </div>
+                </div>
+
                 <div class="card-body px-0 pt-0 pb-2">
                     <table id="tabla-planes" class="table align-items-center mb-0">
                         <thead>
