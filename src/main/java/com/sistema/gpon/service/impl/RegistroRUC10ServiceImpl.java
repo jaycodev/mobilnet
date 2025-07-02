@@ -79,6 +79,11 @@ public class RegistroRUC10ServiceImpl implements RegistroRUC10Service {
 		}
 	}
 
+	@Override
+	public int CountEstado(String estado) {
+		return registroRUC10Repository.countByEstado_Descripcion(estado);
+	}
+
 }
 
 

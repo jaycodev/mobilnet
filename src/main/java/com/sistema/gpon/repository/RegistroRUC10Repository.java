@@ -11,4 +11,5 @@ import java.util.List;
 public interface RegistroRUC10Repository extends JpaRepository<RegistroRUC10, Integer> {
     List<RegistroRUC10> findByActivo(int activo);
 
+    int countByEstado_Descripcion(String descripcion);
 }
