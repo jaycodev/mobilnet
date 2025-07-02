@@ -42,7 +42,11 @@ public class ClienteController {
     }
 
     @PostMapping("/registrar")
-    public String registrar(@Validated @ModelAttribute Cliente cliente, BindingResult bindingResults, Model model, RedirectAttributes flash) {
+    public String registrar(@Validated @ModelAttribute Cliente cliente, BindingResult bindingResult, Model model, RedirectAttributes flash) {
+        if (bindingResult.hasErrors()) {
+            return "clientes/nuevo";
+        }
+
         ResultadoResponse response = clienteService.crearCliente(cliente);
 
         if (!response.success) {
@@ -65,6 +69,10 @@ public class ClienteController {
 
     @PostMapping("/guardar")
     public String guardar(@Validated @ModelAttribute Cliente cliente, BindingResult bindingResult, Model model, RedirectAttributes flash) {
+        if (bindingResult.hasErrors()) {
+            return "clientes/edicion";
+        }
+
         ResultadoResponse response = clienteService.modificarCliente(cliente);
 
         if (!response.success) {
