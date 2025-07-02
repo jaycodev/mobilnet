@@ -68,7 +68,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ResultadoResponse cambiarEstado(String id) {
         Cliente cliente = this.buscarPorId(id);
-        Boolean accion = cliente.getEstado() ? false : true;
+        Boolean accion = cliente.getActivo() ? false : true;
         String texto;
 
         if (accion == true) {
@@ -77,7 +77,7 @@ public class ClienteServiceImpl implements ClienteService {
             texto = "ha sido inactivado";
         }
 
-        cliente.setEstado(!cliente.getEstado());
+        cliente.setActivo(!cliente.getActivo());
 
         try {
             Cliente registrado = clienteRepository.save(cliente);
