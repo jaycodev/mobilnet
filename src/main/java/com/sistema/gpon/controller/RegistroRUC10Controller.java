@@ -1,6 +1,9 @@
 package com.sistema.gpon.controller;
 
-import com.sistema.gpon.model.RucDTO;
+import com.sistema.gpon.dto.RegistroFilter;
+import com.sistema.gpon.dto.RucDTO;
+import com.sistema.gpon.dto.RucDTOUpdate;
+import com.sistema.gpon.dto.UsuarioFilter;
 import com.sistema.gpon.model.*;
 import com.sistema.gpon.service.impl.*;
 import com.sistema.gpon.utils.Alert;
@@ -13,7 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 @RequestMapping("/registros")
@@ -35,7 +38,7 @@ public class RegistroRUC10Controller {
     private SectorServiceImpl _seSectorService;
 
     @Autowired
-    private  ClienteServiceImpl _ClienteService;
+    private ClienteServiceImpl _ClienteService;
 
     @Autowired
     private DistritoServiceImpl _disDistritoService;
@@ -49,20 +52,31 @@ public class RegistroRUC10Controller {
     @Autowired
     private CronogramaImpl _CronogramaService;
 
-
     @Autowired
-    private  EstadoRegistroImpl _EstadoRegistro;
+    private EstadoRegistroImpl _EstadoRegistro;
 
     @GetMapping({"", "/"})
-    public String index(HttpServletRequest request,Model model){
+    public String listado(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
-        model.addAttribute("listaruc",_registroRUC10Service.listarRegistrosActivos(1));
-//        model.addAttribute("listaruc",_registroRUC10Service.listarRegistros());
+        model.addAttribute("lstEstados", _EstadoRegistro.listarEstado());
+        model.addAttribute("filtro", new RegistroFilter());
+        model.addAttribute("lstRegistros", _registroRUC10Service.listarRegistros());
+
         return "registros/index";
     }
+
+    @GetMapping("/filtrado")
+    public String filtrado(@ModelAttribute RegistroFilter filtro, Model model) {
+        model.addAttribute("lstEstados", _EstadoRegistro.listarEstado());
+        model.addAttribute("filtro", filtro);
+        model.addAttribute("lstRegistros", _registroRUC10Service.listarFiltros(filtro));
+
+        return "registros/index";
+    }
+
     @GetMapping("/detalle/{id}")
-    public String detalle(HttpServletRequest request,Model model , @PathVariable int id){
+    public String detalle(HttpServletRequest request, Model model, @PathVariable int id) {
         model.addAttribute("uri", request.getRequestURI());
 
         RegistroRUC10 registroRUC10 = _registroRUC10Service.buscarPorId(id);
@@ -88,38 +102,30 @@ public class RegistroRUC10Controller {
         return "registros/detalle";
     }
 
-    @PostMapping("/filtrar")
-    public String filtrar(HttpServletRequest request, Model model, @RequestParam("estado") int estado) {
-        model.addAttribute("uri", request.getRequestURI());
-        model.addAttribute("listaruc", _registroRUC10Service.listarRegistrosActivos(estado));
-        return "registros/index";
-    }
-
-
     @GetMapping("/nuevo")
-    public String nuevo( Model model) {
+    public String nuevo(Model model) {
         model.addAttribute("Consultor", _usuarioService.findByRol_Descripcion("Consultor"));
         model.addAttribute("Supervisor", _usuarioService.findByRol_Descripcion("Supervisor"));
         model.addAttribute("promocion", _promocionService.listarPromociones());
         model.addAttribute("plam", _planService.listarTodoPlanes());
-        model.addAttribute("sector" , _seSectorService.listarSectores() );
-        model.addAttribute("distrito" , _disDistritoService.listarDistritos());
-        model.addAttribute("ruc10DTO" , new RucDTO());
+        model.addAttribute("sector", _seSectorService.listarSectores());
+        model.addAttribute("distrito", _disDistritoService.listarDistritos());
+        model.addAttribute("ruc10DTO", new RucDTO());
 
         return "registros/nuevo";
     }
 
     @PostMapping("/create")
     @Transactional
-    public String create(HttpServletRequest request, Model model , @ModelAttribute RucDTO ruc10DTO , RedirectAttributes flash) {
+    public String create(HttpServletRequest request, Model model, @ModelAttribute RucDTO ruc10DTO, RedirectAttributes flash) {
         model.addAttribute("uri", request.getRequestURI());
 
         model.addAttribute("Consultor", _usuarioService.findByRol_Descripcion("Consultor"));
         model.addAttribute("Supervisor", _usuarioService.findByRol_Descripcion("Supervisor"));
         model.addAttribute("promocion", _promocionService.listarPromociones());
         model.addAttribute("plam", _planService.listarTodoPlanes());
-        model.addAttribute("sector" , _seSectorService.listarSectores() );
-        model.addAttribute("distrito" , _disDistritoService.listarDistritos());
+        model.addAttribute("sector", _seSectorService.listarSectores());
+        model.addAttribute("distrito", _disDistritoService.listarDistritos());
 
         try {
             System.out.println("===== DATOS RECIBIDOS EN EL FORMULARIO =====");
@@ -151,21 +157,21 @@ public class RegistroRUC10Controller {
             System.out.println("Observación: " + ruc10DTO.getObservacion());
             System.out.println("=============================================");
 
-            ContactoPrincipal contactoPrincipal=new ContactoPrincipal();
+            ContactoPrincipal contactoPrincipal = new ContactoPrincipal();
             contactoPrincipal.setNombreContacto(ruc10DTO.getNombreContacto());
             contactoPrincipal.setDni(ruc10DTO.getDniContacto());
             contactoPrincipal.setCorreo(ruc10DTO.getCorreoContacto());
             contactoPrincipal.setTelefono(ruc10DTO.getTelefonoContacto());
             contactoPrincipal = _ContactoPrincipalService.crearContactoPrin(contactoPrincipal);
 
-            ContactoSecundario contactoSecundario=new ContactoSecundario();
+            ContactoSecundario contactoSecundario = new ContactoSecundario();
             contactoSecundario.setNombreContacto(ruc10DTO.getNombreContactoSec());
             contactoSecundario.setDni(ruc10DTO.getDniContactoSec());
             contactoSecundario.setCorreo(ruc10DTO.getCorreoContactoSec());
             contactoSecundario.setTelefono(ruc10DTO.getTelefonoContactoSec());
             contactoSecundario = _ContactoSecundarioService.creaContactoSec(contactoSecundario);
 
-            Cronograma cronograma= new Cronograma();
+            Cronograma cronograma = new Cronograma();
             cronograma.setUbicacionInstalacion(
                     ruc10DTO.getNombreDistrito() + " " +         // Ej: JIRON PARURO
                             "NRO." + ruc10DTO.getNumero() + " " +        // Ej: NRO.1132
@@ -178,16 +184,16 @@ public class RegistroRUC10Controller {
             cronograma.setRangoInstalacion(ruc10DTO.getRangoInstalacion());
             cronograma = _CronogramaService.crearCronograma(cronograma);
 
-            Cliente cliente= new Cliente();
+            Cliente cliente = new Cliente();
             cliente.setDniCliente(ruc10DTO.getDniCliente());
             cliente.setRuc(ruc10DTO.getRucCliente());
             cliente.setTelefono(ruc10DTO.getTelefonoCliente());
             cliente.setNombre(ruc10DTO.getNombreCliente());
             cliente.setApellido(ruc10DTO.getApellidoCliente());
-            cliente.setEstado(true);
+            cliente.setActivo(true);
             cliente = _ClienteService.crearClientenew(cliente);
 
-            RegistroRUC10 rucDTO= new RegistroRUC10();
+            RegistroRUC10 rucDTO = new RegistroRUC10();
             rucDTO.setUsuarioConsulto(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioConsulto()));
             rucDTO.setUsuarioSupervisor(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioSupervisor()));
             rucDTO.setContactoPrincipal(contactoPrincipal);
@@ -203,9 +209,9 @@ public class RegistroRUC10Controller {
 //            flash.addFlashAttribute("alert", Alert.sweetAlertSuccess("Se ingreso correctamente el registro"));
             flash.addFlashAttribute("alert", Alert.sweetToast("Se creo correctamente la venta", "success", 5000));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            flash.addFlashAttribute("alert", Alert.sweetAlert("ERROR" ,"Se produjo un error" ,"error"));
+            flash.addFlashAttribute("alert", Alert.sweetAlert("ERROR", "Se produjo un error", "error"));
             model.addAttribute("error", "Ocurrió un error al registrar");
             return "/registros";
 
@@ -234,7 +240,6 @@ public class RegistroRUC10Controller {
         Promocion promocion = _promocionService.buscarPorId(registroRUC10.getPromocion().getIdPromocion());
 
 
-
         RucDTOUpdate ruc10DTO = new RucDTOUpdate(
                 registroRUC10.getIdRegistro(),
                 contactoPrincipal.getNombreContacto(), contactoPrincipal.getDni(),
@@ -258,20 +263,17 @@ public class RegistroRUC10Controller {
         return "registros/actualizar";
     }
 
-
-
-
     @PostMapping("/save")
     @Transactional
-    public String save(HttpServletRequest request, Model model , @ModelAttribute RucDTOUpdate ruc10DTO , RedirectAttributes flash) {
+    public String save(HttpServletRequest request, Model model, @ModelAttribute RucDTOUpdate ruc10DTO, RedirectAttributes flash) {
         model.addAttribute("uri", request.getRequestURI());
 
         model.addAttribute("Consultor", _usuarioService.findByRol_Descripcion("Consultor"));
         model.addAttribute("Supervisor", _usuarioService.findByRol_Descripcion("Supervisor"));
         model.addAttribute("promocion", _promocionService.listarPromociones());
         model.addAttribute("plam", _planService.listarTodoPlanes());
-        model.addAttribute("sector" , _seSectorService.listarSectores() );
-        model.addAttribute("distrito" , _disDistritoService.listarDistritos());
+        model.addAttribute("sector", _seSectorService.listarSectores());
+        model.addAttribute("distrito", _disDistritoService.listarDistritos());
 
         try {
             System.out.println("===== DATOS RECIBIDOS EN EL FORMULARIO =====");
@@ -305,9 +307,9 @@ public class RegistroRUC10Controller {
             System.out.println("=============================================");
 
 
-            RegistroRUC10 registroRUC10=_registroRUC10Service.buscarPorId(ruc10DTO.getIdRegistro());
+            RegistroRUC10 registroRUC10 = _registroRUC10Service.buscarPorId(ruc10DTO.getIdRegistro());
 
-            ContactoPrincipal contactoPrincipal=new ContactoPrincipal();
+            ContactoPrincipal contactoPrincipal = new ContactoPrincipal();
             contactoPrincipal.setIdContactoPrincipal(registroRUC10.getContactoPrincipal().getIdContactoPrincipal());
             contactoPrincipal.setNombreContacto(ruc10DTO.getNombreContacto());
             contactoPrincipal.setDni(ruc10DTO.getDniContacto());
@@ -315,7 +317,7 @@ public class RegistroRUC10Controller {
             contactoPrincipal.setTelefono(ruc10DTO.getTelefonoContacto());
             contactoPrincipal = _ContactoPrincipalService.crearContactoPrin(contactoPrincipal);
 
-            ContactoSecundario contactoSecundario=new ContactoSecundario();
+            ContactoSecundario contactoSecundario = new ContactoSecundario();
             contactoSecundario.setIdContactoSecundario(registroRUC10.getContactoSecundario().getIdContactoSecundario());
             contactoSecundario.setNombreContacto(ruc10DTO.getNombreContactoSec());
             contactoSecundario.setDni(ruc10DTO.getDniContactoSec());
@@ -323,24 +325,24 @@ public class RegistroRUC10Controller {
             contactoSecundario.setTelefono(ruc10DTO.getTelefonoContactoSec());
             contactoSecundario = _ContactoSecundarioService.creaContactoSec(contactoSecundario);
 
-            Cronograma cronograma= new Cronograma();
+            Cronograma cronograma = new Cronograma();
             cronograma.setIdCronograma(registroRUC10.getCronograma().getIdCronograma());
             cronograma.setUbicacionInstalacion(ruc10DTO.getLugarInstalacion());
             cronograma.setRangoInstalacion(ruc10DTO.getRangoInstalacion());
             cronograma.setFechaInstalacion(ruc10DTO.getFechaInstalacion());
             cronograma = _CronogramaService.crearCronograma(cronograma);
 
-            Cliente cliente= new Cliente();
+            Cliente cliente = new Cliente();
             cliente.setDniCliente(registroRUC10.getCliente().getDniCliente());
             cliente.setDniCliente(ruc10DTO.getDniCliente());
             cliente.setRuc(ruc10DTO.getRucCliente());
             cliente.setTelefono(ruc10DTO.getTelefonoCliente());
             cliente.setNombre(ruc10DTO.getNombreCliente());
             cliente.setApellido(ruc10DTO.getApellidoCliente());
-            cliente.setEstado(true);
+            cliente.setActivo(true);
             cliente = _ClienteService.crearClientenew(cliente);
 
-            RegistroRUC10 rucDTO= new RegistroRUC10();
+            RegistroRUC10 rucDTO = new RegistroRUC10();
             rucDTO.setIdRegistro(registroRUC10.getIdRegistro());
             rucDTO.setUsuarioConsulto(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioConsulto()));
             rucDTO.setUsuarioSupervisor(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioSupervisor()));
@@ -357,9 +359,9 @@ public class RegistroRUC10Controller {
 //            flash.addFlashAttribute("alert", Alert.sweetAlertSuccess("Se ingreso correctamente el registro"));
             flash.addFlashAttribute("alert", Alert.sweetToast("Se Actualizo correctamente la venta", "success", 5000));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            flash.addFlashAttribute("alert", Alert.sweetAlert("ERROR" ,"Se produjo un error" ,"error"));
+            flash.addFlashAttribute("alert", Alert.sweetAlert("ERROR", "Se produjo un error", "error"));
             model.addAttribute("error", "Ocurrió un error al registrar");
             return "/registros";
 
@@ -367,18 +369,4 @@ public class RegistroRUC10Controller {
 
         return "redirect:/registros";
     }
-
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable int id , RedirectAttributes flash){
-
-        ResultadoResponse response= _registroRUC10Service.cambiarEstado(id);
-        flash.addFlashAttribute("alert", Alert.sweetToast("Cambio de estado correctamente", "success", 3000));
-
-
-
-        return "redirect:/registros";
-    }
-
-
-
 }

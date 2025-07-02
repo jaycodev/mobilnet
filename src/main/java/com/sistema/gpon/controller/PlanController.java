@@ -43,50 +43,47 @@ public class PlanController {
         return "planes/index";
     }
 
+    @GetMapping("/nuevo")
+    public String nuevo(Model model) {
+        model.addAttribute("plan", new Plan());
+        return "planes/nuevo";
+    }
 
-    @GetMapping("/nuevoPlan")
-    public String nuevoPlan(Model model) {
-    	model.addAttribute("plan", new Plan());
-    	return "planes/nuevo";
-    }
-    
     @PostMapping("/registrar")
-    public String registrarPlan(@Validated @ModelAttribute Plan plan,BindingResult bindingResults, Model model, RedirectAttributes flash) {
-    	
-    	ResultadoResponse result = planService.crearPlan(plan);
-    
-    	if(!result.success) {
-    		model.addAttribute("alert", Alert.sweetAlertError("Error " + result.mensaje));
-    		return ("planes/nuevo");
-    	}else {
-    		flash.addFlashAttribute("alert",Alert.sweetToast(result.mensaje, "success", 5000));
-    	}
-    	return "redirect:/planes";
+    public String registrarPlan(@Validated @ModelAttribute Plan plan, BindingResult bindingResults, Model model, RedirectAttributes flash) {
+
+        ResultadoResponse result = planService.crearPlan(plan);
+
+        if (!result.success) {
+            model.addAttribute("alert", Alert.sweetAlertError("Error " + result.mensaje));
+            return ("planes/nuevo");
+        } else {
+            flash.addFlashAttribute("alert", Alert.sweetToast(result.mensaje, "success", 5000));
+        }
+        return "redirect:/planes";
     }
-    
+
     @GetMapping("/editarPlan/{id}")
     public String editarPlan(@PathVariable Integer id, Model model) {
-    	Plan planObtenido = planService.buscarPorId(id);
-    	model.addAttribute("plan", planObtenido);
-    	return "planes/edicion";
+        Plan planObtenido = planService.buscarPorId(id);
+        model.addAttribute("plan", planObtenido);
+        return "planes/edicion";
     }
-    
+
     @PostMapping("/guardarPlan")
     public String editarPlanSave(@Validated @ModelAttribute Plan plan, BindingResult bindingResult, Model model,
-            RedirectAttributes flash) {
-    	ResultadoResponse response = planService.actualizarPlan(plan);
-    	
-    	if(!response.success) {
-    		model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
-    		return "planes/edicion";
-    	}else {
-    		model.addAttribute("alert", Alert.sweetToast(response.mensaje, "Succes", 5000));
-    		return "redirect:/planes";
-    	}
-    	
+                                 RedirectAttributes flash) {
+        ResultadoResponse response = planService.actualizarPlan(plan);
+
+        if (!response.success) {
+            model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
+            return "planes/edicion";
+        } else {
+            model.addAttribute("alert", Alert.sweetToast(response.mensaje, "Succes", 5000));
+            return "redirect:/planes";
+        }
     }
-    
-    
+
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Integer id, RedirectAttributes flash) {
         boolean eliminado = planService.eliminarPlan(id);
@@ -97,6 +94,4 @@ public class PlanController {
         }
         return "redirect:/planes";
     }
-    
-    
 }

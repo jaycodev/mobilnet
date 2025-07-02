@@ -37,23 +37,18 @@ public class UsuarioController {
 	public String listado(HttpServletRequest request, Model model) {
 		model.addAttribute("uri", request.getRequestURI());
 
-		List<Usuario> lstUsuarios = usuarioService.listarUsuarios();
-		List<Rol> lstRoles = rolesService.listarRoles();
-		model.addAttribute("lstRoles", lstRoles);
+		model.addAttribute("lstRoles", rolesService.listarRoles());
 		model.addAttribute("filtro", new UsuarioFilter());
-		model.addAttribute("lstUsuarios", lstUsuarios);
+		model.addAttribute("lstUsuarios", usuarioService.listarUsuarios());
+
 		return "usuarios/index";
 	}
 
 	@GetMapping("/filtrado")
 	public String filtrado(@ModelAttribute UsuarioFilter filtro, Model model) {
-
-		List<Usuario> lstUsuarios = usuarioService.listarFiltros(filtro);
-		List<Rol> lstRoles = rolesService.listarRoles();
-
-		model.addAttribute("lstRoles", lstRoles);
+		model.addAttribute("lstRoles", rolesService.listarRoles());
 		model.addAttribute("filtro", filtro);
-		model.addAttribute("lstUsuarios", lstUsuarios);
+		model.addAttribute("lstUsuarios", usuarioService.listarFiltros(filtro));
 
 		return "usuarios/index";
 	}

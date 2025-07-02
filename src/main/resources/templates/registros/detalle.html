@@ -100,8 +100,8 @@
                             <td th:text="${cliente.apellido}"></td>
                             <td th:text="${cliente.telefono}"></td>
                             <td>
-                                <span th:text="${cliente.estado ? 'Activo' : 'Inactivo'}"
-                                      th:classappend="${cliente.estado} ? 'text-success' : 'text-danger'"></span>
+                                <span th:text="${cliente.activo ? 'Activo' : 'Inactivo'}"
+                                      th:classappend="${cliente.activo} ? 'text-success' : 'text-danger'"></span>
                             </td>
                         </tr>
                         </tbody>
