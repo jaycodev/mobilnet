@@ -71,6 +71,8 @@
                                             </div>
                                         </div>
                                     </form>
+
+                                    <span class="d-none export-estado" th:text="${cliente.estado} ? 'Sí' : 'No'"></span>
                                 </td>
                                 <td class="ps-0">
                                     <a th:href="@{'/clientes/edicion/' + ${cliente.dniCliente}}" class="btn btn-sm text-primary me-1 mb-0">
@@ -119,9 +121,18 @@
             table.rows({ search: 'applied' }).every(function () {
                 const row = this.data();
                 const rowData = [];
+
                 for (let i = 0; i < row.length - 1; i++) {
-                    rowData.push($(row[i]).text() || row[i]);
+                    const cell = $(row[i]);
+
+                    const statusSpan = cell.find('.export-estado');
+                    if (statusSpan.length > 0) {
+                        rowData.push(statusSpan.text().trim());
+                    } else {
+                        rowData.push(cell.text().trim());
+                    }
                 }
+
                 data.push(rowData);
             });
 
@@ -169,7 +180,20 @@
                     lineColor: '#cccccc',
                     lineWidth: 0.1
                 },
-                theme: 'grid'
+                theme: 'grid',
+                didParseCell: function (data) {
+                    const colIndex = headers.indexOf('Activo');
+                    if (data.section === 'body' && data.column.index === colIndex) {
+                        const normalize = (str) => str?.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+                        const value = normalize(data.cell.raw);
+
+                        if (value === 'si') {
+                            data.cell.styles.textColor = '#4CAF50';
+                        } else if (value === 'no') {
+                            data.cell.styles.textColor = '#F44335';
+                        }
+                    }
+                }
             });
 
             doc.save('clientes.pdf');
@@ -192,7 +216,13 @@
                 const row = this.data();
                 const rowData = [];
                 for (let i = 0; i < row.length - 1; i++) {
-                    rowData.push($(row[i]).text().trim() || row[i]);
+                    const cell = $(row[i]);
+                    const statusSpan = cell.find('.export-estado');
+                    if (statusSpan.length > 0) {
+                        rowData.push(statusSpan.text().trim());
+                    } else {
+                        rowData.push(cell.text().trim());
+                    }
                 }
                 data.push(rowData);
             });
@@ -240,8 +270,21 @@
 
             data.forEach(rowData => {
                 const row = sheet.addRow(rowData);
-                row.eachCell(cell => {
-                    cell.font = { color: { argb: 'FF000000' } };
+                row.eachCell((cell, colNumber) => {
+                    const isStatusColumn = headers[colNumber - 1] === 'Activo';
+                    let fontColor = 'FF000000';
+
+                    if (isStatusColumn) {
+                        const value = cell.value?.toString()
+                            .normalize("NFD")
+                            .replace(/[\u0300-\u036f]/g, "")
+                            .toLowerCase();
+
+                        if (value === 'si') fontColor = 'FF4CAF50';
+                        else if (value === 'no') fontColor = 'FFF44335';
+                    }
+
+                    cell.font = { color: { argb: fontColor } };
                     cell.alignment = { vertical: 'middle', horizontal: 'left' };
                     cell.border = {
                         top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
