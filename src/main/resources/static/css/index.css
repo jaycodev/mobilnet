@@ -18,3 +18,7 @@
   --bs-btn-padding-x: 1rem !important;
   --bs-btn-padding-y: 0.5rem !important;
 }
+
+.invalid-feedback {
+  font-size: 0.75rem;
+}
