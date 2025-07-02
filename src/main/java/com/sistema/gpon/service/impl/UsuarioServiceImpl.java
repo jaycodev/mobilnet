@@ -7,7 +7,7 @@ import com.sistema.gpon.utils.ResultadoResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.sistema.gpon.dtos.UsuarioFilter;
+import com.sistema.gpon.dto.UsuarioFilter;
 import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;

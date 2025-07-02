@@ -1,7 +1,11 @@
 package com.sistema.gpon.controller;
 
+import com.sistema.gpon.dto.ClienteFilter;
+import com.sistema.gpon.dto.UsuarioFilter;
 import com.sistema.gpon.model.Cliente;
 import com.sistema.gpon.model.Promocion;
+import com.sistema.gpon.model.Rol;
+import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.utils.Alert;
 import com.sistema.gpon.utils.ResultadoResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +33,18 @@ public class ClienteController {
         model.addAttribute("uri", request.getRequestURI());
 
         List<Cliente> lstClientes = clienteService.listarClientes();
+        model.addAttribute("filtro", new ClienteFilter());
+        model.addAttribute("lstClientes", lstClientes);
+
+        return "clientes/index";
+    }
+
+    @GetMapping("/filtrado")
+    public String filtrado(@ModelAttribute ClienteFilter filtro, Model model) {
+
+        List<Cliente> lstClientes = clienteService.listarFiltros(filtro);
+
+        model.addAttribute("filtro", filtro);
         model.addAttribute("lstClientes", lstClientes);
 
         return "clientes/index";

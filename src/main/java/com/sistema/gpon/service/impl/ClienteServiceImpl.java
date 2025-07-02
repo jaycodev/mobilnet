@@ -2,6 +2,8 @@ package com.sistema.gpon.service.impl;
 
 import java.util.List;
 
+import com.sistema.gpon.dto.ClienteFilter;
+import com.sistema.gpon.dto.UsuarioFilter;
 import com.sistema.gpon.model.Promocion;
 import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.service.ClienteService;
@@ -40,6 +42,11 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
+    }
+
+    @Override
+    public List<Cliente> listarFiltros(ClienteFilter filtro) {
+        return clienteRepository.findAllWithFilter(filtro.getActivo());
     }
 
     @Override

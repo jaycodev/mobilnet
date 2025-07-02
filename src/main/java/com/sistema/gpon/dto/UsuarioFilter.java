@@ -1,4 +1,4 @@
-package com.sistema.gpon.dtos;
+package com.sistema.gpon.dto;
 
 import lombok.Getter;
 import lombok.Setter;
