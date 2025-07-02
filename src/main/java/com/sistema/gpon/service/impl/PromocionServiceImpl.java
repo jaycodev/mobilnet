@@ -53,7 +53,7 @@ public class PromocionServiceImpl implements PromocionService {
 			String mensaje = String.format("Promocion actualizada correctamente", actualizado.getIdPromocion());
 			return new ResultadoResponse(true, mensaje);
 
-		} catch (Exception ex) {
+		} catch (Exception ex) { 
 			return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
 		}		
 	}

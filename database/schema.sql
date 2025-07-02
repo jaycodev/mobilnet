@@ -29,7 +29,8 @@ CREATE TABLE Cliente (
 
 CREATE TABLE Plan (
     IdPlan INT PRIMARY KEY AUTO_INCREMENT,
-    Descripcion VARCHAR(255) NOT NULL
+    Descripcion VARCHAR(255) NOT NULL,
+    Activo Bit default 1
 );
 
 CREATE TABLE Promocion (
