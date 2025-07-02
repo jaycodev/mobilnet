@@ -2,7 +2,7 @@ package com.sistema.gpon.service;
 
 import java.util.List;
 
-import com.sistema.gpon.dtos.UsuarioFilter;
+import com.sistema.gpon.dto.UsuarioFilter;
 import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.utils.ResultadoResponse;
 

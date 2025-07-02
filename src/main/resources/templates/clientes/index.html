@@ -18,6 +18,32 @@
                     </a>
                 </div>
 
+                <div class="row g-2 px-4 pt-3 d-flex justify-content-between align-items-center">
+                    <form method="get" th:action="@{/clientes/filtrado}" th:object="${filtro}" class="d-flex flex-wrap gap-2 col">
+                        <!-- Select de Roles -->
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm">
+								<span class="input-group-text border-secondary">
+									<i id="estado-icon" class="fa-solid fa-filter text-secondary"></i>
+								</span>
+                                <select id="estado-select" class="form-select border-secondary" th:field="*{activo}" onchange="actualizarIconoEstado(); this.form.submit()">
+                                    <option value="">Todos</option>
+                                    <option value="true">Activo</option>
+                                    <option value="false">Inactivo</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Botón Limpiar -->
+                        <div class="col-auto">
+                            <a th:href="@{/clientes}" class="btn btn-outline-secondary btn-sm mb-0">
+                                <i class="fa-solid fa-broom me-1"></i>
+                                Limpiar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="px-4 pt-3">
                     <div class="d-flex gap-2">
                         <button id="btn-exportar-pdf" class="btn btn-danger btn-sm mb-0">
@@ -67,12 +93,12 @@
                                         <div class="d-flex align-items-center gap-2">
                                             <div class="form-switch">
                                                 <input class="form-check-input" type="checkbox"
-                                                       th:checked="${cliente.estado}" onchange="this.form.submit()">
+                                                       th:checked="${cliente.activo}" onchange="this.form.submit()">
                                             </div>
                                         </div>
                                     </form>
 
-                                    <span class="d-none export-estado" th:text="${cliente.estado} ? 'Sí' : 'No'"></span>
+                                    <span class="d-none export-estado" th:text="${cliente.activo} ? 'Sí' : 'No'"></span>
                                 </td>
                                 <td class="ps-0">
                                     <a th:href="@{'/clientes/edicion/' + ${cliente.dniCliente}}" class="btn btn-sm text-primary me-1 mb-0">
@@ -94,7 +120,29 @@
 </th:block>
 
 <th:block th:fragment="scripts">
+    <!-- Initialize DataTable with custom styles -->
     <th:block th:replace="fragments/datatable-script :: datatableScript('tabla-clientes')"/>
+
+    <!-- Dynamic icon based on status filter selection -->
+    <script>
+        function actualizarIconoEstado() {
+            const select = document.getElementById('estado-select');
+            const icon = document.getElementById('estado-icon');
+            const value = select.value;
+
+            icon.className = 'fa-solid';
+
+            if (value === 'true') {
+                icon.classList.add('fa-toggle-on', 'text-primary');
+            } else if (value === 'false') {
+                icon.classList.add('fa-toggle-off', 'text-danger');
+            } else {
+                icon.classList.add('fa-filter', 'text-secondary');
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", actualizarIconoEstado);
+    </script>
 
     <!-- jsPDF + autoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

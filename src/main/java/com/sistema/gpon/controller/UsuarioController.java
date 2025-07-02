@@ -2,7 +2,7 @@ package com.sistema.gpon.controller;
 
 import java.util.List;
 
-import com.sistema.gpon.dtos.UsuarioFilter;
+import com.sistema.gpon.dto.UsuarioFilter;
 import com.sistema.gpon.model.Rol;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
