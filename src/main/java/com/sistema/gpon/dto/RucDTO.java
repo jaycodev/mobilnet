@@ -1,4 +1,4 @@
-package com.sistema.gpon.model;
+package com.sistema.gpon.dto;
 
 import lombok.*;
 

@@ -93,7 +93,6 @@ CREATE TABLE RegistroRUC10 (
     IdInstalacion VARCHAR(255)  DEFAULT 'ninguno',
     IdCarrito VARCHAR(255)  DEFAULT 'ninguno',
     Observacion VARCHAR(255),
-    activo int default 1,
     FOREIGN KEY (IdUsuarioConsulto) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (IdUsuarioSupervisor) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (DniCliente) REFERENCES Cliente(DniCliente),

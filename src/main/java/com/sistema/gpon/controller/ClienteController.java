@@ -32,20 +32,16 @@ public class ClienteController {
     public String listado(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
-        List<Cliente> lstClientes = clienteService.listarClientes();
         model.addAttribute("filtro", new ClienteFilter());
-        model.addAttribute("lstClientes", lstClientes);
+        model.addAttribute("lstClientes", clienteService.listarClientes());
 
         return "clientes/index";
     }
 
     @GetMapping("/filtrado")
     public String filtrado(@ModelAttribute ClienteFilter filtro, Model model) {
-
-        List<Cliente> lstClientes = clienteService.listarFiltros(filtro);
-
         model.addAttribute("filtro", filtro);
-        model.addAttribute("lstClientes", lstClientes);
+        model.addAttribute("lstClientes", clienteService.listarFiltros(filtro));
 
         return "clientes/index";
     }

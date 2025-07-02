@@ -11,7 +11,8 @@
 						<i class="fa-solid fa-layer-group me-1"></i>
 						Lista de planes
 					</h5>
-					<a th:href="@{/planes/nuevoPlan}" class="btn btn-primary btn-sm mb-0">
+
+					<a th:href="@{/planes/nuevo}" class="btn btn-primary mb-0">
 						<i class="fas fa-plus me-1"></i>
 						Nuevo
 					</a>
@@ -34,16 +35,15 @@
 					<table id="tabla-planes" class="table align-items-center mb-0">
 						<thead>
 							<tr>
-								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código
-								</th>
-								<th class="text-secondary opacity-7">Descripcion</th>
-								<th class="text-secondary opacity-7">Acciones</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Descripcion</th>
+								<th class="text-secondary opacity-7"></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="plan, iterStart : ${lstPlan}">
 								<td class="ps-4">
-									<span class="badge border text-dark" th:text="${plan.idPlan}"></span>
+									<span class="badge badge-sm border text-dark" th:text="${plan.idPlan}"></span>
 								</td>
 								<td class="ps-0">
 									<p class="text-sm text-dark mb-0" th:text="${plan.descripcion}"></p>
