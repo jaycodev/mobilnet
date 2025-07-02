@@ -24,13 +24,13 @@ CREATE TABLE Cliente (
     Nombre VARCHAR(255) NOT NULL,
     Apellido VARCHAR(255) NOT NULL,
     Telefono VARCHAR(9) NOT NULL,
-    Estado BOOLEAN NOT NULL DEFAULT TRUE
+    Activo BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE Plan (
     IdPlan INT PRIMARY KEY AUTO_INCREMENT,
     Descripcion VARCHAR(255) NOT NULL,
-    Activo Bit default 1
+    Activo BIT DEFAULT 1
 );
 
 CREATE TABLE Promocion (

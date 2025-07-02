@@ -36,6 +36,6 @@ public class Cliente {
 	@Pattern(regexp = "\\d{9}", message = "El teléfono debe tener 9 dígitos")
 	private String telefono;
 
-	@Column(name = "Estado", nullable = false)
-	private Boolean estado;
+	@Column(name = "Activo", nullable = false)
+	private Boolean activo;
 }
