@@ -61,6 +61,32 @@ public class RegistroRUC10Controller {
 //        model.addAttribute("listaruc",_registroRUC10Service.listarRegistros());
         return "registros/index";
     }
+    @GetMapping("/detalle/{id}")
+    public String detalle(HttpServletRequest request,Model model , @PathVariable int id){
+        model.addAttribute("uri", request.getRequestURI());
+
+        RegistroRUC10 registroRUC10 = _registroRUC10Service.buscarPorId(id);
+        Cronograma cronograma = _CronogramaService.buscarPorId(registroRUC10.getCronograma().getIdCronograma());
+        Cliente cliente = _ClienteService.buscarPorId(registroRUC10.getCliente().getDniCliente());
+        ContactoPrincipal contactoPrincipal = _ContactoPrincipalService.buscarPorId(registroRUC10.getContactoPrincipal().getIdContactoPrincipal());
+        ContactoSecundario contactoSecundario = _ContactoSecundarioService.buscarPorId(registroRUC10.getContactoSecundario().getIdContactoSecundario());
+        Usuario consultor = _usuarioService.buscarPorId(registroRUC10.getUsuarioConsulto().getIdUsuario());
+        Usuario supervisor = _usuarioService.buscarPorId(registroRUC10.getUsuarioSupervisor().getIdUsuario());
+        Plan plan = _planService.buscarPorId(registroRUC10.getPlan().getIdPlan());
+        Promocion promocion = _promocionService.buscarPorId(registroRUC10.getPromocion().getIdPromocion());
+
+        model.addAttribute("registro", registroRUC10);
+        model.addAttribute("cronograma", cronograma);
+        model.addAttribute("cliente", cliente);
+        model.addAttribute("contactoPrincipal", contactoPrincipal);
+        model.addAttribute("contactoSecundario", contactoSecundario);
+        model.addAttribute("consultor", consultor);
+        model.addAttribute("supervisor", supervisor);
+        model.addAttribute("plan", plan);
+        model.addAttribute("promocion", promocion);
+
+        return "registros/detalle";
+    }
 
     @PostMapping("/filtrar")
     public String filtrar(HttpServletRequest request, Model model, @RequestParam("estado") int estado) {
@@ -158,6 +184,7 @@ public class RegistroRUC10Controller {
             cliente.setTelefono(ruc10DTO.getTelefonoCliente());
             cliente.setNombre(ruc10DTO.getNombreCliente());
             cliente.setApellido(ruc10DTO.getApellidoCliente());
+            cliente.setEstado(true);
             cliente = _ClienteService.crearClientenew(cliente);
 
             RegistroRUC10 rucDTO= new RegistroRUC10();
@@ -310,6 +337,7 @@ public class RegistroRUC10Controller {
             cliente.setTelefono(ruc10DTO.getTelefonoCliente());
             cliente.setNombre(ruc10DTO.getNombreCliente());
             cliente.setApellido(ruc10DTO.getApellidoCliente());
+            cliente.setEstado(true);
             cliente = _ClienteService.crearClientenew(cliente);
 
             RegistroRUC10 rucDTO= new RegistroRUC10();
@@ -344,7 +372,7 @@ public class RegistroRUC10Controller {
     public String delete(@PathVariable int id , RedirectAttributes flash){
 
         ResultadoResponse response= _registroRUC10Service.cambiarEstado(id);
-        flash.addFlashAttribute("alert", Alert.sweetToast("Registro eliminada correctamente", "success", 3000));
+        flash.addFlashAttribute("alert", Alert.sweetToast("Cambio de estado correctamente", "success", 3000));
 
 
 

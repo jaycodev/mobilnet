@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" th:fragment="layoutBase(controlador, accion, contenido, scripts)">
+
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,7 +12,48 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/argon-dashboard/2.0.4/css/argon-dashboard.min.css" rel="stylesheet">
 	<link href="/css/index.css" rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<style>
+		.form-step {
+			display: none;
+		}
+
+		.form-step.active {
+			display: block;
+		}
+	</style>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+	function confirmarCambioEstado(checkbox) {
+        const form = checkbox.form;
+        const activo = checkbox.checked; // true si se activó, false si se desactivó
+
+        if (!activo) {
+            // Si se va a desactivar, pedir confirmación
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Estás por desactivar este registro.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, desactivar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                } else {
+                    checkbox.checked = true; // volver a activarlo si cancela
+                }
+            });
+        } else {
+            // Si se activa, no se necesita confirmación
+            form.submit();
+        }
+    }
+</script>
 <body class="g-sidenav-show   bg-gray-100">
 	<div class="min-height-300 bg-dark position-absolute w-100"></div>
 	<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
