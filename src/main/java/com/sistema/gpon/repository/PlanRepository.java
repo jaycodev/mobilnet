@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 public interface PlanRepository extends JpaRepository<Plan, Integer> {
 	
 	@Query("""
-			select p from Plan p 
-			where activo = true 
-			order by activo ASC
+			SELECT p FROM Plan p 
+			WHERE activo = true 
+			ORDER BY activo ASC
 			""")
-	List<Plan>listaPromocionesEstadoTrue();
+	List<Plan>listarPlanesEstadoTrue();
 }
