@@ -10,11 +10,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlanRepository extends JpaRepository<Plan, Integer> {
-	
-	@Query("""
-			SELECT p FROM Plan p 
-			WHERE activo = true 
-			ORDER BY activo ASC
-			""")
-	List<Plan>listarPlanesEstadoTrue();
 }

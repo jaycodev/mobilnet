@@ -2,6 +2,7 @@ package com.sistema.gpon.service.impl;
 
 import java.util.List;
 
+import com.sistema.gpon.model.Cliente;
 import com.sistema.gpon.service.PromocionService;
 import com.sistema.gpon.utils.ResultadoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class PromocionServiceImpl implements PromocionService {
 	public ResultadoResponse crearPromocion(Promocion promocion) {		
 		try {	
 			
-			if (promocion.getEstado() == null || promocion.getEstado() == false) {
-				promocion.setEstado(true);
+			if (promocion.getActivo() == null || promocion.getActivo() == false) {
+				promocion.setActivo(true);
 	        }
 			
 			Promocion registrada = promocionRepository.save(promocion);
@@ -59,35 +60,23 @@ public class PromocionServiceImpl implements PromocionService {
 	}
 
 	@Override
-	public boolean eliminarPromocion(Integer idPromocion) {
-	    try {
-	        if (promocionRepository.existsById(idPromocion)) {
-	            promocionRepository.deleteById(idPromocion);
-	            return true;
-	        } else {
-	            return false;
-	        }
-	    } catch (Exception ex) {
-	        ex.printStackTrace();
-	        return false; 
-	    }
-	}
-	
-	public Promocion getOne(Integer id) {
-		return promocionRepository.findById(id).orElseThrow();
-	}
-
-	@Override
 	public ResultadoResponse cambiarEstado(Integer id) {
-		Promocion promo = this.getOne(id);
-		String accion = promo.getEstado() ? "desactivado" : "activado";
+		Promocion promo = this.buscarPorId(id);
+		Boolean accion = promo.getActivo() ? false : true;
+		String texto;
 
-		promo.setEstado(!promo.getEstado());
+		if (accion == true) {
+			texto = "ha sido activada";
+		} else {
+			texto = "ha sido inactivada";
+		}
+
+		promo.setActivo(!promo.getActivo());
 
 		try {
-			Promocion registrada = promocionRepository.save(promo);
+			Promocion registrado = promocionRepository.save(promo);
 
-			String mensaje = String.format("Promocion con código %s %s", registrada.getIdPromocion(), accion);
+			String mensaje = String.format("Promocion con código: %s %s", registrado.getIdPromocion(), texto);
 			return new ResultadoResponse(true, mensaje);
 
 		} catch (Exception ex) {

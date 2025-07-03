@@ -10,6 +10,5 @@ public interface PromocionService {
     List<Promocion> listarPromociones();
     Promocion buscarPorId(Integer idPromocion);
     ResultadoResponse actualizarPromocion(Promocion promocion);
-    boolean eliminarPromocion(Integer idPromocion);
-    ResultadoResponse cambiarEstado(Integer Id);
+    ResultadoResponse cambiarEstado(Integer idPromocion);
 }

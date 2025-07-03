@@ -92,8 +92,7 @@ public class ClienteController {
             return "clientes/edicion";
         }
 
-        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-        flash.addFlashAttribute("alert", toast);
+        flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
 
         return "redirect:/clientes";
     }

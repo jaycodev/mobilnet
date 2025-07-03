@@ -8,8 +8,7 @@ import com.sistema.gpon.utils.ResultadoResponse;
 public interface PlanService {
     ResultadoResponse crearPlan(Plan plan);
     List<Plan> listarPlanes();
-    List<Plan> listarTodoPlanes();
     Plan buscarPorId(Integer idPlan);
     ResultadoResponse actualizarPlan(Plan plan);
-    boolean eliminarPlan(Integer idPlan);
+    ResultadoResponse cambiarEstado(Integer idPlan);
 }
