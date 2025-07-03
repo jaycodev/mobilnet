@@ -9,20 +9,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-	@Query("SELECT u FROM Usuario u ORDER BY u.estado DESC, u.idUsuario DESC")
-	List<Usuario> findAllOrderByEstadoAndIdUsuarioDesc();
-
-	List<Usuario> findByRol_Descripcion(String descripcion);
-	List<Usuario> findByEstadoOrderByIdUsuarioDesc(Boolean estado);
+	List<Usuario> findByRolDescripcion(String descripcion);
 	
 	@Query("""
 		    SELECT u FROM Usuario u
 		    WHERE (:idRol IS NULL OR u.rol.idRol = :idRol)
-		    ORDER BY u.estado DESC, u.idUsuario DESC
+		    ORDER BY u.activo DESC, u.idUsuario DESC
 		""")
 		List<Usuario> findAllWithFilter(@Param("idRol") Integer idRol);
 
-	
-	/*CODIGO AÑADIDO ELIMINAR SI DA ERROR*/
 	Usuario findByCorreoAndContrasena(String correo, String contrasena);
 }

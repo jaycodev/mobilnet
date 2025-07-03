@@ -22,8 +22,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     public ResultadoResponse crearUsuario(Usuario usuario) {
         try {
 
-            if (usuario.getEstado() == null || usuario.getEstado() == false) {
-                usuario.setEstado(true);
+            if (usuario.getActivo() == null || usuario.getActivo() == false) {
+                usuario.setActivo(true);
             }
 
             Usuario registrado = usuarioRepository.save(usuario);
@@ -39,7 +39,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAllOrderByEstadoAndIdUsuarioDesc();
+        return usuarioRepository.findAll();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<Usuario> findByRol_Descripcion(String descripcion) {
-        return usuarioRepository.findByRol_Descripcion(descripcion);
+        return usuarioRepository.findByRolDescripcion(descripcion);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public ResultadoResponse cambiarEstado(Integer id) {
         Usuario usuario = this.buscarPorId(id);
-        Boolean accion = usuario.getEstado() ? false : true;
+        Boolean accion = usuario.getActivo() ? false : true;
         String texto;
 
         if (accion == true) {
@@ -77,7 +77,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             texto = "ha sido inactivado";
         }
 
-        usuario.setEstado(!usuario.getEstado());
+        usuario.setActivo(!usuario.getActivo());
 
         try {
             Usuario registrado = usuarioRepository.save(usuario);
