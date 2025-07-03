@@ -11,5 +11,4 @@ public interface ContactoSecundarioService {
     ContactoSecundario buscarPorId(Integer idCOntacto);
     ContactoSecundario actualizarContactoSec(ContactoSecundario contactoSecundario);
     boolean eliminarContactoSec(Integer idContacto);
-
 }

@@ -21,19 +21,19 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public ResultadoResponse crearUsuario(Usuario usuario) {
         try {
-
-            if (usuario.getActivo() == null || usuario.getActivo() == false) {
-                usuario.setActivo(true);
-            }
+            usuario.setActivo(true);
 
             Usuario registrado = usuarioRepository.save(usuario);
 
-            String mensaje = String.format("Usuario con numero %s registrado correctamente", registrado.getIdUsuario());
+            String nombreCompleto = registrado.getNombre() + " " + registrado.getApellido();
+            String mensaje = String.format("El usuario %s (Cod. %s) ha sido registrado exitosamente.",
+                    nombreCompleto, registrado.getIdUsuario());
+
             return new ResultadoResponse(true, mensaje);
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new ResultadoResponse(false, "Error al registrar: " + ex.getMessage());
+            return new ResultadoResponse(false, "Ocurrió un error al registrar el usuario: " + ex.getMessage());
         }
     }
 
@@ -43,15 +43,23 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public List<Usuario> listarFiltros(UsuarioFilter filtro) {
+        return usuarioRepository.findAllWithFilter(filtro.getIdRol(), filtro.getActivo());
+    }
+
+    @Override
     public ResultadoResponse modificarUsuario(Usuario usuario) {
         try {
             Usuario actualizado = usuarioRepository.save(usuario);
 
-            String mensaje = String.format("Usuario con nro. %s actualizado", actualizado.getIdUsuario());
+            String nombreCompleto = actualizado.getNombre() + " " + actualizado.getApellido();
+            String mensaje = String.format("Los datos del usuario %s (Cod. %s) han sido actualizados correctamente.",
+                    nombreCompleto, actualizado.getIdUsuario());
+
             return new ResultadoResponse(true, mensaje);
 
         } catch (Exception ex) {
-            return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
+            return new ResultadoResponse(false, "Ocurrió un error al actualizar el usuario: " + ex.getMessage());
         }
     }
 
@@ -68,32 +76,24 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public ResultadoResponse cambiarEstado(Integer id) {
         Usuario usuario = this.buscarPorId(id);
-        Boolean accion = usuario.getActivo() ? false : true;
-        String texto;
+        boolean accion = !usuario.getActivo();
 
-        if (accion == true) {
-            texto = "ha sido activado";
-        } else {
-            texto = "ha sido inactivado";
-        }
+        String texto = accion ? "activado" : "desactivado";
 
-        usuario.setActivo(!usuario.getActivo());
+        usuario.setActivo(accion);
 
         try {
             Usuario registrado = usuarioRepository.save(usuario);
 
-            String mensaje = String.format("Usuario con código: %s %s", registrado.getIdUsuario(), texto);
+            String nombreCompleto = registrado.getNombre() + " " + registrado.getApellido();
+            String mensaje = String.format("El usuario %s (Cod. %s) ha sido %s correctamente.",
+                    nombreCompleto, registrado.getIdUsuario(), texto);
             return new ResultadoResponse(true, mensaje);
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new ResultadoResponse(false, "Error al cambiar de estado: " + ex.getMessage());
+            return new ResultadoResponse(false, "Ocurrió un error al cambiar el estado del usuario: " + ex.getMessage());
         }
-    }
-
-    @Override
-    public List<Usuario> listarFiltros(UsuarioFilter filtro) {
-        return usuarioRepository.findAllWithFilter(filtro.getIdRol(), filtro.getActivo());
     }
 
     @Override

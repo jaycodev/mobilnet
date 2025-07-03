@@ -62,8 +62,7 @@ public class PromocionController {
             return "inventarios/nuevo";
         }
 
-        flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
-
+        flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
         return "redirect:/promociones";
     }
 
@@ -84,8 +83,7 @@ public class PromocionController {
             return "promociones/edicion";
         }
 
-        flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
-
+        flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
         return "redirect:/promociones";
     }
 
@@ -94,8 +92,7 @@ public class PromocionController {
 
         ResultadoResponse response = promocionService.cambiarEstado(id);
 
-        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-        flash.addFlashAttribute("alert", toast);
+        flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
         return "redirect:/promociones";
     }
 }

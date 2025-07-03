@@ -77,8 +77,7 @@ public class UsuarioController {
 			return "usuarios/nuevo";
 		}
 
-		String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-		flash.addFlashAttribute("alert", toast);
+		flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
 		return "redirect:/usuarios";
 	}
 
@@ -108,8 +107,7 @@ public class UsuarioController {
 			return "usuarios/edicion";
 		}
 
-		String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-		flash.addFlashAttribute("alert", toast);
+		flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
 		return "redirect:/usuarios";
 	}
 
@@ -118,8 +116,7 @@ public class UsuarioController {
 
 		ResultadoResponse response = usuarioService.cambiarEstado(id);
 
-		String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-		flash.addFlashAttribute("alert", toast);
+		flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
 		return "redirect:/usuarios";
 	}
 }
