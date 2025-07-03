@@ -2,7 +2,10 @@ package com.sistema.gpon.service.impl;
 
 import java.util.List;
 
+import com.sistema.gpon.dto.PlanFilter;
+import com.sistema.gpon.dto.PromocionFilter;
 import com.sistema.gpon.model.Cliente;
+import com.sistema.gpon.model.Plan;
 import com.sistema.gpon.service.PromocionService;
 import com.sistema.gpon.utils.ResultadoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,11 @@ public class PromocionServiceImpl implements PromocionService {
 	@Override
 	public List<Promocion> listarPromociones() {
 		return promocionRepository.findAll();
+	}
+
+	@Override
+	public List<Promocion> listarFiltros(PromocionFilter filtro) {
+		return promocionRepository.findAllWithFilter(filtro.getActivo());
 	}
 
 	@Override

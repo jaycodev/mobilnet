@@ -3,6 +3,9 @@ package com.sistema.gpon.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.sistema.gpon.dto.ClienteFilter;
+import com.sistema.gpon.dto.PlanFilter;
+import com.sistema.gpon.model.Cliente;
 import com.sistema.gpon.model.Promocion;
 import com.sistema.gpon.service.PlanService;
 import com.sistema.gpon.utils.ResultadoResponse;
@@ -34,6 +37,11 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public List<Plan> listarPlanes() {
         return planRepository.findAll();
+    }
+
+    @Override
+    public List<Plan> listarFiltros(PlanFilter filtro) {
+        return planRepository.findAllWithFilter(filtro.getActivo());
     }
 
     @Override

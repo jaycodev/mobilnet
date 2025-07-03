@@ -34,7 +34,6 @@ public class ClienteController {
 
         model.addAttribute("filtro", new ClienteFilter());
         model.addAttribute("lstClientes", clienteService.listarClientes());
-
         return "clientes/index";
     }
 

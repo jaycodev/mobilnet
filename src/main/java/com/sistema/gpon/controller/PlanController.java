@@ -1,5 +1,7 @@
 package com.sistema.gpon.controller;
 
+import com.sistema.gpon.dto.ClienteFilter;
+import com.sistema.gpon.dto.PlanFilter;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -30,10 +32,19 @@ public class PlanController {
     private PlanService planService;
 
     @GetMapping({"", "/"})
-    public String index(HttpServletRequest request, Model model) {
+    public String listado(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
+        model.addAttribute("filtro", new PlanFilter());
         model.addAttribute("lstPlanes", planService.listarPlanes());
+        return "planes/index";
+    }
+
+    @GetMapping("/filtrado")
+    public String filtrado(@ModelAttribute PlanFilter filtro, Model model) {
+        model.addAttribute("filtro", filtro);
+        model.addAttribute("lstPlanes", planService.listarFiltros(filtro));
+
         return "planes/index";
     }
 
