@@ -105,13 +105,6 @@
 									   class="btn btn-sm text-primary me-1 mb-0" title="Editar">
 										<i class="fa-solid fa-pen"></i>
 									</a>
-									<a href="javascript:void(0);"
-									   class="btn btn-sm text-danger mb-0"
-									   th:onclick="'confirmarEliminacion(' + ${usuario.idUsuario} + ')'"
-									   title="Eliminar"
-									>
-										<i class="fas fa-trash-alt"></i>
-									</a>
 								</td>
 							</tr>
 							<tr th:if="${#lists.isEmpty(lstUsuarios)}">
@@ -126,26 +119,6 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- SweetAlert para confirmación -->
-	<script>
-		function confirmarEliminacion(id) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Esta acción inhabilitará al usuario.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Confirmar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '/usuarios/eliminar/' + id;
-                }
-            });
-        }
-	</script>
 
 	<!-- Mostrar alertas -->
 	<div th:utext="${alert}"></div>
@@ -259,7 +232,6 @@
         // =================== End Export to PDF ===================
 
         // ===================== Export to Excel =====================
-		
 		document.getElementById('btn-exportar-excel').addEventListener('click', async () => {
 		           const table = $('#tabla-usuarios').DataTable();
 		           const headers = [];
