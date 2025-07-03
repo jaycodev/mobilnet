@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class HomeController {
+public class InicioController {
 
     @Autowired
     RegistroRUC10ServiceImpl _Service;
@@ -19,10 +19,10 @@ public class HomeController {
     public String index(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
-        model.addAttribute("pendiente",_Service.CountEstado("Pendiente instalacion"));
-        model.addAttribute("Anulado",_Service.CountEstado("Anulado"));
-        model.addAttribute("Observado",_Service.CountEstado("Observado"));
-        model.addAttribute("Instalado",_Service.CountEstado("Instalado"));
-        return "home/dashboard";
+        model.addAttribute("pendiente",_Service.countEstado("Pendiente instalacion"));
+        model.addAttribute("anulado",_Service.countEstado("Anulado"));
+        model.addAttribute("observado",_Service.countEstado("Observado"));
+        model.addAttribute("instalado",_Service.countEstado("Instalado"));
+        return "inicio/dashboard";
     }
 }

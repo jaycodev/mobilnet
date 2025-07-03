@@ -20,14 +20,14 @@
                     </label>
                     <input type="number" th:value="*{idRegistro}" class="form-control" id="idRegistroVisible" disabled />
 
-                    <label for="estados" class="form-label">
-                        Consultor
+                    <label for="idEstado" class="form-label">
+                        Estado
                         <span class="text-danger">*</span>
                     </label>
                     <select th:field="*{idEstado}" class="form-select" required>
-                        <option th:each="c : ${estados}"
-                                th:value="${c.idEstado}"
-                                th:text="${c.descripcion}">
+                        <option th:each="e : ${estados}"
+                                th:value="${e.idEstado}"
+                                th:text="${e.descripcion}">
                         </option>
                     </select>
                 </div>
@@ -289,8 +289,6 @@
                     <input type="text" th:field="*{idSolicitud}" class="form-control"/>
                 </div>
 
-
-            </div>
                 <!-- ==================================================== -->
                 <!-- PASO 6: CRONOGRAMA                                   -->
                 <!-- ==================================================== -->

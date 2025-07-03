@@ -33,7 +33,6 @@ public class RegistroRUC10Controller {
     @Autowired
     private ReportService reporteService;
 
-
     @Autowired
     private UsuarioServiceImpl _usuarioService;
 
@@ -113,7 +112,7 @@ public class RegistroRUC10Controller {
         model.addAttribute("consultores", _usuarioService.findByRolDescripcion("Consultor"));
         model.addAttribute("supervisores", _usuarioService.findByRolDescripcion("Supervisor"));
         model.addAttribute("promociones", _promocionService.listarPromociones());
-        model.addAttribute("planes", _planService.listarTodoPlanes());
+        model.addAttribute("planes", _planService.listarPlanes());
         model.addAttribute("sectores", _seSectorService.listarSectores());
         model.addAttribute("distritos", _disDistritoService.listarDistritos());
     }
@@ -211,7 +210,7 @@ public class RegistroRUC10Controller {
         Plan plan = _planService.buscarPorId(registroRUC10.getPlan().getIdPlan());
         Promocion promocion = _promocionService.buscarPorId(registroRUC10.getPromocion().getIdPromocion());
 
-        List<EstadoRegistro> estadosLista= _EstadoRegistro.listarEstado();
+        List<EstadoRegistro> estadosLista = _EstadoRegistro.listarEstado();
 
         RucDTOActualizar ruc10DTO = new RucDTOActualizar(
                 registroRUC10.getIdRegistro(),
@@ -233,6 +232,7 @@ public class RegistroRUC10Controller {
         model.addAttribute("ruc10DTO", ruc10DTO);
 
         model.addAttribute("estados",estadosLista);
+
         return "registros/edicion";
     }
 
@@ -335,8 +335,4 @@ public class RegistroRUC10Controller {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
 }
-
-
-

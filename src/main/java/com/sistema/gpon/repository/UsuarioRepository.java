@@ -18,7 +18,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 		""")
 	List<Usuario> findAllWithFilter(@Param("idRol") Integer idRol, @Param("activo") Boolean activo);
 
-	
-	/*CODIGO AÑADIDO ELIMINAR SI DA ERROR*/
 	Usuario findByCorreoAndContrasena(String correo, String contrasena);
 }

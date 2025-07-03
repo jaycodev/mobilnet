@@ -131,7 +131,7 @@ public class CuentaController {
         model.addAttribute("usuario", usuario);
         return "cuenta/perfil";
     }
-    
+
     @PostMapping("/actualizar")
     public String actualizarPerfil(@ModelAttribute Usuario formUsuario,
                                    @RequestParam String contrasenaActual,

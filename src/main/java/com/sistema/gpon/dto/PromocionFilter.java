@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RegistroFilter {
-    private Integer idEstado;
+public class PromocionFilter {
+    private Boolean activo;
 }

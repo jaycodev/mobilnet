@@ -3,6 +3,10 @@ package com.sistema.gpon.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.sistema.gpon.dto.ClienteFilter;
+import com.sistema.gpon.dto.PlanFilter;
+import com.sistema.gpon.model.Cliente;
+import com.sistema.gpon.model.Promocion;
 import com.sistema.gpon.service.PlanService;
 import com.sistema.gpon.utils.ResultadoResponse;
 
@@ -23,24 +27,21 @@ public class PlanServiceImpl implements PlanService {
 		try {
 			Plan planGuardado = planRepository.save(planObtenido);
 			String mensaje = String.format("El plan fue creado correctamente con codigo: ", planGuardado.getIdPlan());
-			return new ResultadoResponse(true,mensaje);
+			return new ResultadoResponse(true, mensaje);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResultadoResponse(false,"Error al crear Plan"+ e.getMessage());
+			return new ResultadoResponse(false, "Error al crear Plan" + e.getMessage());
 		}
-	}
-	
-	
-	
-	@Override
-	public List<Plan> listarTodoPlanes() {
-		return planRepository.listaPromocionesEstadoTrue();
 	}
 
 	@Override
-	public List<Plan> listarPlanes() { /*PENDIENTE 1/07/25*/
-		// Si necesitas un filtrado específico, modifícalo según el método personalizado en el repositorio
+	public List<Plan> listarPlanes() {
 		return planRepository.findAll();
+	}
+
+	@Override
+	public List<Plan> listarFiltros(PlanFilter filtro) {
+		return planRepository.findAllWithFilter(filtro.getActivo());
 	}
 
 	@Override
@@ -57,26 +58,32 @@ public class PlanServiceImpl implements PlanService {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return new ResultadoResponse(false, "El plan no se pudo actualizar" + ex.getLocalizedMessage());
-		}	
+		}
 	}
 
 	@Override
-	public boolean eliminarPlan(Integer idPlan) {
+	public ResultadoResponse cambiarEstado(Integer idPlan) {
+		Plan plan = this.buscarPorId(idPlan);
+		Boolean accion = plan.getActivo() ? false : true;
+		String texto;
+
+		if (accion == true) {
+			texto = "ha sido activado";
+		} else {
+			texto = "ha sido inactivado";
+		}
+
+		plan.setActivo(!plan.getActivo());
 
 		try {
-			Optional<Plan>cambiarEstado = planRepository.findById(idPlan);
-			if(cambiarEstado.isPresent()){
-				
-				Plan planCambiado =  cambiarEstado.get();
-				planCambiado.setActivo(false);
-				planRepository.save(planCambiado);
-				return true;
-			}else {
-				return false;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			Plan registrado = planRepository.save(plan);
+
+			String mensaje = String.format("Plan con código: %s %s", registrado.getIdPlan(), texto);
+			return new ResultadoResponse(true, mensaje);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return new ResultadoResponse(false, "Error al cambiar de estado: " + ex.getMessage());
 		}
 	}
 }

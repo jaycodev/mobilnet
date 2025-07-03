@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  th:replace="fragments/layout :: layoutBase('Promociones', 'Editar', ~{::contenido}, ~{})">
+	  th:replace="fragments/layout :: layoutBase('Promociones', 'Listado', ~{::contenido}, ~{::scripts})">
 
 <th:block th:fragment="contenido">
 	<div class="row">
@@ -62,33 +62,40 @@
 						<tr>
 							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
 							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Descripción</th>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Activo</th>
 							<th class="text-secondary opacity-7"></th>
 						</tr>
 						</thead>
 						<tbody>
-						<tr th:each="promo, iterStat : ${lstPromocion}">
+						<tr th:each="promo : ${lstPromociones}">
 							<td class="ps-4">
-								<span class="badge border text-dark" th:text="${iterStat.count}"></span>
+								<span class="badge badge-sm border text-dark" th:text="${promo.idPromocion}"></span>
 							</td>
 							<td class="ps-0">
 								<p class="text-sm text-dark mb-0" th:text="${promo.descripcion}"></p>
+							</td>
+							<td class="ps-0">
+								<form method="post"
+									  th:action="@{/promociones/cambiar-estado/{id}(id=${promo.idPromocion})}">
+									<div class="d-flex align-items-center gap-2">
+										<div class="form-switch">
+											<input class="form-check-input" type="checkbox"
+												   th:checked="${promo.activo}" onchange="this.form.submit()">
+										</div>
+									</div>
+								</form>
+
+								<span class="d-none export-estado" th:text="${promo.activo} ? 'Sí' : 'No'"></span>
 							</td>
 							<td class="ps-0">
 								<a th:href="@{'/promociones/edicion/' + ${promo.idPromocion}}"
 								   class="btn btn-sm text-primary me-1 mb-0" title="Editar">
 									<i class="fa-solid fa-pen"></i>
 								</a>
-
-								<a href="javascript:void(0);"
-								   class="btn btn-sm text-danger mb-0"
-								   th:onclick="'confirmarEliminacion(' + ${promo.idPromocion} + ')'"
-								   title="Eliminar">
-									<i class="fas fa-trash-alt"></i>
-								</a>
 							</td>
 						</tr>
-						<tr th:if="${#lists.isEmpty(lstPromocion)}">
-							<td colspan="3" class="text-center text-secondary">
+						<tr th:if="${#lists.isEmpty(lstPromociones)}">
+							<td colspan="4" class="text-center text-secondary">
 								No hay promociones registradas.
 							</td>
 						</tr>
@@ -98,30 +105,48 @@
 			</div>
 		</div>
 	</div>
+</th:block>
 
+<th:block th:fragment="scripts">
+	<!-- Initialize DataTable with custom styles -->
 	<div th:replace="fragments/datatable-script :: datatableScript('tabla-promociones')"></div>
 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- Dynamic icon based on status filter selection -->
 	<script>
-		function confirmarEliminacion(id) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Esta acción eliminará la promoción permanentemente.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Confirmar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '/promociones/eliminar/' + id;
-                }
-            });
+		function actualizarIconoEstado() {
+            const select = document.getElementById('estado-select');
+            const icon = document.getElementById('estado-icon');
+            const value = select.value;
+
+            icon.className = 'fa-solid';
+
+            if (value === 'true') {
+                icon.classList.add('fa-toggle-on', 'text-primary');
+            } else if (value === 'false') {
+                icon.classList.add('fa-toggle-off', 'text-danger');
+            } else {
+                icon.classList.add('fa-filter', 'text-secondary');
+            }
         }
+
+        document.addEventListener("DOMContentLoaded", actualizarIconoEstado);
 	</script>
 
-	<!-- Mostrar alertas -->
-	<div th:utext="${alert}"></div>
+	<!-- jsPDF + autoTable -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+	<!-- ExcelJS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+
+	<script>
+		// ===================== Export to PDF =====================
+
+        // =================== End Export to PDF ===================
+
+        // ===================== Export to Excel =====================
+
+        // ================== End Export to Excel ==================
+	</script>
 </th:block>
 </html>

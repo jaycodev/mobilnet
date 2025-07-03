@@ -1,5 +1,7 @@
 package com.sistema.gpon.controller;
 
+import com.sistema.gpon.dto.ClienteFilter;
+import com.sistema.gpon.dto.PlanFilter;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -26,20 +28,23 @@ import com.sistema.gpon.model.*;
 @RequestMapping("/planes")
 public class PlanController {
 
-    private final ClienteServiceImpl clienteServiceImpl;
-
     @Autowired
     private PlanService planService;
 
-    PlanController(ClienteServiceImpl clienteServiceImpl) {
-        this.clienteServiceImpl = clienteServiceImpl;
+    @GetMapping({"", "/"})
+    public String listado(HttpServletRequest request, Model model) {
+        model.addAttribute("uri", request.getRequestURI());
+
+        model.addAttribute("filtro", new PlanFilter());
+        model.addAttribute("lstPlanes", planService.listarPlanes());
+        return "planes/index";
     }
 
-    @GetMapping({"", "/"})
-    public String index(HttpServletRequest request, Model model) {
-        model.addAttribute("uri", request.getRequestURI());
-        List<Plan> listaPlan = planService.listarTodoPlanes();
-        model.addAttribute("lstPlan", listaPlan);
+    @GetMapping("/filtrado")
+    public String filtrado(@ModelAttribute PlanFilter filtro, Model model) {
+        model.addAttribute("filtro", filtro);
+        model.addAttribute("lstPlanes", planService.listarFiltros(filtro));
+
         return "planes/index";
     }
 
@@ -50,48 +55,49 @@ public class PlanController {
     }
 
     @PostMapping("/registrar")
-    public String registrarPlan(@Validated @ModelAttribute Plan plan, BindingResult bindingResults, Model model, RedirectAttributes flash) {
+    public String registrarPlan(@Validated @ModelAttribute Plan plan, BindingResult bindingResults, Model model,
+                                RedirectAttributes flash) {
+        ResultadoResponse response = planService.crearPlan(plan);
 
-        ResultadoResponse result = planService.crearPlan(plan);
-
-        if (!result.success) {
-            model.addAttribute("alert", Alert.sweetAlertError("Error " + result.mensaje));
-            return ("planes/nuevo");
-        } else {
-            flash.addFlashAttribute("alert", Alert.sweetToast(result.mensaje, "success", 5000));
+        if (!response.success) {
+            model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
+            return "planes/nuevo";
         }
-        return "redirect:/planes";
+
+        flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
+
+        return "redirect:/promociones";
     }
 
-    @GetMapping("/editarPlan/{id}")
-    public String editarPlan(@PathVariable Integer id, Model model) {
+    @GetMapping("/edicion/{id}")
+    public String edicion(@PathVariable Integer id, Model model) {
         Plan planObtenido = planService.buscarPorId(id);
         model.addAttribute("plan", planObtenido);
         return "planes/edicion";
     }
 
-    @PostMapping("/guardarPlan")
-    public String editarPlanSave(@Validated @ModelAttribute Plan plan, BindingResult bindingResult, Model model,
-                                 RedirectAttributes flash) {
+    @PostMapping("/guardar")
+    public String guardar(@Validated @ModelAttribute Plan plan, BindingResult bindingResult, Model model,
+                          RedirectAttributes flash) {
         ResultadoResponse response = planService.actualizarPlan(plan);
 
         if (!response.success) {
             model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
             return "planes/edicion";
-        } else {
-            model.addAttribute("alert", Alert.sweetToast(response.mensaje, "Succes", 5000));
-            return "redirect:/planes";
         }
+
+        flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
+
+        return "redirect:/planes";
     }
 
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Integer id, RedirectAttributes flash) {
-        boolean eliminado = planService.eliminarPlan(id);
-        if (eliminado) {
-            flash.addFlashAttribute("alert", Alert.sweetToast("Plan eliminada correctamente", "success", 3000));
-        } else {
-            flash.addFlashAttribute("alert", Alert.sweetAlertError("No se pudo eliminar el plan."));
-        }
+    @PostMapping("/cambiar-estado/{id}")
+    public String cambiarEstado(@PathVariable Integer id, RedirectAttributes flash) {
+
+        ResultadoResponse response = planService.cambiarEstado(id);
+
+        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
+        flash.addFlashAttribute("alert", toast);
         return "redirect:/planes";
     }
 }
