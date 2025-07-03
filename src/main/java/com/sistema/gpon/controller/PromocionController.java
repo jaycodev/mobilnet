@@ -32,8 +32,7 @@ public class PromocionController {
     public String listado(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
-        List<Promocion> lstPromocion = promocionService.listarPromociones();
-        model.addAttribute("lstPromocion", lstPromocion);
+        model.addAttribute("lstPromociones", promocionService.listarPromociones());
         return "promociones/index";
     }
 
@@ -45,15 +44,15 @@ public class PromocionController {
 
     @PostMapping("/registrar")
     public String registrar(@Validated @ModelAttribute Promocion Promocion, BindingResult bindingResults, Model model, RedirectAttributes flash) {
-
         ResultadoResponse response = promocionService.crearPromocion(Promocion);
 
         if (!response.success) {
-
             model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
             return "inventarios/nuevo";
         }
+
         flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
+
         return "redirect:/promociones";
     }
 
@@ -67,27 +66,15 @@ public class PromocionController {
     @PostMapping("/guardar")
     public String guardar(@Validated @ModelAttribute Promocion promocion, BindingResult bindingResult, Model model,
                           RedirectAttributes flash) {
-
         ResultadoResponse response = promocionService.actualizarPromocion(promocion);
 
         if (!response.success) {
             model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
-            return "inventarios/edicion";
+            return "promociones/edicion";
         }
 
-        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-        flash.addFlashAttribute("alert", toast);
-        return "redirect:/promociones";
-    }
+        flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
 
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Integer id, RedirectAttributes flash) {
-        boolean eliminado = promocionService.eliminarPromocion(id);
-        if (eliminado) {
-            flash.addFlashAttribute("alert", Alert.sweetToast("Promoción eliminada correctamente", "success", 3000));
-        } else {
-            flash.addFlashAttribute("alert", Alert.sweetAlertError("No se pudo eliminar la promoción."));
-        }
         return "redirect:/promociones";
     }
 
