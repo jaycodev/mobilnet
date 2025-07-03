@@ -2,6 +2,8 @@ package com.sistema.gpon.controller;
 
 import java.util.List;
 
+import com.sistema.gpon.dto.PlanFilter;
+import com.sistema.gpon.dto.PromocionFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +34,16 @@ public class PromocionController {
     public String listado(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
+        model.addAttribute("filtro", new PromocionFilter());
         model.addAttribute("lstPromociones", promocionService.listarPromociones());
+        return "promociones/index";
+    }
+
+    @GetMapping("/filtrado")
+    public String filtrado(@ModelAttribute PromocionFilter filtro, Model model) {
+        model.addAttribute("filtro", filtro);
+        model.addAttribute("lstPromociones", promocionService.listarFiltros(filtro));
+
         return "promociones/index";
     }
 
