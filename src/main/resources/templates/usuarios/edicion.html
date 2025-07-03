@@ -57,12 +57,12 @@
 
                 <!-- Rol -->
                 <div class="col-md-6 mb-3">
-                    <label for="rol" class="form-label fw-bold text-capitalize">
+                    <label for="rol" class="form-label">
                         Rol
                         <span class="text-danger">*</span>
                     </label>
                     <select th:field="*{rol}" class="form-select" required>
-                        <option value="-1">--Seleccione--</option>
+                        <option value="-1">Seleccione un rol</option>
                         <option th:each="rolItem : ${roles}"
                                 th:value="${rolItem.idRol}"
                                 th:text="${rolItem.descripcion}"

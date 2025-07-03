@@ -57,68 +57,68 @@
 				<div class="card-body px-0 pt-0 pb-2">
 					<table id="tabla-usuarios" class="table align-items-center mb-0">
 						<thead>
-						<tr>
-							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
-							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Nombre</th>
-							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Apellido</th>
-							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Correo</th>
-							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Contraseña</th>
-							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Rol</th>
-							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Activo</th>
-							<th class="text-secondary opacity-7"></th>
-						</tr>
+							<tr>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Nombre</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Apellido</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Correo</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Contraseña</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Rol</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Activo</th>
+								<th class="text-secondary opacity-7"></th>
+							</tr>
 						</thead>
 						<tbody>
-						<tr th:each="usuario : ${lstUsuarios}">
-							<td class="ps-4">
-								<span class="badge border text-dark" th:text="${usuario.idUsuario}"></span>
-							</td>
-							<td class="ps-0">
-								<p class="text-sm text-dark mb-0" th:text="${usuario.nombre}"></p>
-							</td>
-							<td class="ps-0">
-								<p class="text-sm text-dark mb-0" th:text="${usuario.apellido}"></p>
-							</td>
-							<td class="ps-0">
-								<p class="text-sm text-dark mb-0" th:text="${usuario.correo}"></p>
-							</td>
-							<td class="ps-0">
-								<p class="text-sm text-dark mb-0">••••••</p>
-							</td>
-							<td class="ps-0">
-								<span class="badge border text-dark text-capitalize" th:text="${usuario.rol.descripcion}"></span>
-							</td>
-							<td class="ps-0">
-								<form method="post"
-									  th:action="@{/usuarios/cambiar-estado/{id}(id=${usuario.idUsuario})}">
-									<div class="d-flex align-items-center gap-2">
-										<div class="form-switch">
-											<input class="form-check-input" type="checkbox"
-												   th:checked="${usuario.estado}" onchange="this.form.submit()">
+							<tr th:each="usuario : ${lstUsuarios}">
+								<td class="ps-4">
+									<span class="badge border text-dark" th:text="${usuario.idUsuario}"></span>
+								</td>
+								<td class="ps-0">
+									<p class="text-sm text-dark mb-0" th:text="${usuario.nombre}"></p>
+								</td>
+								<td class="ps-0">
+									<p class="text-sm text-dark mb-0" th:text="${usuario.apellido}"></p>
+								</td>
+								<td class="ps-0">
+									<p class="text-sm text-dark mb-0" th:text="${usuario.correo}"></p>
+								</td>
+								<td class="ps-0">
+									<p class="text-sm text-dark mb-0">••••••</p>
+								</td>
+								<td class="ps-0">
+									<span class="badge border text-dark text-capitalize" th:text="${usuario.rol.descripcion}"></span>
+								</td>
+								<td class="ps-0">
+									<form method="post"
+										  th:action="@{/usuarios/cambiar-estado/{id}(id=${usuario.idUsuario})}">
+										<div class="d-flex align-items-center gap-2">
+											<div class="form-switch">
+												<input class="form-check-input" type="checkbox"
+													   th:checked="${usuario.estado}" onchange="this.form.submit()">
+											</div>
 										</div>
-									</div>
-								</form>
-								<span class="d-none export-estado" th:text="${usuario.estado} ? 'Sí' : 'No'"></span>
-							</td>
-							<td class="ps-0">
-								<a th:href="@{'/usuarios/edicion/' + ${usuario.idUsuario}}"
-								   class="btn btn-sm text-primary me-1 mb-0" title="Editar">
-									<i class="fa-solid fa-pen"></i>
-								</a>
-								<a href="javascript:void(0);"
-								   class="btn btn-sm text-danger mb-0"
-								   th:onclick="'confirmarEliminacion(' + ${usuario.idUsuario} + ')'"
-								   title="Eliminar"
-								>
-									<i class="fas fa-trash-alt"></i>
-								</a>
-							</td>
-						</tr>
-						<tr th:if="${#lists.isEmpty(lstUsuarios)}">
-							<td colspan="3" class="text-center text-muted py-4">
-								No hay usuarios registrados.
-							</td>
-						</tr>
+									</form>
+									<span class="d-none export-estado" th:text="${usuario.estado} ? 'Sí' : 'No'"></span>
+								</td>
+								<td class="ps-0">
+									<a th:href="@{'/usuarios/edicion/' + ${usuario.idUsuario}}"
+									   class="btn btn-sm text-primary me-1 mb-0" title="Editar">
+										<i class="fa-solid fa-pen"></i>
+									</a>
+									<a href="javascript:void(0);"
+									   class="btn btn-sm text-danger mb-0"
+									   th:onclick="'confirmarEliminacion(' + ${usuario.idUsuario} + ')'"
+									   title="Eliminar"
+									>
+										<i class="fas fa-trash-alt"></i>
+									</a>
+								</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(lstUsuarios)}">
+								<td colspan="8" class="text-center text-secondary">
+									No hay usuarios registrados.
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
