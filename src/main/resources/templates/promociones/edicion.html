@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layoutBase('Promociones', 'Editar', ~{::contenido}, ~{})">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layoutBase('Promociones', 'Editar', ~{::contenido}, ~{::scripts})">
 <th:block th:fragment="contenido">
 
     <div class="card shadow-sm p-4">
@@ -8,7 +8,7 @@
             Editar promoción
         </h5>
 
-        <form th:action="@{/promociones/guardar}" method="post" th:object="${promocion}">
+        <form th:action="@{/promociones/guardar}" method="post" th:object="${promocion}" novalidate>
             <div class="row">
                 <!-- Código (oculto y deshabilitado) -->
                 <input type="hidden" th:field="*{idPromocion}" />
@@ -25,11 +25,16 @@
                         Descripción
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text" th:field="*{descripcion}" class="form-control" placeholder="Ej. 2x1 en instalación fibra" required />
+                    <input type="text" th:field="*{descripcion}" class="form-control"
+                           th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'" placeholder="Ej. 2x1 en instalación fibra" required />
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('descripcion')}"
+                              th:text="${#fields.errors('descripcion')[0]}"></span>
+                    </div>
                 </div>
             </div>
 
-			<input type="hidden" th:field="*{estado}" />
+            <input type="hidden" th:field="*{activo}" />
 
             <!-- Botones -->
             <div class="d-flex justify-content-end">
@@ -45,5 +50,21 @@
             </div>
         </form>
     </div>
+</th:block>
+
+<th:block th:fragment="scripts">
+    <script>
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', () => {
+                input.classList.remove('is-invalid');
+            });
+        });
+
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', () => {
+                select.classList.remove('is-invalid');
+            });
+        });
+    </script>
 </th:block>
 </html>

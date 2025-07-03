@@ -1,5 +1,7 @@
 package com.sistema.gpon.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.DynamicInsert;
 
 import jakarta.persistence.Column;
@@ -29,8 +31,10 @@ public class Plan {
 	private Integer idPlan;
 
 	@Column(name = "Descripcion", nullable = false)
+	@NotBlank(message = "La descripción es obligatoria")
+	@Size(max = 100, message = "La descripción no debe exceder los 100 caracteres")
 	private String descripcion;
-	
-	@Column (name = "Activo")
+
+	@Column (name = "Activo", nullable = false)
 	private Boolean activo;
 }

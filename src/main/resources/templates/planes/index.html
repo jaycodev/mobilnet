@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="fragments/layout :: layoutBase('Planes', 'Listado', ~{::contenido}, ~{})">
+	  th:replace="fragments/layout :: layoutBase('Planes', 'Listado', ~{::contenido}, ~{::scripts})">
 
 <th:block th:fragment="contenido">
 	<div class="row">
@@ -18,81 +18,136 @@
 					</a>
 				</div>
 
-				<div class="px-4 pt-3">
-					<div class="d-flex gap-2">
-						<button id="btn-exportar-pdf" class="btn btn-danger btn-sm mb-0">
-							<i class="fa-solid fa-file-pdf me-1"></i>
-							PDF
-						</button>
-						<button id="btn-exportar-excel" class="btn btn-success btn-sm mb-0">
-							<i class="fa-solid fa-file-excel me-1"></i>
-							Excel
-						</button>
+				<!-- Filtros -->
+				<div class="row px-4 pt-3">
+					<div class="col-12">
+						<div class="d-flex flex-wrap align-items-center gap-2">
+							<!-- Formulario de filtros -->
+							<form method="get" th:action="@{/planes/filtrado}" th:object="${filtro}" class="d-flex flex-wrap align-items-center gap-2 mb-0">
+
+								<!-- Select de estados -->
+								<div class="input-group input-group-sm" style="width: auto;">
+									<span class="input-group-text border-secondary">
+										<i id="estado-icon" class="fa-solid fa-filter text-secondary"></i>
+									</span>
+									<select id="estado-select" class="form-select border-secondary" th:field="*{activo}" onchange="actualizarIconoEstado(); this.form.submit()" style="width: 130px;">
+										<option value="">Todos</option>
+										<option value="true">Activo</option>
+										<option value="false">Inactivo</option>
+									</select>
+								</div>
+
+								<!-- Botón Limpiar -->
+								<a th:href="@{/planes}" class="btn btn-outline-secondary btn-sm mb-0">
+									<i class="fa-solid fa-broom me-1"></i> Limpiar
+								</a>
+							</form>
+
+							<!-- Botones PDF/Excel -->
+							<div class="d-flex align-items-center gap-2 ms-auto flex-wrap">
+								<button id="btn-exportar-pdf" class="btn btn-danger btn-sm mb-0">
+									<i class="fa-solid fa-file-pdf me-1"></i> PDF
+								</button>
+								<button id="btn-exportar-excel" class="btn btn-success btn-sm mb-0">
+									<i class="fa-solid fa-file-excel me-1"></i> Excel
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 
 				<div class="card-body px-0 pt-0 pb-2">
 					<table id="tabla-planes" class="table align-items-center mb-0">
 						<thead>
-							<tr>
-								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
-								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Descripcion</th>
-								<th class="text-secondary opacity-7"></th>
-							</tr>
+						<tr>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Descripcion</th>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Activo</th>
+							<th class="text-secondary opacity-7"></th>
+						</tr>
 						</thead>
 						<tbody>
-							<tr th:each="plan, iterStart : ${lstPlan}">
-								<td class="ps-4">
-									<span class="badge badge-sm border text-dark" th:text="${plan.idPlan}"></span>
-								</td>
-								<td class="ps-0">
-									<p class="text-sm text-dark mb-0" th:text="${plan.descripcion}"></p>
-								</td>
-								<td class="ps-0">
-									<a th:href="@{/planes/editarPlan/{id}(id=${plan.idPlan})}"
-										class="btn btn-sm text-primary me-1 mb-0" title="Editar">
-										<i class="fa-solid fa-pen"></i>
-									</a>
+						<tr th:each="plan : ${lstPlanes}">
+							<td class="ps-4">
+								<span class="badge badge-sm border text-dark" th:text="${plan.idPlan}"></span>
+							</td>
+							<td class="ps-0">
+								<p class="text-sm text-dark mb-0" th:text="${plan.descripcion}"></p>
+							</td>
+							<td class="ps-0">
+								<form method="post"
+									  th:action="@{/planes/cambiar-estado/{id}(id=${plan.idPlan})}">
+									<div class="d-flex align-items-center gap-2">
+										<div class="form-switch">
+											<input class="form-check-input" type="checkbox"
+												   th:checked="${plan.activo}" onchange="this.form.submit()">
+										</div>
+									</div>
+								</form>
 
-									<a href="javascript:void(0);" class="btn btn-sm text-danger mb-0"
-										th:onclick="'confirmarEliminacion(' + ${plan.idPlan} + ')'"
-										title="Eliminar">
-										<i class="fas fa-trash-alt"></i>
-									</a>
-								</td>
-							</tr>
-							
-							<tr th:if="${#lists.isEmpty(lstPlan)}">
-								<td colspan="3" class="text-center text-secondary">
-									No hay planes registrados.
-								</td>
-							</tr>
+								<span class="d-none export-estado" th:text="${plan.activo} ? 'Sí' : 'No'"></span>
+							</td>
+							<td class="ps-0">
+								<a th:href="@{/planes/edicion/{id}(id=${plan.idPlan})}"
+								   class="btn btn-sm text-primary me-1 mb-0" title="Editar">
+									<i class="fa-solid fa-pen"></i>
+								</a>
+							</td>
+						</tr>
+
+						<tr th:if="${#lists.isEmpty(lstPlanes)}">
+							<td colspan="4" class="text-center text-secondary">
+								No hay planes registrados.
+							</td>
+						</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div th:replace="fragments/datatable-script :: datatableScript('tabla-planes')"></div>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		<script>
-			function confirmarEliminacion(id) {
-	            Swal.fire({
-	                title: '¿Estás seguro?',
-	                text: "Deshabilitar el plan",
-	                icon: 'warning',
-	                showCancelButton: true,
-	                confirmButtonColor: '#d33',
-	                cancelButtonColor: '#3085d6',
-	                cancelButtonText: 'Cancelar',
-	                confirmButtonText: 'Confirmar'
-	            }).then((result) => {
-	                if (result.isConfirmed) {
-	                    window.location.href = '/planes/eliminar/' + id;
-	                }
-	            });
-	        }
-		</script>
 </th:block>
 
+<th:block th:fragment="scripts">
+	<!-- Initialize DataTable with custom styles -->
+	<div th:replace="fragments/datatable-script :: datatableScript('tabla-planes')"></div>
+
+	<!-- Dynamic icon based on status filter selection -->
+	<script>
+		function actualizarIconoEstado() {
+            const select = document.getElementById('estado-select');
+            const icon = document.getElementById('estado-icon');
+            const value = select.value;
+
+            icon.className = 'fa-solid';
+
+            if (value === 'true') {
+                icon.classList.add('fa-toggle-on', 'text-primary');
+            } else if (value === 'false') {
+                icon.classList.add('fa-toggle-off', 'text-danger');
+            } else {
+                icon.classList.add('fa-filter', 'text-secondary');
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", actualizarIconoEstado);
+	</script>
+
+	<!-- jsPDF + autoTable -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+	<!-- ExcelJS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+
+	<script>
+		// ===================== Export to PDF =====================
+
+        // =================== End Export to PDF ===================
+
+        // ===================== Export to Excel =====================
+
+        // ================== End Export to Excel ==================
+	</script>
+</th:block>
 </html>

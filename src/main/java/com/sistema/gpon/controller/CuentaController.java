@@ -131,7 +131,7 @@ public class CuentaController {
         model.addAttribute("usuario", usuario);
         return "cuenta/perfil";
     }
-    
+
     @PostMapping("/actualizar")
     public String actualizarPerfil(@ModelAttribute Usuario formUsuario,
                                    @RequestParam String contrasenaActual,
@@ -169,7 +169,7 @@ public class CuentaController {
             return "redirect:/cuenta/perfil";
         }
 
-        flash.addFlashAttribute("alert", Alert.sweetToast("Perfil actualizado correctamente", "success", 3000));
+        flash.addFlashAttribute("alert", Alert.sweetAlertSuccess("Perfil actualizado correctamente"));
         return "redirect:/cuenta/perfil";
     }
 }

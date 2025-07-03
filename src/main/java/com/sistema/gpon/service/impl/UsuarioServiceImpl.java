@@ -2,6 +2,7 @@ package com.sistema.gpon.service.impl;
 
 import java.util.List;
 
+import com.sistema.gpon.model.Cliente;
 import com.sistema.gpon.service.UsuarioService;
 import com.sistema.gpon.utils.ResultadoResponse;
 
@@ -17,104 +18,95 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-   
-	@Override
-	public ResultadoResponse crearUsuario(Usuario usuario) {
-		try {
-			
-			 if (usuario.getEstado() == null || usuario.getEstado() == false) {
-		            usuario.setEstado(true);
-		        }
-			 
-			Usuario registrado = usuarioRepository.save(usuario);
 
-			String mensaje = String.format("Usuario con numero %s registrado correctamente", registrado.getIdUsuario());
-			return new ResultadoResponse(true, mensaje);
+    @Override
+    public ResultadoResponse crearUsuario(Usuario usuario) {
+        try {
+            usuario.setActivo(true);
 
-		}catch (Exception ex) {
-			ex.printStackTrace();
-			return new ResultadoResponse(false, "Error al registrar: " + ex.getMessage());
-		}
-	}
+            Usuario registrado = usuarioRepository.save(usuario);
 
-	@Override
-	public List<Usuario> listarUsuarios() {
-	    return usuarioRepository.findAllOrderByEstadoAndIdUsuarioDesc();
-	}
+            String nombreCompleto = registrado.getNombre() + " " + registrado.getApellido();
+            String mensaje = String.format("El usuario %s (Cod. %s) ha sido registrado exitosamente.",
+                    nombreCompleto, registrado.getIdUsuario());
 
-	@Override
-	public ResultadoResponse modificarUsuario(Usuario usuario) {
-		try {
-			Usuario actualizado = usuarioRepository.save(usuario);
+            return new ResultadoResponse(true, mensaje);
 
-			String mensaje = String.format("Usuario con nro. %s actualizado", actualizado.getIdUsuario());
-			return new ResultadoResponse(true, mensaje);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResultadoResponse(false, "Ocurrió un error al registrar el usuario: " + ex.getMessage());
+        }
+    }
 
-		} catch (Exception ex) {
-			return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
-		}
-	}
+    @Override
+    public List<Usuario> listarUsuarios() {
+        return usuarioRepository.findAll();
+    }
 
-	@Override
-	public boolean eliminarUsuario(Integer idUsuario) {
-	    try {
-	        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
-	        if (usuario != null) {
-	            usuario.setEstado(false);
-	            usuarioRepository.save(usuario);
-	            return true;
-	        }
-	        return false;
-	    } catch (Exception ex) {
-	        ex.printStackTrace();
-	        return false;
-	    }
-	}
+    @Override
+    public List<Usuario> listarFiltros(UsuarioFilter filtro) {
+        return usuarioRepository.findAllWithFilter(filtro.getIdRol(), filtro.getActivo());
+    }
 
+    @Override
+    public ResultadoResponse modificarUsuario(Usuario usuario) {
+        try {
+            Usuario existente = usuarioRepository.findById(usuario.getIdUsuario()).orElse(null);
 
-	@Override
-	public List<Usuario> findByRol_Descripcion(String descripcion){
-      return usuarioRepository.findByRol_Descripcion(descripcion);
-	};
+            if (existente == null) {
+                return new ResultadoResponse(false, "El usuario no existe en la base de datos.");
+            }
 
-	@Override
-	public Usuario buscarPorId(Integer idUsuario) {
-		return usuarioRepository.findById(idUsuario).orElseThrow();
-	}
+            usuario.setContrasena(existente.getContrasena());
 
-	@Override
-	public ResultadoResponse cambiarEstado(Integer id) {
-		Usuario usuario = this.buscarPorId(id);
-		Boolean accion = usuario.getEstado() ? false : true;
-		String texto;
-		
-		if(accion == true) {
-			 texto = "Activo";
-		} else {
-			 texto = "Inactivo";
-		}
+            Usuario actualizado = usuarioRepository.save(usuario);
 
-		usuario.setEstado(!usuario.getEstado());
+            String nombreCompleto = actualizado.getNombre() + " " + actualizado.getApellido();
+            String mensaje = String.format("Los datos del usuario %s (Cod. %s) han sido actualizados correctamente.",
+                    nombreCompleto, actualizado.getIdUsuario());
 
-		try {
-			Usuario registrado = usuarioRepository.save(usuario);
+            return new ResultadoResponse(true, mensaje);
 
-			String mensaje = String.format("Usuario con código %s %s", registrado.getIdUsuario(), texto);
-			return new ResultadoResponse(true, mensaje);
+        } catch (Exception ex) {
+            return new ResultadoResponse(false, "Ocurrió un error al actualizar el usuario: " + ex.getMessage());
+        }
+    }
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return new ResultadoResponse(false, "Error al cambiar de estado: " + ex.getMessage());
-		}
-	}
+    @Override
+    public List<Usuario> findByRolDescripcion(String descripcion) {
+        return usuarioRepository.findByRolDescripcion(descripcion);
+    }
 
-	@Override
-	public List<Usuario> listarFiltros(UsuarioFilter filtro) {
-		return usuarioRepository.findAllWithFilter(filtro.getIdRol());
-	}
-	
-  @Override
-	public Usuario autenticacion(Usuario filter) {
-		return usuarioRepository.findByCorreoAndContrasena(filter.getCorreo(), filter.getContrasena());
-	}
+    @Override
+    public Usuario buscarPorId(Integer idUsuario) {
+        return usuarioRepository.findById(idUsuario).orElseThrow();
+    }
+
+    @Override
+    public ResultadoResponse cambiarEstado(Integer id) {
+        Usuario usuario = this.buscarPorId(id);
+        boolean accion = !usuario.getActivo();
+
+        String texto = accion ? "activado" : "desactivado";
+
+        usuario.setActivo(accion);
+
+        try {
+            Usuario registrado = usuarioRepository.save(usuario);
+
+            String nombreCompleto = registrado.getNombre() + " " + registrado.getApellido();
+            String mensaje = String.format("El usuario %s (Cod. %s) ha sido %s correctamente.",
+                    nombreCompleto, registrado.getIdUsuario(), texto);
+            return new ResultadoResponse(true, mensaje);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResultadoResponse(false, "Ocurrió un error al cambiar el estado del usuario: " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public Usuario autenticacion(Usuario filter) {
+        return usuarioRepository.findByCorreoAndContrasena(filter.getCorreo(), filter.getContrasena());
+    }
 }

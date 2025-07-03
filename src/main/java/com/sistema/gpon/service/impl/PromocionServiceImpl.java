@@ -2,6 +2,10 @@ package com.sistema.gpon.service.impl;
 
 import java.util.List;
 
+import com.sistema.gpon.dto.PlanFilter;
+import com.sistema.gpon.dto.PromocionFilter;
+import com.sistema.gpon.model.Cliente;
+import com.sistema.gpon.model.Plan;
 import com.sistema.gpon.service.PromocionService;
 import com.sistema.gpon.utils.ResultadoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,32 +16,35 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PromocionServiceImpl implements PromocionService {
-	
+
 	@Autowired
 	private PromocionRepository promocionRepository;
 
 	@Override
-	public ResultadoResponse crearPromocion(Promocion promocion) {		
-		try {	
-			
-			if (promocion.getEstado() == null || promocion.getEstado() == false) {
-				promocion.setEstado(true);
-	        }
-			
-			Promocion registrada = promocionRepository.save(promocion);
-			
-			String mensaje = String.format("Promocion nueva registrada correctamente", registrada);		
+	public ResultadoResponse crearPromocion(Promocion promocion) {
+		try {
+			promocion.setActivo(true);
+
+			Promocion registrado = promocionRepository.save(promocion);
+
+			String mensaje = String.format("La promoción (Cod. %s) ha sido registrada exitosamente.", registrado.getIdPromocion());
+
 			return new ResultadoResponse(true, mensaje);
-			
-		}catch (Exception ex) {
+
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			return new ResultadoResponse(false, "Error al registrar: " + ex.getMessage());
-		}		
+			return new ResultadoResponse(false, "Ocurrió un error al registrar la promoción: " + ex.getMessage());
+		}
 	}
 
 	@Override
 	public List<Promocion> listarPromociones() {
-		return promocionRepository.findAllByOrderByIdPromocionDesc();
+		return promocionRepository.findAll();
+	}
+
+	@Override
+	public List<Promocion> listarFiltros(PromocionFilter filtro) {
+		return promocionRepository.findAllWithFilter(filtro.getActivo());
 	}
 
 	@Override
@@ -50,49 +57,33 @@ public class PromocionServiceImpl implements PromocionService {
 		try {
 			Promocion actualizado = promocionRepository.save(promocion);
 
-			String mensaje = String.format("Promocion actualizada correctamente", actualizado.getIdPromocion());
+			String mensaje = String.format("Los datos de la promoción (Cod. %s) han sido actualizados correctamente.", actualizado.getIdPromocion());
+
 			return new ResultadoResponse(true, mensaje);
 
-		} catch (Exception ex) { 
-			return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
-		}		
-	}
-
-	@Override
-	public boolean eliminarPromocion(Integer idPromocion) {
-	    try {
-	        if (promocionRepository.existsById(idPromocion)) {
-	            promocionRepository.deleteById(idPromocion);
-	            return true;
-	        } else {
-	            return false;
-	        }
-	    } catch (Exception ex) {
-	        ex.printStackTrace();
-	        return false; 
-	    }
-	}
-	
-	public Promocion getOne(Integer id) {
-		return promocionRepository.findById(id).orElseThrow();
+		} catch (Exception ex) {
+			return new ResultadoResponse(false, "Ocurrió un error al actualizar la promoción: " + ex.getMessage());
+		}
 	}
 
 	@Override
 	public ResultadoResponse cambiarEstado(Integer id) {
-		Promocion promo = this.getOne(id);
-		String accion = promo.getEstado() ? "desactivado" : "activado";
+		Promocion promocion = this.buscarPorId(id);
+		boolean accion = !promocion.getActivo();
 
-		promo.setEstado(!promo.getEstado());
+		String texto = accion ? "activada" : "desactivada";
+
+		promocion.setActivo(accion);
 
 		try {
-			Promocion registrada = promocionRepository.save(promo);
+			Promocion registrado = promocionRepository.save(promocion);
 
-			String mensaje = String.format("Promocion con código %s %s", registrada.getIdPromocion(), accion);
+			String mensaje = String.format("La promoción (Cod. %s) ha sido %s correctamente.", registrado.getIdPromocion(), texto);
 			return new ResultadoResponse(true, mensaje);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return new ResultadoResponse(false, "Error al cambiar de estado: " + ex.getMessage());
+			return new ResultadoResponse(false, "Ocurrió un error al cambiar el estado de la promoción: " + ex.getMessage());
 		}
 	}
 }

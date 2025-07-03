@@ -28,14 +28,19 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ResultadoResponse crearCliente(Cliente cliente) {
         try {
+            cliente.setActivo(true);
+
             Cliente registrado = clienteRepository.save(cliente);
 
-            String mensaje = String.format("Cliente con DNI: %s creado", registrado.getDniCliente());
+            String nombreCompleto = registrado.getNombre() + " " + registrado.getApellido();
+            String mensaje = String.format("El cliente %s (DNI %s) ha sido registrado exitosamente.",
+                    nombreCompleto, registrado.getDniCliente());
+
             return new ResultadoResponse(true, mensaje);
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new ResultadoResponse(false, "Error al crear: " + ex.getMessage());
+            return new ResultadoResponse(false, "Ocurrió un error al registrar el cliente: " + ex.getMessage());
         }
     }
 
@@ -64,37 +69,37 @@ public class ClienteServiceImpl implements ClienteService {
         try {
             Cliente actualizado = clienteRepository.save(cliente);
 
-            String mensaje = String.format("Cliente con DNI: %s actualizado", actualizado.getDniCliente());
+            String nombreCompleto = actualizado.getNombre() + " " + actualizado.getApellido();
+            String mensaje = String.format("Los datos del cliente %s (DNI %s) han sido actualizados correctamente.",
+                    nombreCompleto, actualizado.getDniCliente());
+
             return new ResultadoResponse(true, mensaje);
 
         } catch (Exception ex) {
-            return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
+            return new ResultadoResponse(false, "Ocurrió un error al actualizar el cliente: " + ex.getMessage());
         }
     }
 
     @Override
     public ResultadoResponse cambiarEstado(String id) {
         Cliente cliente = this.buscarPorId(id);
-        Boolean accion = cliente.getActivo() ? false : true;
-        String texto;
+        boolean accion = !cliente.getActivo();
 
-        if (accion == true) {
-            texto = "ha sido activado";
-        } else {
-            texto = "ha sido inactivado";
-        }
+        String texto = accion ? "activado" : "desactivado";
 
-        cliente.setActivo(!cliente.getActivo());
+        cliente.setActivo(accion);
 
         try {
             Cliente registrado = clienteRepository.save(cliente);
 
-            String mensaje = String.format("Cliente con DNI: %s %s", registrado.getDniCliente(), texto);
+            String nombreCompleto = registrado.getNombre() + " " + registrado.getApellido();
+            String mensaje = String.format("El cliente %s (DNI %s) ha sido %s correctamente.",
+                    nombreCompleto, registrado.getDniCliente(), texto);
             return new ResultadoResponse(true, mensaje);
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new ResultadoResponse(false, "Error al cambiar de estado: " + ex.getMessage());
+            return new ResultadoResponse(false, "Ocurrió un error al cambiar el estado del cliente: " + ex.getMessage());
         }
     }
 }

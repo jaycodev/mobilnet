@@ -3,6 +3,11 @@ package com.sistema.gpon.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.sistema.gpon.dto.ClienteFilter;
+import com.sistema.gpon.dto.PlanFilter;
+import com.sistema.gpon.model.Cliente;
+import com.sistema.gpon.model.Promocion;
+import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.service.PlanService;
 import com.sistema.gpon.utils.ResultadoResponse;
 
@@ -19,28 +24,30 @@ public class PlanServiceImpl implements PlanService {
 	private PlanRepository planRepository;
 
 	@Override
-	public ResultadoResponse crearPlan(Plan planObtenido) {
+	public ResultadoResponse crearPlan(Plan plan) {
 		try {
-			Plan planGuardado = planRepository.save(planObtenido);
-			String mensaje = String.format("El plan fue creado correctamente con codigo: ", planGuardado.getIdPlan());
-			return new ResultadoResponse(true,mensaje);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResultadoResponse(false,"Error al crear Plan"+ e.getMessage());
+			plan.setActivo(true);
+
+			Plan registrado = planRepository.save(plan);
+
+			String mensaje = String.format("El plan (Cod. %s) ha sido registrado exitosamente.", registrado.getIdPlan());
+
+			return new ResultadoResponse(true, mensaje);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return new ResultadoResponse(false, "Ocurrió un error al registrar el plan: " + ex.getMessage());
 		}
-	}
-	
-	
-	
-	@Override
-	public List<Plan> listarTodoPlanes() {
-		return planRepository.listaPromocionesEstadoTrue();
 	}
 
 	@Override
-	public List<Plan> listarPlanes() { /*PENDIENTE 1/07/25*/
-		// Si necesitas un filtrado específico, modifícalo según el método personalizado en el repositorio
+	public List<Plan> listarPlanes() {
 		return planRepository.findAll();
+	}
+
+	@Override
+	public List<Plan> listarFiltros(PlanFilter filtro) {
+		return planRepository.findAllWithFilter(filtro.getActivo());
 	}
 
 	@Override
@@ -51,32 +58,35 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public ResultadoResponse actualizarPlan(Plan plan) {
 		try {
-			Plan planActualizado = planRepository.save(plan);
-			String mensaje = String.format("El Plan fue actualizado con codigo", planActualizado.getIdPlan());
+			Plan actualizado = planRepository.save(plan);
+
+			String mensaje = String.format("Los datos del plan (Cod. %s) han sido actualizados correctamente.", actualizado.getIdPlan());
+
 			return new ResultadoResponse(true, mensaje);
+
 		} catch (Exception ex) {
-			ex.printStackTrace();
-			return new ResultadoResponse(false, "El plan no se pudo actualizar" + ex.getLocalizedMessage());
-		}	
+			return new ResultadoResponse(false, "Ocurrió un error al actualizar el plan: " + ex.getMessage());
+		}
 	}
 
 	@Override
-	public boolean eliminarPlan(Integer idPlan) {
+	public ResultadoResponse cambiarEstado(Integer idPlan) {
+		Plan plan = this.buscarPorId(idPlan);
+		boolean accion = !plan.getActivo();
+
+		String texto = accion ? "activado" : "desactivado";
+
+		plan.setActivo(accion);
 
 		try {
-			Optional<Plan>cambiarEstado = planRepository.findById(idPlan);
-			if(cambiarEstado.isPresent()){
-				
-				Plan planCambiado =  cambiarEstado.get();
-				planCambiado.setActivo(false);
-				planRepository.save(planCambiado);
-				return true;
-			}else {
-				return false;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			Plan registrado = planRepository.save(plan);
+
+			String mensaje = String.format("El plan (Cod. %s) ha sido %s correctamente.", registrado.getIdPlan(), texto);
+			return new ResultadoResponse(true, mensaje);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return new ResultadoResponse(false, "Ocurrió un error al cambiar el estado del plan: " + ex.getMessage());
 		}
 	}
 }

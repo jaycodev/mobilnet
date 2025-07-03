@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="fragments/layout :: layoutBase('Usuarios', 'Nuevo', ~{::contenido}, ~{})">
+      th:replace="fragments/layout :: layoutBase('Usuarios', 'Nuevo', ~{::contenido}, ~{::scripts})">
 
 <th:block th:fragment="contenido">
 
@@ -10,7 +10,7 @@
             Nuevo usuario
         </h5>
 
-        <form th:action="@{/usuarios/registrar}" method="post" th:object="${usuario}">
+        <form th:action="@{/usuarios/registrar}" method="post" th:object="${usuario}" novalidate>
             <div class="row">
                 <!-- Nombre(s) -->
                 <div class="col-md-6 mb-3">
@@ -18,7 +18,12 @@
                         Nombre(s)
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text" th:field="*{nombre}" class="form-control" placeholder="Ingrese un(os) nombre(s)" required />
+                    <input type="text" th:field="*{nombre}" class="form-control"
+                           th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'" placeholder="Ingrese un(os) nombre(s)" required />
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('nombre')}"
+                              th:text="${#fields.errors('nombre')[0]}"></span>
+                    </div>
                 </div>
 
                 <!-- Apellido(s) -->
@@ -27,7 +32,12 @@
                         Apellido(s)
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text" th:field="*{apellido}" class="form-control" placeholder="Ingrese un(os) apellido(s)" required />
+                    <input type="text" th:field="*{apellido}" class="form-control"
+                           th:classappend="${#fields.hasErrors('apellido')} ? 'is-invalid'" placeholder="Ingrese un(os) apellido(s)" required />
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('apellido')}"
+                              th:text="${#fields.errors('apellido')[0]}"></span>
+                    </div>
                 </div>
 
                 <!-- Correo -->
@@ -36,7 +46,12 @@
                         Correo electrónico
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text" th:field="*{correo}" class="form-control" placeholder="correo@ejemplo.com" required />
+                    <input type="email" th:field="*{correo}" class="form-control"
+                           th:classappend="${#fields.hasErrors('correo')} ? 'is-invalid'" placeholder="correo@ejemplo.com" required />
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('correo')}"
+                              th:text="${#fields.errors('correo')[0]}"></span>
+                    </div>
                 </div>
 
                 <!-- Contraseña -->
@@ -45,7 +60,12 @@
                         Contraseña
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="password" th:field="*{contrasena}" class="form-control" placeholder="Ingrese una contraseña" required />
+                    <input type="password" th:field="*{contrasena}" class="form-control"
+                           th:classappend="${#fields.hasErrors('contrasena')} ? 'is-invalid'" placeholder="Ingrese una contraseña" required />
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('contrasena')}"
+                              th:text="${#fields.errors('contrasena')[0]}"></span>
+                    </div>
                 </div>
 
                 <!-- Rol -->
@@ -54,18 +74,22 @@
                         Rol
                         <span class="text-danger">*</span>
                     </label>
-                    <select th:field="*{rol}" class="form-select" required>
-                        <option value="-1">Seleccione un rol</option>
+                    <select th:field="*{rol}" class="form-select"
+                            th:classappend="${#fields.hasErrors('rol')} ? 'is-invalid'">
+                        <option value="">Seleccione un rol</option>
                         <option th:each="rolItem : ${roles}"
                                 th:value="${rolItem.idRol}"
                                 th:text="${rolItem.descripcion}">
                         </option>
                     </select>
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('rol')}"
+                              th:text="${#fields.errors('rol')[0]}"></span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Estado (oculto) -->
-            <input type="hidden" th:field="*{estado}" value="activo" />
+            <input type="hidden" th:field="*{activo}" />
 
             <!-- Botones -->
             <div class="d-flex justify-content-end">
@@ -81,5 +105,21 @@
             </div>
         </form>
     </div>
+</th:block>
+
+<th:block th:fragment="scripts">
+    <script>
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', () => {
+                input.classList.remove('is-invalid');
+            });
+        });
+
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', () => {
+                select.classList.remove('is-invalid');
+            });
+        });
+    </script>
 </th:block>
 </html>

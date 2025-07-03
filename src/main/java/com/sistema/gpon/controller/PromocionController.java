@@ -2,6 +2,8 @@ package com.sistema.gpon.controller;
 
 import java.util.List;
 
+import com.sistema.gpon.dto.PlanFilter;
+import com.sistema.gpon.dto.PromocionFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,8 +34,16 @@ public class PromocionController {
     public String listado(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
-        List<Promocion> lstPromocion = promocionService.listarPromociones();
-        model.addAttribute("lstPromocion", lstPromocion);
+        model.addAttribute("filtro", new PromocionFilter());
+        model.addAttribute("lstPromociones", promocionService.listarPromociones());
+        return "promociones/index";
+    }
+
+    @GetMapping("/filtrado")
+    public String filtrado(@ModelAttribute PromocionFilter filtro, Model model) {
+        model.addAttribute("filtro", filtro);
+        model.addAttribute("lstPromociones", promocionService.listarFiltros(filtro));
+
         return "promociones/index";
     }
 
@@ -44,16 +54,19 @@ public class PromocionController {
     }
 
     @PostMapping("/registrar")
-    public String registrar(@Validated @ModelAttribute Promocion Promocion, BindingResult bindingResults, Model model, RedirectAttributes flash) {
+    public String registrar(@Validated @ModelAttribute Promocion Promocion, BindingResult bindingResult, Model model, RedirectAttributes flash) {
+        if (bindingResult.hasErrors()) {
+            return "promociones/nuevo";
+        }
 
         ResultadoResponse response = promocionService.crearPromocion(Promocion);
 
         if (!response.success) {
-
             model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
             return "inventarios/nuevo";
         }
-        flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
+
+        flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
         return "redirect:/promociones";
     }
 
@@ -67,27 +80,18 @@ public class PromocionController {
     @PostMapping("/guardar")
     public String guardar(@Validated @ModelAttribute Promocion promocion, BindingResult bindingResult, Model model,
                           RedirectAttributes flash) {
+        if (bindingResult.hasErrors()) {
+            return "promociones/edicion";
+        }
 
         ResultadoResponse response = promocionService.actualizarPromocion(promocion);
 
         if (!response.success) {
             model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
-            return "inventarios/edicion";
+            return "promociones/edicion";
         }
 
-        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-        flash.addFlashAttribute("alert", toast);
-        return "redirect:/promociones";
-    }
-
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Integer id, RedirectAttributes flash) {
-        boolean eliminado = promocionService.eliminarPromocion(id);
-        if (eliminado) {
-            flash.addFlashAttribute("alert", Alert.sweetToast("Promoción eliminada correctamente", "success", 3000));
-        } else {
-            flash.addFlashAttribute("alert", Alert.sweetAlertError("No se pudo eliminar la promoción."));
-        }
+        flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
         return "redirect:/promociones";
     }
 
@@ -96,8 +100,7 @@ public class PromocionController {
 
         ResultadoResponse response = promocionService.cambiarEstado(id);
 
-        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-        flash.addFlashAttribute("alert", toast);
+        flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
         return "redirect:/promociones";
     }
 }

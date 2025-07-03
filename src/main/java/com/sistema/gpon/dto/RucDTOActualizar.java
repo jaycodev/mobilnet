@@ -1,7 +1,5 @@
 package com.sistema.gpon.dto;
 
-import com.sistema.gpon.model.EstadoRegistro;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

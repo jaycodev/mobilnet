@@ -61,15 +61,17 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/registrar")
-	public String registrar(@Validated @ModelAttribute Usuario usuarios, BindingResult bindingResults, Model model, RedirectAttributes flash) {
+	public String registrar(@Validated @ModelAttribute Usuario usuario, BindingResult result, Model model, RedirectAttributes flash) {
+		if (usuario.getContrasena() == null || !usuario.getContrasena().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+=<>?{}\\[\\]-]).{8,}$")) {
+			result.rejectValue("contrasena", "error.usuario", "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un símbolo");
+		}
 
-		if (bindingResults.hasErrors()) {
+		if (result.hasErrors()) {
 			model.addAttribute("roles", rolesService.listarRoles());
-			model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion de la Promocion"));
 			return "usuarios/nuevo";
 		}
 
-		ResultadoResponse response = usuarioService.crearUsuario(usuarios);
+		ResultadoResponse response = usuarioService.crearUsuario(usuario);
 
 		if (!response.success) {
 			model.addAttribute("roles", rolesService.listarRoles());
@@ -77,8 +79,7 @@ public class UsuarioController {
 			return "usuarios/nuevo";
 		}
 
-		String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-		flash.addFlashAttribute("alert", toast);
+		flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
 		return "redirect:/usuarios";
 	}
 
@@ -93,10 +94,8 @@ public class UsuarioController {
 	@PostMapping("/guardar")
 	public String guardar(@Validated @ModelAttribute Usuario usuario, BindingResult bindingResult, Model model,
 						  RedirectAttributes flash) {
-
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("roles", rolesService.listarRoles());
-			model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion del Usuario"));
 			return "usuarios/edicion";
 		}
 
@@ -108,19 +107,7 @@ public class UsuarioController {
 			return "usuarios/edicion";
 		}
 
-		String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-		flash.addFlashAttribute("alert", toast);
-		return "redirect:/usuarios";
-	}
-
-	@GetMapping("/eliminar/{id}")
-	public String eliminar(@PathVariable Integer id, RedirectAttributes flash) {
-		boolean eliminado = usuarioService.eliminarUsuario(id);
-		if (eliminado) {
-			flash.addFlashAttribute("alert", Alert.sweetToast("Usuario eliminado correctamente", "success", 3000));
-		} else {
-			flash.addFlashAttribute("alert", Alert.sweetAlertError("No se pudo eliminar al Usuario."));
-		}
+		flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
 		return "redirect:/usuarios";
 	}
 
@@ -129,8 +116,7 @@ public class UsuarioController {
 
 		ResultadoResponse response = usuarioService.cambiarEstado(id);
 
-		String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-		flash.addFlashAttribute("alert", toast);
+		flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
 		return "redirect:/usuarios";
 	}
 }
