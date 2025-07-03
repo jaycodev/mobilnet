@@ -1,18 +1,18 @@
 package com.sistema.gpon.controller;
 
 import com.sistema.gpon.dto.RegistroFilter;
-import com.sistema.gpon.dto.RucDTO;
-import com.sistema.gpon.dto.RucDTOUpdate;
-import com.sistema.gpon.dto.UsuarioFilter;
+import com.sistema.gpon.dto.RucDTOCrear;
+import com.sistema.gpon.dto.RucDTOActualizar;
 import com.sistema.gpon.model.*;
 import com.sistema.gpon.service.impl.*;
 import com.sistema.gpon.utils.Alert;
-import com.sistema.gpon.utils.ResultadoResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -77,14 +77,12 @@ public class RegistroRUC10Controller {
 
     @GetMapping("/detalle/{id}")
     public String detalle(HttpServletRequest request, Model model, @PathVariable int id) {
-        model.addAttribute("uri", request.getRequestURI());
-
         RegistroRUC10 registroRUC10 = _registroRUC10Service.buscarPorId(id);
         Cronograma cronograma = _CronogramaService.buscarPorId(registroRUC10.getCronograma().getIdCronograma());
         Cliente cliente = _ClienteService.buscarPorId(registroRUC10.getCliente().getDniCliente());
         ContactoPrincipal contactoPrincipal = _ContactoPrincipalService.buscarPorId(registroRUC10.getContactoPrincipal().getIdContactoPrincipal());
         ContactoSecundario contactoSecundario = _ContactoSecundarioService.buscarPorId(registroRUC10.getContactoSecundario().getIdContactoSecundario());
-        Usuario consultor = _usuarioService.buscarPorId(registroRUC10.getUsuarioConsulto().getIdUsuario());
+        Usuario consultor = _usuarioService.buscarPorId(registroRUC10.getUsuarioConsultor().getIdUsuario());
         Usuario supervisor = _usuarioService.buscarPorId(registroRUC10.getUsuarioSupervisor().getIdUsuario());
         Plan plan = _planService.buscarPorId(registroRUC10.getPlan().getIdPlan());
         Promocion promocion = _promocionService.buscarPorId(registroRUC10.getPromocion().getIdPromocion());
@@ -102,61 +100,33 @@ public class RegistroRUC10Controller {
         return "registros/detalle";
     }
 
+    private void cargarDatosSelects(Model model) {
+        model.addAttribute("consultores", _usuarioService.findByRol_Descripcion("Consultor"));
+        model.addAttribute("supervisores", _usuarioService.findByRol_Descripcion("Supervisor"));
+        model.addAttribute("promociones", _promocionService.listarPromociones());
+        model.addAttribute("planes", _planService.listarTodoPlanes());
+        model.addAttribute("sectores", _seSectorService.listarSectores());
+        model.addAttribute("distritos", _disDistritoService.listarDistritos());
+    }
+
     @GetMapping("/nuevo")
     public String nuevo(Model model) {
-        model.addAttribute("Consultor", _usuarioService.findByRol_Descripcion("Consultor"));
-        model.addAttribute("Supervisor", _usuarioService.findByRol_Descripcion("Supervisor"));
-        model.addAttribute("promocion", _promocionService.listarPromociones());
-        model.addAttribute("plam", _planService.listarTodoPlanes());
-        model.addAttribute("sector", _seSectorService.listarSectores());
-        model.addAttribute("distrito", _disDistritoService.listarDistritos());
-        model.addAttribute("ruc10DTO", new RucDTO());
+        cargarDatosSelects(model);
+        model.addAttribute("ruc10DTO", new RucDTOCrear());
 
         return "registros/nuevo";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/registrar")
     @Transactional
-    public String create(HttpServletRequest request, Model model, @ModelAttribute RucDTO ruc10DTO, RedirectAttributes flash) {
-        model.addAttribute("uri", request.getRequestURI());
+    public String registrar(@Validated @ModelAttribute("ruc10DTO") RucDTOCrear ruc10DTO, BindingResult bindingResult, Model model, RedirectAttributes flash) {
+        cargarDatosSelects(model);
 
-        model.addAttribute("Consultor", _usuarioService.findByRol_Descripcion("Consultor"));
-        model.addAttribute("Supervisor", _usuarioService.findByRol_Descripcion("Supervisor"));
-        model.addAttribute("promocion", _promocionService.listarPromociones());
-        model.addAttribute("plam", _planService.listarTodoPlanes());
-        model.addAttribute("sector", _seSectorService.listarSectores());
-        model.addAttribute("distrito", _disDistritoService.listarDistritos());
+        if (bindingResult.hasErrors()) {
+            return "registros/nuevo";
+        }
 
         try {
-            System.out.println("===== DATOS RECIBIDOS EN EL FORMULARIO =====");
-            System.out.println("Nombre Contacto Principal: " + ruc10DTO.getNombreContacto());
-            System.out.println("DNI Contacto Principal: " + ruc10DTO.getDniContacto());
-            System.out.println("Correo Contacto Principal: " + ruc10DTO.getCorreoContacto());
-            System.out.println("Teléfono Contacto Principal: " + ruc10DTO.getTelefonoContacto());
-
-            System.out.println("Nombre Contacto Secundario: " + ruc10DTO.getNombreContactoSec());
-            System.out.println("DNI Contacto Secundario: " + ruc10DTO.getDniContactoSec());
-            System.out.println("Correo Contacto Secundario: " + ruc10DTO.getCorreoContactoSec());
-            System.out.println("Teléfono Contacto Secundario: " + ruc10DTO.getTelefonoContactoSec());
-
-            System.out.println("Ubicación Distrito: " + ruc10DTO.getNombreDistrito());
-            System.out.println("Ubicación Sector: " + ruc10DTO.getNombreSector());
-            System.out.println("Referencia: " + ruc10DTO.getReferencia());
-            System.out.println("Rango de Instalación: " + ruc10DTO.getRangoInstalacion());
-
-            System.out.println("DNI Cliente: " + ruc10DTO.getDniCliente());
-            System.out.println("RUC Cliente: " + ruc10DTO.getRucCliente());
-            System.out.println("Teléfono Cliente: " + ruc10DTO.getTelefonoCliente());
-            System.out.println("Nombre Cliente: " + ruc10DTO.getNombreCliente());
-            System.out.println("Apellido Cliente: " + ruc10DTO.getApellidoCliente());
-
-            System.out.println("ID Usuario Consultor: " + ruc10DTO.getIdUsuarioConsulto());
-            System.out.println("ID Usuario Supervisor: " + ruc10DTO.getIdUsuarioSupervisor());
-            System.out.println("ID Plan: " + ruc10DTO.getIdPlan());
-            System.out.println("ID Promoción: " + ruc10DTO.getIdPromocion());
-            System.out.println("Observación: " + ruc10DTO.getObservacion());
-            System.out.println("=============================================");
-
             ContactoPrincipal contactoPrincipal = new ContactoPrincipal();
             contactoPrincipal.setNombreContacto(ruc10DTO.getNombreContacto());
             contactoPrincipal.setDni(ruc10DTO.getDniContacto());
@@ -194,7 +164,7 @@ public class RegistroRUC10Controller {
             cliente = _ClienteService.crearClientenew(cliente);
 
             RegistroRUC10 rucDTO = new RegistroRUC10();
-            rucDTO.setUsuarioConsulto(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioConsulto()));
+            rucDTO.setUsuarioConsultor(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioConsultor()));
             rucDTO.setUsuarioSupervisor(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioSupervisor()));
             rucDTO.setContactoPrincipal(contactoPrincipal);
             rucDTO.setContactoSecundario(contactoSecundario);
@@ -206,48 +176,41 @@ public class RegistroRUC10Controller {
             rucDTO.setObservacion(ruc10DTO.getObservacion());
             _registroRUC10Service.crearRegistro(rucDTO);
 
-//            flash.addFlashAttribute("alert", Alert.sweetAlertSuccess("Se ingreso correctamente el registro"));
-            flash.addFlashAttribute("alert", Alert.sweetToast("Se creo correctamente la venta", "success", 5000));
+            flash.addFlashAttribute("alert", Alert.sweetToast("Se ingreso correctamente el registro", "success", 5000));
 
         } catch (Exception e) {
             e.printStackTrace();
             flash.addFlashAttribute("alert", Alert.sweetAlert("ERROR", "Se produjo un error", "error"));
             model.addAttribute("error", "Ocurrió un error al registrar");
             return "/registros";
-
         }
 
         return "redirect:/registros";
     }
 
-    @GetMapping("/actualizar/{id}")
-    public String Actualizar(@PathVariable int id, Model model) {
-        model.addAttribute("Consultor", _usuarioService.findByRol_Descripcion("Consultor"));
-        model.addAttribute("Supervisor", _usuarioService.findByRol_Descripcion("Supervisor"));
-        model.addAttribute("promocion", _promocionService.listarPromociones());
-        model.addAttribute("plam", _planService.listarTodoPlanes());
-        model.addAttribute("sector", _seSectorService.listarSectores());
-        model.addAttribute("distrito", _disDistritoService.listarDistritos());
+    @GetMapping("/edicion/{id}")
+    public String edicion(@PathVariable int id, Model model) {
+        cargarDatosSelects(model);
 
         RegistroRUC10 registroRUC10 = _registroRUC10Service.buscarPorId(id);
         Cronograma cronograma = _CronogramaService.buscarPorId(registroRUC10.getCronograma().getIdCronograma());
         Cliente cliente = _ClienteService.buscarPorId(registroRUC10.getCliente().getDniCliente());
         ContactoPrincipal contactoPrincipal = _ContactoPrincipalService.buscarPorId(registroRUC10.getContactoPrincipal().getIdContactoPrincipal());
         ContactoSecundario contactoSecundario = _ContactoSecundarioService.buscarPorId(registroRUC10.getContactoSecundario().getIdContactoSecundario());
-        Usuario consultor = _usuarioService.buscarPorId(registroRUC10.getUsuarioConsulto().getIdUsuario());
+        Usuario consultor = _usuarioService.buscarPorId(registroRUC10.getUsuarioConsultor().getIdUsuario());
         Usuario supervisor = _usuarioService.buscarPorId(registroRUC10.getUsuarioSupervisor().getIdUsuario());
         Plan plan = _planService.buscarPorId(registroRUC10.getPlan().getIdPlan());
         Promocion promocion = _promocionService.buscarPorId(registroRUC10.getPromocion().getIdPromocion());
 
 
-        RucDTOUpdate ruc10DTO = new RucDTOUpdate(
+        RucDTOActualizar ruc10DTO = new RucDTOActualizar(
                 registroRUC10.getIdRegistro(),
                 contactoPrincipal.getNombreContacto(), contactoPrincipal.getDni(),
                 contactoPrincipal.getCorreo(), contactoPrincipal.getTelefono(),
                 contactoSecundario.getNombreContacto(), contactoSecundario.getDni(),
                 contactoSecundario.getCorreo(), contactoSecundario.getTelefono(),
                 cronograma.getRangoInstalacion(), cronograma.getUbicacionInstalacion(),
-                cronograma.getFechaInstalacion(), // ✅ sin formatear
+                cronograma.getFechaInstalacion(),
                 consultor.getIdUsuario(), supervisor.getIdUsuario(),
                 plan.getIdPlan(), promocion.getIdPromocion(),
                 registroRUC10.getObservacion(), cliente.getDniCliente(),
@@ -255,58 +218,22 @@ public class RegistroRUC10Controller {
                 cliente.getTelefono()
         );
         ruc10DTO.setFechaInstalacion(cronograma.getFechaInstalacion());
-        // 🔍 Verifica si llega el valor correctamente
-        System.out.println("📅 Fecha de instalación: " + cronograma.getFechaInstalacion());
 
-        model.addAttribute("ruc10DTOActualizar", ruc10DTO);
+        model.addAttribute("ruc10DTO", ruc10DTO);
 
-        return "registros/actualizar";
+        return "registros/edicion";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/guardar")
     @Transactional
-    public String save(HttpServletRequest request, Model model, @ModelAttribute RucDTOUpdate ruc10DTO, RedirectAttributes flash) {
-        model.addAttribute("uri", request.getRequestURI());
+    public String guardar(@Validated @ModelAttribute("ruc10DTO") RucDTOActualizar ruc10DTO, BindingResult bindingResult, Model model, RedirectAttributes flash) {
+        cargarDatosSelects(model);
 
-        model.addAttribute("Consultor", _usuarioService.findByRol_Descripcion("Consultor"));
-        model.addAttribute("Supervisor", _usuarioService.findByRol_Descripcion("Supervisor"));
-        model.addAttribute("promocion", _promocionService.listarPromociones());
-        model.addAttribute("plam", _planService.listarTodoPlanes());
-        model.addAttribute("sector", _seSectorService.listarSectores());
-        model.addAttribute("distrito", _disDistritoService.listarDistritos());
+        if (bindingResult.hasErrors()) {
+            return "registros/edicion";
+        }
 
         try {
-            System.out.println("===== DATOS RECIBIDOS EN EL FORMULARIO =====");
-            System.out.println("Nombre Contacto Principal: " + ruc10DTO.getNombreContacto());
-            System.out.println("DNI Contacto Principal: " + ruc10DTO.getDniContacto());
-            System.out.println("Correo Contacto Principal: " + ruc10DTO.getCorreoContacto());
-            System.out.println("Teléfono Contacto Principal: " + ruc10DTO.getTelefonoContacto());
-
-            System.out.println("Nombre Contacto Secundario: " + ruc10DTO.getNombreContactoSec());
-            System.out.println("DNI Contacto Secundario: " + ruc10DTO.getDniContactoSec());
-            System.out.println("Correo Contacto Secundario: " + ruc10DTO.getCorreoContactoSec());
-            System.out.println("Teléfono Contacto Secundario: " + ruc10DTO.getTelefonoContactoSec());
-
-//            System.out.println("Ubicación Distrito: " + ruc10DTO.getNombreDistrito());
-//            System.out.println("Ubicación Sector: " + ruc10DTO.getNombreSector());
-//            System.out.println("Referencia: " + ruc10DTO.getReferencia());
-            System.out.println("Referencia: " + ruc10DTO.getLugarInstalacion());
-            System.out.println("Rango de Instalación: " + ruc10DTO.getRangoInstalacion());
-
-            System.out.println("DNI Cliente: " + ruc10DTO.getDniCliente());
-            System.out.println("RUC Cliente: " + ruc10DTO.getRucCliente());
-            System.out.println("Teléfono Cliente: " + ruc10DTO.getTelefonoCliente());
-            System.out.println("Nombre Cliente: " + ruc10DTO.getNombreCliente());
-            System.out.println("Apellido Cliente: " + ruc10DTO.getApellidoCliente());
-
-            System.out.println("ID Usuario Consultor: " + ruc10DTO.getIdUsuarioConsulto());
-            System.out.println("ID Usuario Supervisor: " + ruc10DTO.getIdUsuarioSupervisor());
-            System.out.println("ID Plan: " + ruc10DTO.getIdPlan());
-            System.out.println("ID Promoción: " + ruc10DTO.getIdPromocion());
-            System.out.println("Observación: " + ruc10DTO.getObservacion());
-            System.out.println("=============================================");
-
-
             RegistroRUC10 registroRUC10 = _registroRUC10Service.buscarPorId(ruc10DTO.getIdRegistro());
 
             ContactoPrincipal contactoPrincipal = new ContactoPrincipal();
@@ -344,7 +271,7 @@ public class RegistroRUC10Controller {
 
             RegistroRUC10 rucDTO = new RegistroRUC10();
             rucDTO.setIdRegistro(registroRUC10.getIdRegistro());
-            rucDTO.setUsuarioConsulto(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioConsulto()));
+            rucDTO.setUsuarioConsultor(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioConsultor()));
             rucDTO.setUsuarioSupervisor(_usuarioService.buscarPorId(ruc10DTO.getIdUsuarioSupervisor()));
             rucDTO.setContactoPrincipal(contactoPrincipal);
             rucDTO.setContactoSecundario(contactoSecundario);
@@ -356,8 +283,7 @@ public class RegistroRUC10Controller {
             rucDTO.setObservacion(ruc10DTO.getObservacion());
             _registroRUC10Service.crearRegistro(rucDTO);
 
-//            flash.addFlashAttribute("alert", Alert.sweetAlertSuccess("Se ingreso correctamente el registro"));
-            flash.addFlashAttribute("alert", Alert.sweetToast("Se Actualizo correctamente la venta", "success", 5000));
+            flash.addFlashAttribute("alert", Alert.sweetToast("Se actualizó correctamente la venta", "success", 5000));
 
         } catch (Exception e) {
             e.printStackTrace();

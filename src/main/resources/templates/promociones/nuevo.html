@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layoutBase('Promociones', 'Nuevo', ~{::contenido}, ~{})">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/layout :: layoutBase('Promociones', 'Nuevo', ~{::contenido}, ~{})">
+
 <th:block th:fragment="contenido">
 
     <div class="card shadow-sm p-4">
@@ -31,7 +33,7 @@
 
                 <button type="submit" class="btn btn-primary mb-0">
                     <i class="fas fa-plus me-1"></i>
-                    Crear
+                    Registrar
                 </button>
             </div>
         </form>

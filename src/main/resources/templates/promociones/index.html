@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  th:replace="fragments/layout :: layoutBase('Promociones', 'Listado', ~{::contenido}, ~{})">
+	  th:replace="fragments/layout :: layoutBase('Promociones', 'Editar', ~{::contenido}, ~{})">
 
 <th:block th:fragment="contenido">
 	<div class="row">
@@ -63,7 +63,7 @@
 							</td>
 						</tr>
 						<tr th:if="${#lists.isEmpty(lstPromocion)}">
-							<td colspan="3" class="text-center text-muted py-4">
+							<td colspan="3" class="text-center text-secondary">
 								No hay promociones registradas.
 							</td>
 						</tr>

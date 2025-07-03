@@ -80,7 +80,7 @@ CREATE TABLE Cronograma (
 
 CREATE TABLE RegistroRUC10 (
     IdRegistro INT PRIMARY KEY AUTO_INCREMENT,
-    IdUsuarioConsulto INT NOT NULL,
+    IdUsuarioConsultor INT NOT NULL,
     IdUsuarioSupervisor INT NOT NULL,
     DniCliente VARCHAR(8) NOT NULL,
     IdContactoPrincipal INT NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE RegistroRUC10 (
     IdInstalacion VARCHAR(255)  DEFAULT 'ninguno',
     IdCarrito VARCHAR(255)  DEFAULT 'ninguno',
     Observacion VARCHAR(255),
-    FOREIGN KEY (IdUsuarioConsulto) REFERENCES Usuario(IdUsuario),
+    FOREIGN KEY (IdUsuarioConsultor) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (IdUsuarioSupervisor) REFERENCES Usuario(IdUsuario),
     FOREIGN KEY (DniCliente) REFERENCES Cliente(DniCliente),
     FOREIGN KEY (IdContactoPrincipal) REFERENCES ContactoPrincipal(IdContactoPrincipal),

@@ -92,8 +92,8 @@ public class CuentaController {
         session.setAttribute("cuenta", usuarioIngresado.getNombre());
         session.setAttribute("rolUsuario", usuarioIngresado.getRol().getDescripcion());
 
-        String alertExistoso = Alert.sweetAlertSuccess("Bienvenido a Movinet " + usuarioIngresado.getNombre());
-        flash.addFlashAttribute("alertExistoso", alertExistoso);
+        String alertExitoso = Alert.sweetAlertSuccess("¡Te damos la bienvenida a Mobinet, " + usuarioIngresado.getNombre() + "!");
+        flash.addFlashAttribute("alertExistoso", alertExitoso);
 
         return "redirect:/";
     }

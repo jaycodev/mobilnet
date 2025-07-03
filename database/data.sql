@@ -75,11 +75,11 @@ INSERT INTO Sector (NombreSector) VALUES
 ('Pueblo Libre'), ('Magdalena del Mar'), ('San Juan de Miraflores'), ('Barranco');
 
 INSERT INTO EstadoRegistro(Descripcion) VALUES
-('Pendiente instalacion'),
+('Pendiente instalación'),
 ('Anulado'),
 ('Observado'),
-('Alta por Baja'),
-('sin C.E.'),
+('Alta por baja'),
+('Sin C.E.'),
 ('Pegado'),
 ('Sin disponibilidad'),
 ('Sin cobertura'),
@@ -112,7 +112,7 @@ INSERT INTO Cronograma (UbicacionInstalacion, RangoInstalacion, FechaRegistro, F
 ('Av. Siempre Viva 742, San Isidro', 'manana', '2025-06-11', '2025-06-11');
 
 INSERT INTO RegistroRUC10 (
-    IdUsuarioConsulto, IdUsuarioSupervisor, DniCliente,
+    IdUsuarioConsultor, IdUsuarioSupervisor, DniCliente,
     IdContactoPrincipal, IdContactoSecundario, IdPlan, IdPromocion, IdCronograma,
     IdEstado, IdSolicitud, IdInstalacion, IdCarrito, Observacion
 ) VALUES

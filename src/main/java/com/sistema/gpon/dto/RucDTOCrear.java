@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RucDTO {
+public class RucDTOCrear {
 
     // Datos del contacto principal
     private String nombreContacto;
@@ -14,14 +14,13 @@ public class RucDTO {
     private String correoContacto;
     private String telefonoContacto;
 
-    // Datos del contacto Secundario
+    // Datos del contacto secundario
     private String nombreContactoSec;
     private String dniContactoSec;
     private String correoContactoSec;
     private String telefonoContactoSec;
 
     // Datos del cronograma
-    //estos dos se deben de unir para formar lugarInstalcion
     private String nombreDistrito;
     private String nombreSector;
     private String departamento;
@@ -32,17 +31,16 @@ public class RucDTO {
     private String referencia;
 
     // Datos del registro
-      private Integer idUsuarioConsulto;
-      private Integer idUsuarioSupervisor;
-      private Integer idPlan;
-      private Integer idPromocion;
+    private Integer idUsuarioConsultor;
+    private Integer idUsuarioSupervisor;
+    private Integer idPlan;
+    private Integer idPromocion;
     private String observacion;
 
     // Datos del cliente
-      private String dniCliente;
-      private String rucCliente;
-      private String nombreCliente;
-      private String apellidoCliente;
-      private String telefonoCliente;
-
+    private String dniCliente;
+    private String rucCliente;
+    private String nombreCliente;
+    private String apellidoCliente;
+    private String telefonoCliente;
 }

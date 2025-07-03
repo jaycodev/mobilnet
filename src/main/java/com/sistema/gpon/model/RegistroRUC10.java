@@ -13,11 +13,12 @@ public class RegistroRUC10 {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "IdRegistro")
 	private Integer idRegistro;
 
 	@ManyToOne
-	@JoinColumn(name = "IdUsuarioConsulto", nullable = false)
-	private Usuario usuarioConsulto;
+	@JoinColumn(name = "IdUsuarioConsultor", nullable = false)
+	private Usuario usuarioConsultor;
 
 	@ManyToOne
 	@JoinColumn(name = "IdUsuarioSupervisor", nullable = false)
