@@ -11,5 +11,4 @@ public interface CronogramaService {
     Cronograma buscarPorId(Integer idCronograma);
     Cronograma actualizarCronograma(Cronograma cronograma);
     boolean eliminarCronograma(Integer idCronograma);
-
 }

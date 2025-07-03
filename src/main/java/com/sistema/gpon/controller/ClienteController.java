@@ -65,8 +65,7 @@ public class ClienteController {
             return "clientes/nuevo";
         }
 
-        flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
-
+        flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
         return "redirect:/clientes";
     }
 
@@ -91,8 +90,7 @@ public class ClienteController {
             return "clientes/edicion";
         }
 
-        flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
-
+        flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
         return "redirect:/clientes";
     }
 
@@ -101,8 +99,7 @@ public class ClienteController {
 
         ResultadoResponse response = clienteService.cambiarEstado(id);
 
-        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
-        flash.addFlashAttribute("alert", toast);
+        flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
         return "redirect:/clientes";
     }
 }

@@ -23,19 +23,17 @@ public class PromocionServiceImpl implements PromocionService {
 	@Override
 	public ResultadoResponse crearPromocion(Promocion promocion) {
 		try {
+			promocion.setActivo(true);
 
-			if (promocion.getActivo() == null || promocion.getActivo() == false) {
-				promocion.setActivo(true);
-			}
+			Promocion registrado = promocionRepository.save(promocion);
 
-			Promocion registrada = promocionRepository.save(promocion);
+			String mensaje = String.format("La promoción (Cod. %s) ha sido registrada exitosamente.", registrado.getIdPromocion());
 
-			String mensaje = String.format("Promocion nueva registrada correctamente", registrada);
 			return new ResultadoResponse(true, mensaje);
 
-		}catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			return new ResultadoResponse(false, "Error al registrar: " + ex.getMessage());
+			return new ResultadoResponse(false, "Ocurrió un error al registrar la promoción: " + ex.getMessage());
 		}
 	}
 
@@ -59,37 +57,33 @@ public class PromocionServiceImpl implements PromocionService {
 		try {
 			Promocion actualizado = promocionRepository.save(promocion);
 
-			String mensaje = String.format("Promocion actualizada correctamente", actualizado.getIdPromocion());
+			String mensaje = String.format("Los datos de la promoción (Cod. %s) han sido actualizados correctamente.", actualizado.getIdPromocion());
+
 			return new ResultadoResponse(true, mensaje);
 
 		} catch (Exception ex) {
-			return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
+			return new ResultadoResponse(false, "Ocurrió un error al actualizar la promoción: " + ex.getMessage());
 		}
 	}
 
 	@Override
 	public ResultadoResponse cambiarEstado(Integer id) {
-		Promocion promo = this.buscarPorId(id);
-		Boolean accion = promo.getActivo() ? false : true;
-		String texto;
+		Promocion promocion = this.buscarPorId(id);
+		boolean accion = !promocion.getActivo();
 
-		if (accion == true) {
-			texto = "ha sido activada";
-		} else {
-			texto = "ha sido inactivada";
-		}
+		String texto = accion ? "activada" : "desactivada";
 
-		promo.setActivo(!promo.getActivo());
+		promocion.setActivo(accion);
 
 		try {
-			Promocion registrado = promocionRepository.save(promo);
+			Promocion registrado = promocionRepository.save(promocion);
 
-			String mensaje = String.format("Promocion con código: %s %s", registrado.getIdPromocion(), texto);
+			String mensaje = String.format("La promoción (Cod. %s) ha sido %s correctamente.", registrado.getIdPromocion(), texto);
 			return new ResultadoResponse(true, mensaje);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return new ResultadoResponse(false, "Error al cambiar de estado: " + ex.getMessage());
+			return new ResultadoResponse(false, "Ocurrió un error al cambiar el estado de la promoción: " + ex.getMessage());
 		}
 	}
 }

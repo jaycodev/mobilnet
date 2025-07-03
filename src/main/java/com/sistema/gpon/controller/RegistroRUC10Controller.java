@@ -184,7 +184,7 @@ public class RegistroRUC10Controller {
             rucDTO.setObservacion(ruc10DTO.getObservacion());
             _registroRUC10Service.crearRegistro(rucDTO);
 
-            flash.addFlashAttribute("alert", Alert.sweetToast("Se ingreso correctamente el registro", "success", 5000));
+            flash.addFlashAttribute("alert", Alert.sweetAlertSuccess("Se ingreso correctamente el registro"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -300,7 +300,7 @@ public class RegistroRUC10Controller {
             rucDTO.setEstado(_EstadoRegistro.buscarPorId(ruc10DTO.getIdEstado()));
             _registroRUC10Service.crearRegistro(rucDTO);
 
-            flash.addFlashAttribute("alert", Alert.sweetToast("Se actualizó correctamente la venta", "success", 5000));
+            flash.addFlashAttribute("alert", Alert.sweetAlertSuccess("Se actualizó correctamente la venta"));
 
         } catch (Exception e) {
             e.printStackTrace();

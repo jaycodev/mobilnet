@@ -11,5 +11,4 @@ public interface ContactoPrincipalService {
     ContactoPrincipal buscarPorId(Integer idCOntacto);
     ContactoPrincipal actualizarContactoPrin(ContactoPrincipal contactoPrincipal);
     boolean eliminarContactoPrin(Integer idContacto);
-
 }

@@ -60,10 +60,10 @@
                            th:classappend="${#fields.hasErrors('telefono')} ? 'is-invalid'" placeholder="Ingrese un teléfono" required />
                     <div class="invalid-feedback" th:errors="*{telefono}"></div>
                 </div>
-
-                <!-- Estado (oculto)-->
-                <input type="hidden" th:field="*{activo}" />
             </div>
+
+            <!-- Estado (oculto)-->
+            <input type="hidden" th:field="*{activo}" />
 
             <!-- Botones -->
             <div class="d-flex justify-content-end">
