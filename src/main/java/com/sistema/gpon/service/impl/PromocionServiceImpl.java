@@ -16,27 +16,27 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PromocionServiceImpl implements PromocionService {
-	
+
 	@Autowired
 	private PromocionRepository promocionRepository;
 
 	@Override
-	public ResultadoResponse crearPromocion(Promocion promocion) {		
-		try {	
-			
+	public ResultadoResponse crearPromocion(Promocion promocion) {
+		try {
+
 			if (promocion.getActivo() == null || promocion.getActivo() == false) {
 				promocion.setActivo(true);
-	        }
-			
+			}
+
 			Promocion registrada = promocionRepository.save(promocion);
-			
-			String mensaje = String.format("Promocion nueva registrada correctamente", registrada);		
+
+			String mensaje = String.format("Promocion nueva registrada correctamente", registrada);
 			return new ResultadoResponse(true, mensaje);
-			
+
 		}catch (Exception ex) {
 			ex.printStackTrace();
 			return new ResultadoResponse(false, "Error al registrar: " + ex.getMessage());
-		}		
+		}
 	}
 
 	@Override
@@ -62,9 +62,9 @@ public class PromocionServiceImpl implements PromocionService {
 			String mensaje = String.format("Promocion actualizada correctamente", actualizado.getIdPromocion());
 			return new ResultadoResponse(true, mensaje);
 
-		} catch (Exception ex) { 
+		} catch (Exception ex) {
 			return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
-		}		
+		}
 	}
 
 	@Override

@@ -59,58 +59,58 @@
                 <div class="card-body px-0 pt-0 pb-2">
                     <table id="tabla-clientes" class="table align-items-center mb-0">
                         <thead>
-                            <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">DNI</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">RUC</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Nombre</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Apellido</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Teléfono</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Activo</th>
-                                <th class="text-secondary opacity-7"></th>
-                            </tr>
+                        <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">DNI</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">RUC</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Nombre</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Apellido</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Teléfono</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Activo</th>
+                            <th class="text-secondary opacity-7"></th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="cliente : ${lstClientes}">
-                                <td class="ps-4">
-                                    <span class="badge badge-sm border text-dark" th:text="${cliente.dniCliente}"></span>
-                                </td>
-                                <td class="ps-0">
-                                    <span class="badge badge-sm border text-dark" th:text="${cliente.ruc}"></span>
-                                </td>
-                                <td class="ps-0">
-                                    <p class="text-sm text-dark mb-0" th:text="${cliente.nombre}"></p>
-                                </td>
-                                <td class="ps-0">
-                                    <p class="text-sm text-dark mb-0" th:text="${cliente.apellido}"></p>
-                                </td>
-                                <td class="ps-0">
-                                    <p class="text-sm text-dark mb-0" th:text="${cliente.telefono}"></p>
-                                </td>
-                                <td class="ps-0">
-                                    <form method="post"
-                                          th:action="@{/clientes/cambiar-estado/{id}(id=${cliente.dniCliente})}">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <div class="form-switch">
-                                                <input class="form-check-input" type="checkbox"
-                                                       th:checked="${cliente.activo}" onchange="this.form.submit()">
-                                            </div>
+                        <tr th:each="cliente : ${lstClientes}">
+                            <td class="ps-4">
+                                <span class="badge badge-sm border text-dark" th:text="${cliente.dniCliente}"></span>
+                            </td>
+                            <td class="ps-0">
+                                <span class="badge badge-sm border text-dark" th:text="${cliente.ruc}"></span>
+                            </td>
+                            <td class="ps-0">
+                                <p class="text-sm text-dark mb-0" th:text="${cliente.nombre}"></p>
+                            </td>
+                            <td class="ps-0">
+                                <p class="text-sm text-dark mb-0" th:text="${cliente.apellido}"></p>
+                            </td>
+                            <td class="ps-0">
+                                <p class="text-sm text-dark mb-0" th:text="${cliente.telefono}"></p>
+                            </td>
+                            <td class="ps-0">
+                                <form method="post"
+                                      th:action="@{/clientes/cambiar-estado/{id}(id=${cliente.dniCliente})}">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="form-switch">
+                                            <input class="form-check-input" type="checkbox"
+                                                   th:checked="${cliente.activo}" onchange="this.form.submit()">
                                         </div>
-                                    </form>
+                                    </div>
+                                </form>
 
-                                    <span class="d-none export-estado" th:text="${cliente.activo} ? 'Sí' : 'No'"></span>
-                                </td>
-                                <td class="ps-0">
-                                    <a th:href="@{'/clientes/edicion/' + ${cliente.dniCliente}}"
-                                       class="btn btn-sm text-primary me-1 mb-0" title="Editar">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr th:if="${#lists.isEmpty(lstClientes)}">
-                                <td colspan="7" class="text-center text-secondary">
-                                    No hay clientes registrados.
-                                </td>
-                            </tr>
+                                <span class="d-none export-estado" th:text="${cliente.activo} ? 'Sí' : 'No'"></span>
+                            </td>
+                            <td class="ps-0">
+                                <a th:href="@{'/clientes/edicion/' + ${cliente.dniCliente}}"
+                                   class="btn btn-sm text-primary me-1 mb-0" title="Editar">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(lstClientes)}">
+                            <td colspan="7" class="text-center text-secondary">
+                                No hay clientes registrados.
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

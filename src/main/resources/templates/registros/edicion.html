@@ -19,6 +19,17 @@
                         Código
                     </label>
                     <input type="number" th:value="*{idRegistro}" class="form-control" id="idRegistroVisible" disabled />
+
+                    <label for="idEstado" class="form-label">
+                        Estado
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select th:field="*{idEstado}" class="form-select" required>
+                        <option th:each="e : ${estados}"
+                                th:value="${e.idEstado}"
+                                th:text="${e.descripcion}">
+                        </option>
+                    </select>
                 </div>
 
                 <!-- ==================================================== -->
@@ -258,6 +269,24 @@
                                 th:text="${p.descripcion}">
                         </option>
                     </select>
+                </div>
+
+                <!-- PASO 5.1: IDs internos de sistema (opcional) -->
+                <h6 class="mb-3">
+                    <i class="fa-solid fa-database me-1"></i>
+                    IDs de integración interna
+                </h6>
+                <div class="col-md-4 mb-3">
+                    <label for="idCarrito" class="form-label">ID Carrito</label>
+                    <input type="text" th:field="*{idCarrito}" class="form-control"/>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="idInstalacion" class="form-label">ID Instalación</label>
+                    <input type="text" th:field="*{idInstalacion}" class="form-control"/>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="idSolicitud" class="form-label">ID Solicitud</label>
+                    <input type="text" th:field="*{idSolicitud}" class="form-control"/>
                 </div>
 
                 <!-- ==================================================== -->

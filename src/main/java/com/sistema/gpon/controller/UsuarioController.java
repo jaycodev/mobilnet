@@ -65,7 +65,7 @@ public class UsuarioController {
 
 		if (bindingResults.hasErrors()) {
 			model.addAttribute("roles", rolesService.listarRoles());
-			model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion de la promocion"));
+			model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion de la promoción"));
 			return "usuarios/nuevo";
 		}
 
@@ -96,7 +96,7 @@ public class UsuarioController {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("roles", rolesService.listarRoles());
-			model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion del Usuario"));
+			model.addAttribute("alert", Alert.sweetAlertInfo("Agregue información del usuario"));
 			return "usuarios/edicion";
 		}
 

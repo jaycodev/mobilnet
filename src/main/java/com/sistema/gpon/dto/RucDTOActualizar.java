@@ -80,4 +80,12 @@ public class RucDTOActualizar {
 
     @Pattern(regexp = "\\d{9}", message = "El teléfono debe tener 9 dígitos")
     private String telefonoCliente;
+
+    private Integer idEstado;
+
+    private String idSolicitud ;
+
+    private String idInstalacion ;
+
+    private String idCarrito ;
 }

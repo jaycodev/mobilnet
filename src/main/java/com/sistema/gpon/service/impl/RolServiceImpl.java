@@ -18,21 +18,21 @@ public class RolServiceImpl implements RolService {
 
     @Override
     public ResultadoResponse crearRol(Rol rol) {
-    	try {
-			Rol registrado = rolRepository.save(rol);
+        try {
+            Rol registrado = rolRepository.save(rol);
 
-			String mensaje = String.format("Rol registrado correctamente", registrado.getIdRol());
-			return new ResultadoResponse(true, mensaje);
+            String mensaje = String.format("Rol registrado correctamente", registrado.getIdRol());
+            return new ResultadoResponse(true, mensaje);
 
-		}catch (Exception ex) {
-			ex.printStackTrace();
-			return new ResultadoResponse(false, "Error al registrar: " + ex.getMessage());
-		}
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResultadoResponse(false, "Error al registrar: " + ex.getMessage());
+        }
     }
 
     @Override
     public List<Rol> listarRoles() {
-       return rolRepository.findAll();
+        return rolRepository.findAll();
     }
 
     @Override
@@ -42,15 +42,15 @@ public class RolServiceImpl implements RolService {
 
     @Override
     public ResultadoResponse modificarRol(Rol rol) {
-    	try {
-    		Rol actualizado = rolRepository.save(rol);
+        try {
+            Rol actualizado = rolRepository.save(rol);
 
-			String mensaje = String.format("Rol actualizado correctamente", actualizado.getIdRol());
-			return new ResultadoResponse(true, mensaje);
+            String mensaje = String.format("Rol actualizado correctamente", actualizado.getIdRol());
+            return new ResultadoResponse(true, mensaje);
 
-		} catch (Exception ex) {
-			return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
-		}
+        } catch (Exception ex) {
+            return new ResultadoResponse(false, "Error al actualizar: " + ex.getMessage());
+        }
     }
 
     @Override

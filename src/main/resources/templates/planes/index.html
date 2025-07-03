@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="fragments/layout :: layoutBase('Planes', 'Listado', ~{::contenido}, ~{::scripts})">
+	  th:replace="fragments/layout :: layoutBase('Planes', 'Listado', ~{::contenido}, ~{::scripts})">
 
 <th:block th:fragment="contenido">
 	<div class="row">
@@ -59,47 +59,47 @@
 				<div class="card-body px-0 pt-0 pb-2">
 					<table id="tabla-planes" class="table align-items-center mb-0">
 						<thead>
-							<tr>
-								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
-								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Descripcion</th>
-								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Activo</th>
-								<th class="text-secondary opacity-7"></th>
-							</tr>
+						<tr>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Descripcion</th>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Activo</th>
+							<th class="text-secondary opacity-7"></th>
+						</tr>
 						</thead>
 						<tbody>
-							<tr th:each="plan : ${lstPlanes}">
-								<td class="ps-4">
-									<span class="badge badge-sm border text-dark" th:text="${plan.idPlan}"></span>
-								</td>
-								<td class="ps-0">
-									<p class="text-sm text-dark mb-0" th:text="${plan.descripcion}"></p>
-								</td>
-								<td class="ps-0">
-									<form method="post"
-										  th:action="@{/planes/cambiar-estado/{id}(id=${plan.idPlan})}">
-										<div class="d-flex align-items-center gap-2">
-											<div class="form-switch">
-												<input class="form-check-input" type="checkbox"
-													   th:checked="${plan.activo}" onchange="this.form.submit()">
-											</div>
+						<tr th:each="plan : ${lstPlanes}">
+							<td class="ps-4">
+								<span class="badge badge-sm border text-dark" th:text="${plan.idPlan}"></span>
+							</td>
+							<td class="ps-0">
+								<p class="text-sm text-dark mb-0" th:text="${plan.descripcion}"></p>
+							</td>
+							<td class="ps-0">
+								<form method="post"
+									  th:action="@{/planes/cambiar-estado/{id}(id=${plan.idPlan})}">
+									<div class="d-flex align-items-center gap-2">
+										<div class="form-switch">
+											<input class="form-check-input" type="checkbox"
+												   th:checked="${plan.activo}" onchange="this.form.submit()">
 										</div>
-									</form>
+									</div>
+								</form>
 
-									<span class="d-none export-estado" th:text="${plan.activo} ? 'Sí' : 'No'"></span>
-								</td>
-								<td class="ps-0">
-									<a th:href="@{/planes/edicion/{id}(id=${plan.idPlan})}"
-										class="btn btn-sm text-primary me-1 mb-0" title="Editar">
-										<i class="fa-solid fa-pen"></i>
-									</a>
-								</td>
-							</tr>
-							
-							<tr th:if="${#lists.isEmpty(lstPlanes)}">
-								<td colspan="4" class="text-center text-secondary">
-									No hay planes registrados.
-								</td>
-							</tr>
+								<span class="d-none export-estado" th:text="${plan.activo} ? 'Sí' : 'No'"></span>
+							</td>
+							<td class="ps-0">
+								<a th:href="@{/planes/edicion/{id}(id=${plan.idPlan})}"
+								   class="btn btn-sm text-primary me-1 mb-0" title="Editar">
+									<i class="fa-solid fa-pen"></i>
+								</a>
+							</td>
+						</tr>
+
+						<tr th:if="${#lists.isEmpty(lstPlanes)}">
+							<td colspan="4" class="text-center text-secondary">
+								No hay planes registrados.
+							</td>
+						</tr>
 						</tbody>
 					</table>
 				</div>

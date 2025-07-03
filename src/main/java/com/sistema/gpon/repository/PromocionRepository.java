@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PromocionRepository extends JpaRepository<Promocion, Integer> {
-    @Query("""
+	@Query("""
 		    SELECT p FROM Promocion p
 		    WHERE (:activo IS NULL OR p.activo = :activo)
 		""")
-    List<Promocion> findAllWithFilter(@Param("activo") Boolean activo);
+	List<Promocion> findAllWithFilter(@Param("activo") Boolean activo);
 }

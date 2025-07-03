@@ -64,5 +64,3 @@ public class RegistroRUC10ServiceImpl implements RegistroRUC10Service {
         return registroRUC10Repository.countByEstadoDescripcion(estado);
     }
 }
-
-
