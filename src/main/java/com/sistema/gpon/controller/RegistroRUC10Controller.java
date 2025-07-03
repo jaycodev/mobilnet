@@ -101,8 +101,8 @@ public class RegistroRUC10Controller {
     }
 
     private void cargarDatosSelects(Model model) {
-        model.addAttribute("consultores", _usuarioService.findByRol_Descripcion("Consultor"));
-        model.addAttribute("supervisores", _usuarioService.findByRol_Descripcion("Supervisor"));
+        model.addAttribute("consultores", _usuarioService.findByRolDescripcion("Consultor"));
+        model.addAttribute("supervisores", _usuarioService.findByRolDescripcion("Supervisor"));
         model.addAttribute("promociones", _promocionService.listarPromociones());
         model.addAttribute("planes", _planService.listarPlanes());
         model.addAttribute("sectores", _seSectorService.listarSectores());

@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public class UsuarioFilter {
     private Integer idRol;
+    private Boolean activo;
 }

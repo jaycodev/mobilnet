@@ -56,7 +56,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public List<Usuario> findByRol_Descripcion(String descripcion) {
+    public List<Usuario> findByRolDescripcion(String descripcion) {
         return usuarioRepository.findByRolDescripcion(descripcion);
     }
 
@@ -93,7 +93,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<Usuario> listarFiltros(UsuarioFilter filtro) {
-        return usuarioRepository.findAllWithFilter(filtro.getIdRol());
+        return usuarioRepository.findAllWithFilter(filtro.getIdRol(), filtro.getActivo());
     }
 
     @Override
