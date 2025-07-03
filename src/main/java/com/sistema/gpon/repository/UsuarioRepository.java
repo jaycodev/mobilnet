@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	List<Usuario> findByRolDescripcion(String descripcion);
-	
+
 	@Query("""
-		    SELECT u FROM Usuario u
-		    WHERE (:idRol IS NULL OR u.rol.idRol = :idRol)
-		    ORDER BY u.activo DESC, u.idUsuario DESC
+			SELECT u FROM Usuario u
+			WHERE (:idRol IS NULL OR u.rol.idRol = :idRol)
+			  AND (:activo IS NULL OR u.activo = :activo)
 		""")
-		List<Usuario> findAllWithFilter(@Param("idRol") Integer idRol);
+	List<Usuario> findAllWithFilter(@Param("idRol") Integer idRol, @Param("activo") Boolean activo);
 
 	Usuario findByCorreoAndContrasena(String correo, String contrasena);
 }
