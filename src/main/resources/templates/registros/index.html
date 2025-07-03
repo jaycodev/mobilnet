@@ -43,7 +43,7 @@
                     </form>
 
                     <div class="col-auto d-flex gap-2">
-                        <a id="btn-exportar-pdf" class="btn btn-danger btn-sm mb-0" th:href="@{/registros/report/{id}(id=${filtro.idEstado})}">
+                        <a id="btn-exportar-pdf" target="_blank" class="btn btn-danger btn-sm mb-0" th:href="@{/registros/report/{id}(id=${filtro.idEstado})}">
                             <i class="fa-solid fa-file-pdf me-1"></i>
                             PDF
                         </a>
@@ -96,23 +96,40 @@
                                     <span class="badge border text-dark text-capitalize" th:text="${x.idCarrito}"></span>
                                 </td>
                                 <td class="ps-0">
+                                    <!-- Menú de acciones tipo dropdown (dropstart = despliegue hacia la izquierda) -->
                                     <div class="dropdown dropstart">
-                                        <button class="btn btn-sm mb-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn btn-sm btn-light border-0 shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
-                                        <ul class="dropdown-menu shadow-sm border-0 rounded-3 p-2">
+
+                                        <ul class="dropdown-menu shadow border-0 rounded-3 p-2">
+                                            <!-- Acción principal: Editar -->
                                             <li>
-                                                <a class="dropdown-item d-flex align-items-center gap-2 text-primary rounded" th:href="@{/registros/edicion/{id}(id=${x.idRegistro})}">
+                                                <a class="dropdown-item d-flex align-items-center gap-2 text-primary fw-semibold rounded"
+                                                   th:href="@{/registros/edicion/{id}(id=${x.idRegistro})}">
                                                     <i class="fa-solid fa-pen"></i> Editar
                                                 </a>
                                             </li>
+
+                                            <!-- Detalles del registro -->
                                             <li>
-                                                <a class="dropdown-item d-flex align-items-center gap-2 text-secondary rounded" th:href="@{/registros/detalle/{id}(id=${x.idRegistro})}">
-                                                    <i class="fa-solid fa-circle-info"></i> Detalle
+                                                <a class="dropdown-item d-flex align-items-center gap-2 text-secondary rounded"
+                                                   th:href="@{/registros/detalle/{id}(id=${x.idRegistro})}">
+                                                    <i class="fa-solid fa-circle-info"></i> Ver Detalle
+                                                </a>
+                                            </li>
+
+                                            <!-- Acción secundaria: Generar contrato -->
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center gap-2 text-success rounded"
+                                                   target="_blank"
+                                                   th:href="@{/registros/contrato/{id}(id=${x.idRegistro})}">
+                                                    <i class="fa-solid fa-file-contract"></i> Generar Contrato
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
+
                                 </td>
                             </tr>
                             <tr th:if="${#lists.isEmpty(lstRegistros)}">

@@ -336,7 +336,29 @@ public class RegistroRUC10Controller {
         }
     }
 
-}
 
+    @GetMapping("/contrato/{id}")
+    public ResponseEntity<byte[]> generarContrato(@PathVariable Integer id) {
+        try {
+            System.out.println("id: " + id);
+            byte[] reporte = reporteService.generarReportParametrs("Pagina1", id);
+
+            if (reporte == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            String nombreArchivo = (id != null && id > 0)
+                    ? "registro_ruc10_" + id + ".pdf"
+                    : "registro_ruc10_todos.pdf";
+            headers.add("Content-Disposition", "inline; filename=" + nombreArchivo);
+
+            return new ResponseEntity<>(reporte, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+}
+     }
 
 
