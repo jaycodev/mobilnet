@@ -12,6 +12,7 @@ public interface UsuarioService {
     List<Usuario> listarFiltros(UsuarioFilter filtro);
     Usuario buscarPorId(Integer idUsuario);
     ResultadoResponse modificarUsuario(Usuario usuario);
+    boolean eliminarUsuario(Integer idUsuario);
     List<Usuario> findByRol_Descripcion(String descripcion); 
     ResultadoResponse cambiarEstado(Integer Id);
     Usuario autenticacion(Usuario filter);

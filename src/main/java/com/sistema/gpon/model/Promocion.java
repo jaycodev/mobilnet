@@ -22,7 +22,7 @@ public class Promocion {
 
 	@Column(name = "Descripcion", nullable = false)
 	private String descripcion;
-
-	@Column (name = "Activo", nullable = false)
-	private Boolean activo;
+	
+	@Column(name = "Estado", nullable = false)
+	private Boolean estado;
 }

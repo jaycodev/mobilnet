@@ -45,7 +45,7 @@
                         </label>
                         <select th:field="*{idUsuarioSupervisor}" class="form-select" required>
                             <option value="">Seleccione un supervisor</option>
-                            <option th:each="s : ${supervisores}"
+                            <option th:each="x : ${supervisores}"
                                     th:value="${s.idUsuario}"
                                     th:text="${s.nombre + ' ' + s.apellido}">
                             </option>

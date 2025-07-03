@@ -34,6 +34,7 @@ public class ClienteController {
 
         model.addAttribute("filtro", new ClienteFilter());
         model.addAttribute("lstClientes", clienteService.listarClientes());
+
         return "clientes/index";
     }
 
@@ -91,7 +92,8 @@ public class ClienteController {
             return "clientes/edicion";
         }
 
-        flash.addFlashAttribute("alert", Alert.sweetToast(response.mensaje, "success", 5000));
+        String toast = Alert.sweetToast(response.mensaje, "success", 5000);
+        flash.addFlashAttribute("alert", toast);
 
         return "redirect:/clientes";
     }

@@ -2,17 +2,14 @@ package com.sistema.gpon.service;
 
 import java.util.List;
 
-import com.sistema.gpon.dto.ClienteFilter;
-import com.sistema.gpon.dto.PlanFilter;
-import com.sistema.gpon.model.Cliente;
 import com.sistema.gpon.model.Plan;
 import com.sistema.gpon.utils.ResultadoResponse;
 
 public interface PlanService {
     ResultadoResponse crearPlan(Plan plan);
     List<Plan> listarPlanes();
-    List<Plan> listarFiltros(PlanFilter filtro);
+    List<Plan> listarTodoPlanes();
     Plan buscarPorId(Integer idPlan);
     ResultadoResponse actualizarPlan(Plan plan);
-    ResultadoResponse cambiarEstado(Integer idPlan);
+    boolean eliminarPlan(Integer idPlan);
 }

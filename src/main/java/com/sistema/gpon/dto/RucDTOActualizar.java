@@ -1,5 +1,7 @@
 package com.sistema.gpon.dto;
 
+import com.sistema.gpon.model.EstadoRegistro;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -80,4 +82,12 @@ public class RucDTOActualizar {
 
     @Pattern(regexp = "\\d{9}", message = "El teléfono debe tener 9 dígitos")
     private String telefonoCliente;
+
+    private Integer idEstado;
+
+    private String idSolicitud ;
+
+    private String idInstalacion ;
+
+    private String idCarrito ;
 }

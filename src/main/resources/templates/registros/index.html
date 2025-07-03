@@ -27,7 +27,7 @@
 									<i class="fa-solid fa-filter text-secondary"></i>
 								</span>
                                 <select class="form-select border-secondary" th:field="*{idEstado}" onchange="this.form.submit()">
-                                    <option value="">Todos los estados</option>
+                                    <option value="0" selected >---selected-</option>
                                     <option th:each="item : ${lstEstados}" th:value="${item.idEstado}" th:text="${item.descripcion}"></option>
                                 </select>
                             </div>
@@ -43,10 +43,10 @@
                     </form>
 
                     <div class="col-auto d-flex gap-2">
-                        <button id="btn-exportar-pdf" class="btn btn-danger btn-sm mb-0">
+                        <a id="btn-exportar-pdf" class="btn btn-danger btn-sm mb-0" th:href="@{/registros/report/{id}(id=${filtro.idEstado})}">
                             <i class="fa-solid fa-file-pdf me-1"></i>
                             PDF
-                        </button>
+                        </a>
                         <button id="btn-exportar-excel" class="btn btn-success btn-sm mb-0">
                             <i class="fa-solid fa-file-excel me-1"></i>
                             Excel

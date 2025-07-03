@@ -27,7 +27,7 @@
 									<i class="fa-solid fa-user-tag text-secondary"></i>
 								</span>
 								<select class="form-select border-secondary" th:field="*{idRol}" onchange="this.form.submit()">
-									<option value="">Todos</option>
+									<option value="">-- Todos --</option>
 									<option th:each="item : ${lstRoles}" th:value="${item.idRol}" th:text="${item.descripcion}"></option>
 								</select>
 							</div>
@@ -94,17 +94,23 @@
 										<div class="d-flex align-items-center gap-2">
 											<div class="form-switch">
 												<input class="form-check-input" type="checkbox"
-													   th:checked="${usuario.activo}" onchange="this.form.submit()">
+													   th:checked="${usuario.estado}" onchange="this.form.submit()">
 											</div>
 										</div>
 									</form>
-
-									<span class="d-none export-estado" th:text="${usuario.activo} ? 'Sí' : 'No'"></span>
+									<span class="d-none export-estado" th:text="${usuario.estado} ? 'Sí' : 'No'"></span>
 								</td>
 								<td class="ps-0">
 									<a th:href="@{'/usuarios/edicion/' + ${usuario.idUsuario}}"
 									   class="btn btn-sm text-primary me-1 mb-0" title="Editar">
 										<i class="fa-solid fa-pen"></i>
+									</a>
+									<a href="javascript:void(0);"
+									   class="btn btn-sm text-danger mb-0"
+									   th:onclick="'confirmarEliminacion(' + ${usuario.idUsuario} + ')'"
+									   title="Eliminar"
+									>
+										<i class="fas fa-trash-alt"></i>
 									</a>
 								</td>
 							</tr>
@@ -120,6 +126,26 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- SweetAlert para confirmación -->
+	<script>
+		function confirmarEliminacion(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Esta acción inhabilitará al usuario.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Confirmar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/usuarios/eliminar/' + id;
+                }
+            });
+        }
+	</script>
 
 	<!-- Mostrar alertas -->
 	<div th:utext="${alert}"></div>
@@ -233,6 +259,7 @@
         // =================== End Export to PDF ===================
 
         // ===================== Export to Excel =====================
+		
 		document.getElementById('btn-exportar-excel').addEventListener('click', async () => {
 		           const table = $('#tabla-usuarios').DataTable();
 		           const headers = [];

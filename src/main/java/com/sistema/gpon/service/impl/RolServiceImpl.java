@@ -32,7 +32,7 @@ public class RolServiceImpl implements RolService {
 
     @Override
     public List<Rol> listarRoles() {
-       return rolRepository.findAll();
+       return rolRepository.findAllByOrderByIdRolDesc();
     }
 
     @Override

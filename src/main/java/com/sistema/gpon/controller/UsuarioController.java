@@ -65,7 +65,7 @@ public class UsuarioController {
 
 		if (bindingResults.hasErrors()) {
 			model.addAttribute("roles", rolesService.listarRoles());
-			model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion de la promocion"));
+			model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion de la Promocion"));
 			return "usuarios/nuevo";
 		}
 
@@ -110,6 +110,17 @@ public class UsuarioController {
 
 		String toast = Alert.sweetToast(response.mensaje, "success", 5000);
 		flash.addFlashAttribute("alert", toast);
+		return "redirect:/usuarios";
+	}
+
+	@GetMapping("/eliminar/{id}")
+	public String eliminar(@PathVariable Integer id, RedirectAttributes flash) {
+		boolean eliminado = usuarioService.eliminarUsuario(id);
+		if (eliminado) {
+			flash.addFlashAttribute("alert", Alert.sweetToast("Usuario eliminado correctamente", "success", 3000));
+		} else {
+			flash.addFlashAttribute("alert", Alert.sweetAlertError("No se pudo eliminar al Usuario."));
+		}
 		return "redirect:/usuarios";
 	}
 

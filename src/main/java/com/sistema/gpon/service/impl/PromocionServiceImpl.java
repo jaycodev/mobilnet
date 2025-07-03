@@ -2,10 +2,6 @@ package com.sistema.gpon.service.impl;
 
 import java.util.List;
 
-import com.sistema.gpon.dto.PlanFilter;
-import com.sistema.gpon.dto.PromocionFilter;
-import com.sistema.gpon.model.Cliente;
-import com.sistema.gpon.model.Plan;
 import com.sistema.gpon.service.PromocionService;
 import com.sistema.gpon.utils.ResultadoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +20,8 @@ public class PromocionServiceImpl implements PromocionService {
 	public ResultadoResponse crearPromocion(Promocion promocion) {		
 		try {	
 			
-			if (promocion.getActivo() == null || promocion.getActivo() == false) {
-				promocion.setActivo(true);
+			if (promocion.getEstado() == null || promocion.getEstado() == false) {
+				promocion.setEstado(true);
 	        }
 			
 			Promocion registrada = promocionRepository.save(promocion);
@@ -41,12 +37,7 @@ public class PromocionServiceImpl implements PromocionService {
 
 	@Override
 	public List<Promocion> listarPromociones() {
-		return promocionRepository.findAll();
-	}
-
-	@Override
-	public List<Promocion> listarFiltros(PromocionFilter filtro) {
-		return promocionRepository.findAllWithFilter(filtro.getActivo());
+		return promocionRepository.findAllByOrderByIdPromocionDesc();
 	}
 
 	@Override
@@ -68,23 +59,35 @@ public class PromocionServiceImpl implements PromocionService {
 	}
 
 	@Override
+	public boolean eliminarPromocion(Integer idPromocion) {
+	    try {
+	        if (promocionRepository.existsById(idPromocion)) {
+	            promocionRepository.deleteById(idPromocion);
+	            return true;
+	        } else {
+	            return false;
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        return false; 
+	    }
+	}
+	
+	public Promocion getOne(Integer id) {
+		return promocionRepository.findById(id).orElseThrow();
+	}
+
+	@Override
 	public ResultadoResponse cambiarEstado(Integer id) {
-		Promocion promo = this.buscarPorId(id);
-		Boolean accion = promo.getActivo() ? false : true;
-		String texto;
+		Promocion promo = this.getOne(id);
+		String accion = promo.getEstado() ? "desactivado" : "activado";
 
-		if (accion == true) {
-			texto = "ha sido activada";
-		} else {
-			texto = "ha sido inactivada";
-		}
-
-		promo.setActivo(!promo.getActivo());
+		promo.setEstado(!promo.getEstado());
 
 		try {
-			Promocion registrado = promocionRepository.save(promo);
+			Promocion registrada = promocionRepository.save(promo);
 
-			String mensaje = String.format("Promocion con código: %s %s", registrado.getIdPromocion(), texto);
+			String mensaje = String.format("Promocion con código %s %s", registrada.getIdPromocion(), accion);
 			return new ResultadoResponse(true, mensaje);
 
 		} catch (Exception ex) {

@@ -4,11 +4,16 @@ import com.sistema.gpon.dto.RegistroFilter;
 import com.sistema.gpon.dto.RucDTOCrear;
 import com.sistema.gpon.dto.RucDTOActualizar;
 import com.sistema.gpon.model.*;
+import com.sistema.gpon.service.ReportService;
 import com.sistema.gpon.service.impl.*;
 import com.sistema.gpon.utils.Alert;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +29,10 @@ public class RegistroRUC10Controller {
 
     @Autowired
     private RegistroRUC10ServiceImpl _registroRUC10Service;
+
+    @Autowired
+    private ReportService reporteService;
+
 
     @Autowired
     private UsuarioServiceImpl _usuarioService;
@@ -104,7 +113,7 @@ public class RegistroRUC10Controller {
         model.addAttribute("consultores", _usuarioService.findByRol_Descripcion("Consultor"));
         model.addAttribute("supervisores", _usuarioService.findByRol_Descripcion("Supervisor"));
         model.addAttribute("promociones", _promocionService.listarPromociones());
-        model.addAttribute("planes", _planService.listarPlanes());
+        model.addAttribute("planes", _planService.listarTodoPlanes());
         model.addAttribute("sectores", _seSectorService.listarSectores());
         model.addAttribute("distritos", _disDistritoService.listarDistritos());
     }
@@ -202,6 +211,7 @@ public class RegistroRUC10Controller {
         Plan plan = _planService.buscarPorId(registroRUC10.getPlan().getIdPlan());
         Promocion promocion = _promocionService.buscarPorId(registroRUC10.getPromocion().getIdPromocion());
 
+        List<EstadoRegistro> estadosLista= _EstadoRegistro.listarEstado();
 
         RucDTOActualizar ruc10DTO = new RucDTOActualizar(
                 registroRUC10.getIdRegistro(),
@@ -215,12 +225,14 @@ public class RegistroRUC10Controller {
                 plan.getIdPlan(), promocion.getIdPromocion(),
                 registroRUC10.getObservacion(), cliente.getDniCliente(),
                 cliente.getRuc(), cliente.getNombre(), cliente.getApellido(),
-                cliente.getTelefono()
+                cliente.getTelefono(),registroRUC10.getEstado().getIdEstado(),registroRUC10.getIdSolicitud(),
+                registroRUC10.getIdInstalacion(),registroRUC10.getIdCarrito()
         );
         ruc10DTO.setFechaInstalacion(cronograma.getFechaInstalacion());
 
         model.addAttribute("ruc10DTO", ruc10DTO);
 
+        model.addAttribute("estados",estadosLista);
         return "registros/edicion";
     }
 
@@ -281,6 +293,11 @@ public class RegistroRUC10Controller {
             rucDTO.setCliente(cliente);
             rucDTO.setEstado(_EstadoRegistro.buscarPorId(1));
             rucDTO.setObservacion(ruc10DTO.getObservacion());
+            rucDTO.setIdCarrito(ruc10DTO.getIdCarrito());
+            rucDTO.setIdRegistro(ruc10DTO.getIdRegistro());
+            rucDTO.setIdSolicitud(registroRUC10.getIdSolicitud());
+            rucDTO.setIdInstalacion(ruc10DTO.getIdInstalacion());
+            rucDTO.setEstado(_EstadoRegistro.buscarPorId(ruc10DTO.getIdEstado()));
             _registroRUC10Service.crearRegistro(rucDTO);
 
             flash.addFlashAttribute("alert", Alert.sweetToast("Se actualizó correctamente la venta", "success", 5000));
@@ -295,4 +312,31 @@ public class RegistroRUC10Controller {
 
         return "redirect:/registros";
     }
+
+    @GetMapping("/report/{id}")
+    public ResponseEntity<byte[]> generarReporte(@PathVariable Integer id) {
+        try {
+            System.out.println("id: " + id);
+            byte[] reporte = reporteService.generarReportParametrs("ReportRegister", id);
+
+            if (reporte == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            String nombreArchivo = (id != null && id > 0)
+                    ? "registro_ruc10_" + id + ".pdf"
+                    : "registro_ruc10_todos.pdf";
+            headers.add("Content-Disposition", "inline; filename=" + nombreArchivo);
+
+            return new ResponseEntity<>(reporte, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 }
+
+
+

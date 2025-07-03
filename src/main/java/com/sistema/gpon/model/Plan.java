@@ -31,6 +31,6 @@ public class Plan {
 	@Column(name = "Descripcion", nullable = false)
 	private String descripcion;
 	
-	@Column (name = "Activo", nullable = false)
+	@Column (name = "Activo")
 	private Boolean activo;
 }

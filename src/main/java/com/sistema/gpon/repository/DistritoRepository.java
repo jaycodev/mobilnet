@@ -9,4 +9,5 @@ import java.util.List;
 
 @Repository
 public interface DistritoRepository extends JpaRepository<Distrito, Integer> {
+
 }

@@ -28,7 +28,7 @@ public class RegistroRUC10ServiceImpl implements RegistroRUC10Service {
 
     @Override
     public List<RegistroRUC10> listarRegistros() {
-        return registroRUC10Repository.findAll();
+        return registroRUC10Repository.findAllByOrderByIdRegistroDesc();
     }
 
     @Override
@@ -60,8 +60,8 @@ public class RegistroRUC10ServiceImpl implements RegistroRUC10Service {
     }
 
     @Override
-    public int countEstado(String estado) {
-        return registroRUC10Repository.countByEstadoDescripcion(estado);
+    public int CountEstado(String estado) {
+        return registroRUC10Repository.countByEstado_Descripcion(estado);
     }
 }
 
