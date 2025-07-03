@@ -54,7 +54,11 @@ public class PromocionController {
     }
 
     @PostMapping("/registrar")
-    public String registrar(@Validated @ModelAttribute Promocion Promocion, BindingResult bindingResults, Model model, RedirectAttributes flash) {
+    public String registrar(@Validated @ModelAttribute Promocion Promocion, BindingResult bindingResult, Model model, RedirectAttributes flash) {
+        if (bindingResult.hasErrors()) {
+            return "promociones/nuevo";
+        }
+
         ResultadoResponse response = promocionService.crearPromocion(Promocion);
 
         if (!response.success) {
@@ -76,6 +80,10 @@ public class PromocionController {
     @PostMapping("/guardar")
     public String guardar(@Validated @ModelAttribute Promocion promocion, BindingResult bindingResult, Model model,
                           RedirectAttributes flash) {
+        if (bindingResult.hasErrors()) {
+            return "promociones/edicion";
+        }
+
         ResultadoResponse response = promocionService.actualizarPromocion(promocion);
 
         if (!response.success) {

@@ -55,8 +55,12 @@ public class PlanController {
     }
 
     @PostMapping("/registrar")
-    public String registrarPlan(@Validated @ModelAttribute Plan plan, BindingResult bindingResults, Model model,
+    public String registrarPlan(@Validated @ModelAttribute Plan plan, BindingResult bindingResult, Model model,
                                 RedirectAttributes flash) {
+        if (bindingResult.hasErrors()) {
+            return "planes/nuevo";
+        }
+
         ResultadoResponse response = planService.crearPlan(plan);
 
         if (!response.success) {
@@ -78,6 +82,10 @@ public class PlanController {
     @PostMapping("/guardar")
     public String guardar(@Validated @ModelAttribute Plan plan, BindingResult bindingResult, Model model,
                           RedirectAttributes flash) {
+        if (bindingResult.hasErrors()) {
+            return "planes/edicion";
+        }
+
         ResultadoResponse response = planService.actualizarPlan(plan);
 
         if (!response.success) {

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  th:replace="fragments/layout :: layoutBase('Planes', 'Nuevo', ~{::contenido}, ~{})">
+	  th:replace="fragments/layout :: layoutBase('Planes', 'Nuevo', ~{::contenido}, ~{::scripts})">
 
 <th:block th:fragment="contenido">
 	<div class="card shadow-sm p-4">
 		<h5 class="mb-4">
 			<i class="fa-solid fa-plus me-1"></i>
-			Nueva plan
+			Nuevo plan
 		</h5>
 
-		<form th:action="@{/planes/registrar}" method="post" th:object="${plan}">
+		<form th:action="@{/planes/registrar}" method="post" th:object="${plan}" novalidate>
 			<div class="row">
 				<div class="col-md-12 mb-3">
 					<label for="descripcion" class="form-label">
@@ -17,7 +17,11 @@
 						<span class="text-danger">*</span>
 					</label>
 					<input type="text" th:field="*{descripcion}" class="form-control"
-						   placeholder="300 Mbps. Fibra Optica" required/>
+						   th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'" placeholder="Ej. 300 Mbps. Fibra Optica" required />
+					<div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('descripcion')}"
+							  th:text="${#fields.errors('descripcion')[0]}"></span>
+					</div>
 				</div>
 			</div>
 
@@ -37,5 +41,21 @@
 			</div>
 		</form>
 	</div>
+</th:block>
+
+<th:block th:fragment="scripts">
+	<script>
+		document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', () => {
+                input.classList.remove('is-invalid');
+            });
+        });
+
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', () => {
+                select.classList.remove('is-invalid');
+            });
+        });
+	</script>
 </th:block>
 </html>

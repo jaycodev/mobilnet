@@ -2,6 +2,7 @@ package com.sistema.gpon.service.impl;
 
 import java.util.List;
 
+import com.sistema.gpon.model.Cliente;
 import com.sistema.gpon.service.UsuarioService;
 import com.sistema.gpon.utils.ResultadoResponse;
 
@@ -50,6 +51,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public ResultadoResponse modificarUsuario(Usuario usuario) {
         try {
+            Usuario existente = usuarioRepository.findById(usuario.getIdUsuario()).orElse(null);
+
+            if (existente == null) {
+                return new ResultadoResponse(false, "El usuario no existe en la base de datos.");
+            }
+
+            usuario.setContrasena(existente.getContrasena());
+
             Usuario actualizado = usuarioRepository.save(usuario);
 
             String nombreCompleto = actualizado.getNombre() + " " + actualizado.getApellido();
