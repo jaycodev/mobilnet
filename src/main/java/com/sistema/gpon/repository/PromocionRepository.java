@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PromocionRepository extends JpaRepository<Promocion, Integer> {
-	List<Promocion> findAllByOrderByIdPromocionDesc();
 }

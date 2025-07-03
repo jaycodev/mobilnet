@@ -99,7 +99,8 @@
                                     <span class="d-none export-estado" th:text="${cliente.activo} ? 'Sí' : 'No'"></span>
                                 </td>
                                 <td class="ps-0">
-                                    <a th:href="@{'/clientes/edicion/' + ${cliente.dniCliente}}" class="btn btn-sm text-primary me-1 mb-0">
+                                    <a th:href="@{'/clientes/edicion/' + ${cliente.dniCliente}}"
+                                       class="btn btn-sm text-primary me-1 mb-0" title="Editar">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
                                 </td>

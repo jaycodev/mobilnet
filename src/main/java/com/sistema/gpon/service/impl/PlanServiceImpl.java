@@ -15,68 +15,65 @@ import com.sistema.gpon.repository.PlanRepository;
 @Service
 public class PlanServiceImpl implements PlanService {
 
-	@Autowired
-	private PlanRepository planRepository;
+    @Autowired
+    private PlanRepository planRepository;
 
-	@Override
-	public ResultadoResponse crearPlan(Plan planObtenido) {
-		try {
-			Plan planGuardado = planRepository.save(planObtenido);
-			String mensaje = String.format("El plan fue creado correctamente con codigo: ", planGuardado.getIdPlan());
-			return new ResultadoResponse(true,mensaje);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResultadoResponse(false,"Error al crear Plan"+ e.getMessage());
-		}
-	}
-	
-	
-	
-	@Override
-	public List<Plan> listarTodoPlanes() {
-		return planRepository.listaPromocionesEstadoTrue();
-	}
+    @Override
+    public ResultadoResponse crearPlan(Plan planObtenido) {
+        try {
+            Plan planGuardado = planRepository.save(planObtenido);
+            String mensaje = String.format("El plan fue creado correctamente con codigo: ", planGuardado.getIdPlan());
+            return new ResultadoResponse(true, mensaje);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultadoResponse(false, "Error al crear Plan" + e.getMessage());
+        }
+    }
 
-	@Override
-	public List<Plan> listarPlanes() { /*PENDIENTE 1/07/25*/
-		// Si necesitas un filtrado específico, modifícalo según el método personalizado en el repositorio
-		return planRepository.findAll();
-	}
+    @Override
+    public List<Plan> listarTodoPlanes() {
+        return planRepository.listarPlanesEstadoTrue();
+    }
 
-	@Override
-	public Plan buscarPorId(Integer idPlan) {
-		return planRepository.findById(idPlan).orElseThrow();
-	}
+    @Override
+    public List<Plan> listarPlanes() { /*PENDIENTE 1/07/25*/
+        // Si necesitas un filtrado específico, modifícalo según el método personalizado en el repositorio
+        return planRepository.findAll();
+    }
 
-	@Override
-	public ResultadoResponse actualizarPlan(Plan plan) {
-		try {
-			Plan planActualizado = planRepository.save(plan);
-			String mensaje = String.format("El Plan fue actualizado con codigo", planActualizado.getIdPlan());
-			return new ResultadoResponse(true, mensaje);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return new ResultadoResponse(false, "El plan no se pudo actualizar" + ex.getLocalizedMessage());
-		}	
-	}
+    @Override
+    public Plan buscarPorId(Integer idPlan) {
+        return planRepository.findById(idPlan).orElseThrow();
+    }
 
-	@Override
-	public boolean eliminarPlan(Integer idPlan) {
+    @Override
+    public ResultadoResponse actualizarPlan(Plan plan) {
+        try {
+            Plan planActualizado = planRepository.save(plan);
+            String mensaje = String.format("El Plan fue actualizado con codigo", planActualizado.getIdPlan());
+            return new ResultadoResponse(true, mensaje);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResultadoResponse(false, "El plan no se pudo actualizar" + ex.getLocalizedMessage());
+        }
+    }
 
-		try {
-			Optional<Plan>cambiarEstado = planRepository.findById(idPlan);
-			if(cambiarEstado.isPresent()){
-				
-				Plan planCambiado =  cambiarEstado.get();
-				planCambiado.setActivo(false);
-				planRepository.save(planCambiado);
-				return true;
-			}else {
-				return false;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+    @Override
+    public boolean eliminarPlan(Integer idPlan) {
+        try {
+            Optional<Plan> cambiarEstado = planRepository.findById(idPlan);
+            if (cambiarEstado.isPresent()) {
+
+                Plan planCambiado = cambiarEstado.get();
+                planCambiado.setActivo(false);
+                planRepository.save(planCambiado);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

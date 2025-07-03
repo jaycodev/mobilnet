@@ -37,7 +37,7 @@ public class PromocionServiceImpl implements PromocionService {
 
 	@Override
 	public List<Promocion> listarPromociones() {
-		return promocionRepository.findAllByOrderByIdPromocionDesc();
+		return promocionRepository.findAll();
 	}
 
 	@Override

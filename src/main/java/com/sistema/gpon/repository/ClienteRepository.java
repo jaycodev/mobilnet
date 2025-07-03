@@ -12,7 +12,6 @@ import java.util.List;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, String> {
-
     @Query("""
 		    SELECT c FROM Cliente c
 		    WHERE (:activo IS NULL OR c.activo = :activo)

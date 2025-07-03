@@ -15,5 +15,5 @@ public interface RegistroRUC10Service {
     RegistroRUC10 buscarPorId(Integer idRegistro);
     RegistroRUC10 actualizarRegistro(RegistroRUC10 registro);
     boolean eliminarRegistro(Integer idRegistro);
-    int CountEstado(String estado);
+    int countEstado(String estado);
 }
