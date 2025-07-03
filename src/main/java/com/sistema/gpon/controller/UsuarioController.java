@@ -61,15 +61,17 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/registrar")
-	public String registrar(@Validated @ModelAttribute Usuario usuarios, BindingResult bindingResults, Model model, RedirectAttributes flash) {
+	public String registrar(@Validated @ModelAttribute Usuario usuario, BindingResult result, Model model, RedirectAttributes flash) {
+		if (usuario.getContrasena() == null || !usuario.getContrasena().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+=<>?{}\\[\\]-]).{8,}$")) {
+			result.rejectValue("contrasena", "error.usuario", "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un símbolo");
+		}
 
-		if (bindingResults.hasErrors()) {
+		if (result.hasErrors()) {
 			model.addAttribute("roles", rolesService.listarRoles());
-			model.addAttribute("alert", Alert.sweetAlertInfo("Agregue informacion de la promoción"));
 			return "usuarios/nuevo";
 		}
 
-		ResultadoResponse response = usuarioService.crearUsuario(usuarios);
+		ResultadoResponse response = usuarioService.crearUsuario(usuario);
 
 		if (!response.success) {
 			model.addAttribute("roles", rolesService.listarRoles());
@@ -92,10 +94,8 @@ public class UsuarioController {
 	@PostMapping("/guardar")
 	public String guardar(@Validated @ModelAttribute Usuario usuario, BindingResult bindingResult, Model model,
 						  RedirectAttributes flash) {
-
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("roles", rolesService.listarRoles());
-			model.addAttribute("alert", Alert.sweetAlertInfo("Agregue información del usuario"));
 			return "usuarios/edicion";
 		}
 
