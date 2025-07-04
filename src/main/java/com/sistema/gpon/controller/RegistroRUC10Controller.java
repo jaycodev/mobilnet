@@ -9,6 +9,7 @@ import com.sistema.gpon.service.ReportService;
 import com.sistema.gpon.service.impl.*;
 import com.sistema.gpon.utils.Alert;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -76,6 +77,10 @@ public class RegistroRUC10Controller {
         System.out.println("Registros ordenados:");
         _registroRUC10Service.findAllByOrderByIdRegistroDesc()
                 .forEach(r -> System.out.println(r.getIdRegistro()));
+
+        HttpSession session = request.getSession();
+        Integer idRol = (Integer) session.getAttribute("idRol");
+        model.addAttribute("idRol", idRol);
 
         return "registros/index";
     }
@@ -157,10 +162,10 @@ public class RegistroRUC10Controller {
 
             Cronograma cronograma = new Cronograma();
             cronograma.setUbicacionInstalacion(
-                    ruc10DTO.getNombreDistrito() + " " +         // Ej: JIRON PARURO
-                            "NRO." + ruc10DTO.getNumero() + " " +        // Ej: NRO.1132
-                            "DPTO/INT " + ruc10DTO.getInterior() + " " + // Ej: DPTO/INT 114
-                            ruc10DTO.getObservacion() + " " +            // Ej: PISO 1 URB.AZCONA
+                    ruc10DTO.getNombreDistrito() + " " +
+                            "NRO." + ruc10DTO.getNumero() + " " +
+                            "DPTO/INT " + ruc10DTO.getInterior() + " " +
+                            ruc10DTO.getObservacion() + " " +
                             "(" +
                             "LIMA-" + ruc10DTO.getDepartamento() + "-" + ruc10DTO.getProvincia() +
                             ")"
@@ -304,7 +309,8 @@ public class RegistroRUC10Controller {
             rucDTO.setIdSolicitud(registroRUC10.getIdSolicitud());
             rucDTO.setIdInstalacion(ruc10DTO.getIdInstalacion());
             rucDTO.setEstado(_EstadoRegistro.buscarPorId(ruc10DTO.getIdEstado()));
-            _registroRUC10Service.crearRegistro(rucDTO);
+
+            _registroRUC10Service.actualizarRegistro(rucDTO);
 
             flash.addFlashAttribute("alert", Alert.sweetAlertSuccess("Se actualizó correctamente la venta"));
 

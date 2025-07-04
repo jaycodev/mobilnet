@@ -14,12 +14,14 @@
             <div class="row">
                 <!-- Código (oculto y deshabilitado) -->
                 <input type="hidden" th:field="*{idRegistro}"/>
-                <div class="col-md-12 mb-3">
+                <div class="col-md-6 mb-3">
                     <label for="idRegistroVisible" class="form-label">
                         Código
                     </label>
                     <input type="number" th:value="*{idRegistro}" class="form-control" id="idRegistroVisible" disabled />
+                </div>
 
+                <div class="col-md-6 mb-3">
                     <label for="idEstado" class="form-label">
                         Estado
                         <span class="text-danger">*</span>
@@ -271,23 +273,32 @@
                     </select>
                 </div>
 
-                <!-- PASO 5.1: IDs internos de sistema (opcional) -->
+                <!-- ==================================================== -->
+                <!-- PASO 5.1: CÓDIGOS DE INTEGRACIÓN INTERNA             -->
+                <!-- ==================================================== -->
                 <h6 class="mb-3">
                     <i class="fa-solid fa-database me-1"></i>
-                    IDs de integración interna
+                    Códigos de integración interna
                 </h6>
+
+                <!-- Cod. carrito -->
                 <div class="col-md-4 mb-3">
-                    <label for="idCarrito" class="form-label">ID Carrito</label>
-                    <input type="text" th:field="*{idCarrito}" class="form-control"/>
+                    <label for="idCarrito" class="form-label">Cod. carrito</label>
+                    <input type="text" th:field="*{idCarrito}" class="form-control" placeholder="Ej. CSE00130678226"/>
                 </div>
+
+                <!-- Cod. instalación -->
                 <div class="col-md-4 mb-3">
-                    <label for="idInstalacion" class="form-label">ID Instalación</label>
-                    <input type="text" th:field="*{idInstalacion}" class="form-control"/>
+                    <label for="idInstalacion" class="form-label">Cod. instalación</label>
+                    <input type="text" th:field="*{idInstalacion}" class="form-control" placeholder="Ej. 763952718"/>
                 </div>
+
+                <!-- Cod. solicitud -->
                 <div class="col-md-4 mb-3">
-                    <label for="idSolicitud" class="form-label">ID Solicitud</label>
-                    <input type="text" th:field="*{idSolicitud}" class="form-control"/>
+                    <label for="idSolicitud" class="form-label">Cod. solicitud</label>
+                    <input type="text" th:field="*{idSolicitud}" class="form-control" placeholder="Ej. 1QWERTYUI"/>
                 </div>
+
 
                 <!-- ==================================================== -->
                 <!-- PASO 6: CRONOGRAMA                                   -->

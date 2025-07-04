@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="https://www.entel-ofertas.cl/assets/entel-logo.e51f40b3.png">
+    <title>Mobilnet - Acceso Denegado</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/argon-dashboard/2.0.4/css/argon-dashboard.min.css" rel="stylesheet">
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .fondo-error {
+            background-image: url('/assets/img/error.svg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div class="fondo-error">
+    <div class="text-center">
+        <h1 class="display-1 text-bolder">403</h1>
+        <h2 class="text-dark">Acceso denegado</h2>
+        <p class="lead text-dark">No tienes permisos suficientes para acceder a esta página.</p>
+        <a href="/" class="btn bg-gradient-dark mt-4">Volver al inicio</a>
+    </div>
+</div>
+</body>
+</html>

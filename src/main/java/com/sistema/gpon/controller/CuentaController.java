@@ -53,24 +53,24 @@ public class CuentaController {
         switch (rol) {
             case 1:
                 session.setAttribute("mostrarRegistro", true);
-                session.setAttribute("mostrarClientes", false);
+                session.setAttribute("mostrarClientes", true);
                 session.setAttribute("mostrarPlanes", true);
                 session.setAttribute("mostrarPromociones", true);
                 session.setAttribute("mostrarUsuarios", false);
                 break;
             case 2:
-                session.setAttribute("mostrarRegistro", false);
-                session.setAttribute("mostrarClientes", false);
+                session.setAttribute("mostrarRegistro", true);
+                session.setAttribute("mostrarClientes", true);
                 session.setAttribute("mostrarPlanes", false);
                 session.setAttribute("mostrarPromociones", false);
-                session.setAttribute("mostrarUsuarios", true);
+                session.setAttribute("mostrarUsuarios", false);
                 break;
             case 3:
                 session.setAttribute("mostrarRegistro", true);
                 session.setAttribute("mostrarClientes", true);
-                session.setAttribute("mostrarPlanes", true);
-                session.setAttribute("mostrarPromociones", true);
-                session.setAttribute("mostrarUsuarios", true);
+                session.setAttribute("mostrarPlanes", false);
+                session.setAttribute("mostrarPromociones", false);
+                session.setAttribute("mostrarUsuarios", false);
                 break;
             case 4:
                 session.setAttribute("mostrarRegistro", true);
@@ -88,14 +88,14 @@ public class CuentaController {
                 break;
         }
 
-        // Obtengo informacion del Usuario que se esta logeando
         String nomUsuario = String.format("%s %s", usuarioIngresado.getNombre(), usuarioIngresado.getContrasena());
         session.setAttribute("idUsuario", usuarioIngresado.getIdUsuario());
         session.setAttribute("nombresCompletos", nomUsuario);
         session.setAttribute("cuenta", usuarioIngresado.getNombre());
         session.setAttribute("rolUsuario", usuarioIngresado.getRol().getDescripcion());
+        session.setAttribute("idRol", usuarioIngresado.getRol().getIdRol());
 
-        String alertExitoso = Alert.sweetAlertSuccess("¡Te damos la bienvenida a Mobinet, " + usuarioIngresado.getNombre() + "!");
+        String alertExitoso = Alert.sweetAlertSuccess("¡Te damos la bienvenida a Mobilnet, " + usuarioIngresado.getNombre() + "!");
         flash.addFlashAttribute("alertExistoso", alertExitoso);
 
         return "redirect:/";
@@ -105,12 +105,6 @@ public class CuentaController {
     public String cerrarSesion(HttpSession session) {
         session.invalidate();
         return "redirect:/cuenta/login";
-    }
-
-    @GetMapping("/registro")
-    public String mostrarFormularioRegistro(Model model) {
-        model.addAttribute("usuario", new Usuario());
-        return "cuenta/registro";
     }
 
     @GetMapping("/perfil")

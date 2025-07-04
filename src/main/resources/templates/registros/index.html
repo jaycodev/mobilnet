@@ -42,14 +42,11 @@
                                 </a>
                             </form>
 
-                            <!-- Botones PDF/Excel -->
+                            <!-- Botón PDF -->
                             <div class="d-flex align-items-center gap-2 ms-auto flex-wrap">
                                 <a th:href="@{/registros/report/{id}(id=${filtro.idEstado})}" target="_blank" class="btn btn-danger btn-sm mb-0" >
                                     <i class="fa-solid fa-file-pdf me-1"></i> PDF
                                 </a>
-                                <button id="btn-exportar-excel" class="btn btn-success btn-sm mb-0">
-                                    <i class="fa-solid fa-file-excel me-1"></i> Excel
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -114,8 +111,9 @@
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
                                         <ul class="dropdown-menu shadow-sm border-0 rounded-3 p-2">
-                                            <li>
-                                                <a class="dropdown-item d-flex align-items-center gap-2 text-primary rounded" th:href="@{/registros/edicion/{id}(id=${x.idRegistro})}">
+                                            <li th:if="${idRol == 1 or idRol == 4}">
+                                                <a class="dropdown-item d-flex align-items-center gap-2 text-primary rounded"
+                                                   th:href="@{/registros/edicion/{id}(id=${x.idRegistro})}">
                                                     <i class="fa-solid fa-pen"></i> Editar
                                                 </a>
                                             </li>
