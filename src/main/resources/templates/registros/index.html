@@ -91,7 +91,8 @@
                                             <i th:case="5" class="fas fa-inbox me-1 text-secondary" title="Sin C.E."></i>
                                             <i th:case="6" class="fas fa-thumbtack me-1 text-success" title="Pagado"></i>
                                             <i th:case="7" class="fas fa-times-circle me-1 text-dark" title="Sin disponibilidad"></i>
-                                            <i th:case="8" class="fas fa-signal me-1 text-muted" title="Sin cobertura"></i>
+                                            <i th:case="8" class="fas fa-check-circle me-1 text-success" title="Instalado"></i>
+                                            <i th:case="9" class="fas fa-signal me-1 text-muted" title="Sin cobertura"></i>
                                         </i>
                                         <span th:text="${x.estado.descripcion}"></span>
                                     </span>
@@ -184,6 +185,9 @@
                     icon.classList.add('fa-times-circle', 'text-dark');
                     break;
                 case '8':
+                    icon.classList.add('fa-check-circle', 'text-success');
+                    break;
+                case '9':
                     icon.classList.add('fa-signal', 'text-muted');
                     break;
                 default:
