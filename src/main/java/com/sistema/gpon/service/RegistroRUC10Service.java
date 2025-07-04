@@ -1,8 +1,11 @@
 package com.sistema.gpon.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.sistema.gpon.dto.DistritoCantidadDTO;
 import com.sistema.gpon.dto.RegistroFilter;
+import com.sistema.gpon.dto.RegistroPorMesDTO;
 import com.sistema.gpon.dto.UsuarioFilter;
 import com.sistema.gpon.model.RegistroRUC10;
 import com.sistema.gpon.model.Usuario;
@@ -15,5 +18,7 @@ public interface RegistroRUC10Service {
     RegistroRUC10 buscarPorId(Integer idRegistro);
     RegistroRUC10 actualizarRegistro(RegistroRUC10 registro);
     boolean eliminarRegistro(Integer idRegistro);
-    int countEstado(String estado);
+    long contarEstado(String estado);
+    List<RegistroPorMesDTO> contarRegistrosPorMes();
+    List<DistritoCantidadDTO> contarRegistrosPorDistrito();
 }

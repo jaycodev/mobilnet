@@ -1,5 +1,7 @@
 package com.sistema.gpon.repository;
 
+import com.sistema.gpon.dto.DistritoCantidadDTO;
+import com.sistema.gpon.dto.RegistroPorMesDTO;
 import com.sistema.gpon.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -19,5 +21,24 @@ public interface RegistroRUC10Repository extends JpaRepository<RegistroRUC10, In
 		""")
     List<RegistroRUC10> findAllWithFilter(@Param("idEstado") Integer idEstado);
 
-    int countByEstadoDescripcion(String descripcion);
+	@Query("SELECT COUNT(r) FROM RegistroRUC10 r WHERE r.estado.descripcion = :descripcion")
+	long countByEstadoDescripcion(@Param("descripcion") String descripcion);
+
+	@Query("""
+		SELECT MONTH(c.fechaRegistro) AS mes, COUNT(r) AS cantidad
+		FROM RegistroRUC10 r
+		JOIN r.cronograma c
+		WHERE c.fechaRegistro IS NOT NULL
+		GROUP BY MONTH(c.fechaRegistro)
+		ORDER BY mes
+	""")
+	List<RegistroPorMesDTO> contarRegistrosPorMes();
+
+	@Query("""
+		SELECT r.distrito.nombreDistrito, COUNT(r)
+		FROM RegistroRUC10 r
+		GROUP BY r.distrito.nombreDistrito
+		ORDER BY COUNT(r) DESC
+	""")
+	List<DistritoCantidadDTO> contarRegistrosPorDistrito();
 }

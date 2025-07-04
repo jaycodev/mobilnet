@@ -156,7 +156,6 @@ public class RegistroRUC10Controller {
 
             Cronograma cronograma = new Cronograma();
             cronograma.setUbicacionInstalacion(
-                    ruc10DTO.getNombreDistrito() + " " +
                             "NRO." + ruc10DTO.getNumero() + " " +
                             "DPTO/INT " + ruc10DTO.getInterior() + " " +
                             ruc10DTO.getObservacion() + " " +
@@ -186,7 +185,9 @@ public class RegistroRUC10Controller {
             rucDTO.setCronograma(cronograma);
             rucDTO.setCliente(cliente);
             rucDTO.setEstado(_EstadoRegistro.buscarPorId(1));
+            rucDTO.setDistrito(_disDistritoService.buscarPorId(ruc10DTO.getIdDistrito()));
             rucDTO.setObservacion(ruc10DTO.getObservacion());
+
             _registroRUC10Service.crearRegistro(rucDTO);
 
             flash.addFlashAttribute("alert", Alert.sweetAlertSuccess("Se ingreso correctamente el registro"));
@@ -226,7 +227,7 @@ public class RegistroRUC10Controller {
                 cronograma.getRangoInstalacion(), cronograma.getUbicacionInstalacion(),
                 cronograma.getFechaInstalacion(),
                 consultor.getIdUsuario(), supervisor.getIdUsuario(),
-                plan.getIdPlan(), promocion.getIdPromocion(),
+                plan.getIdPlan(), promocion.getIdPromocion(), registroRUC10.getDistrito().getIdDistrito(),
                 registroRUC10.getObservacion(), cliente.getDniCliente(),
                 cliente.getRuc(), cliente.getNombre(), cliente.getApellido(),
                 cliente.getTelefono(), registroRUC10.getEstado().getIdEstado(), registroRUC10.getIdSolicitud(),
@@ -303,6 +304,7 @@ public class RegistroRUC10Controller {
             rucDTO.setIdSolicitud(registroRUC10.getIdSolicitud());
             rucDTO.setIdInstalacion(ruc10DTO.getIdInstalacion());
             rucDTO.setEstado(_EstadoRegistro.buscarPorId(ruc10DTO.getIdEstado()));
+            rucDTO.setDistrito(registroRUC10.getDistrito());
 
             _registroRUC10Service.actualizarRegistro(rucDTO);
 

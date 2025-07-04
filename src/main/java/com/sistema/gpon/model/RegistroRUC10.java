@@ -33,7 +33,7 @@ public class RegistroRUC10 {
 	private ContactoPrincipal contactoPrincipal;
 
 	@ManyToOne
-	@JoinColumn(name = "idContactoSecundario", nullable = false)
+	@JoinColumn(name = "IdContactoSecundario", nullable = false)
 	private ContactoSecundario contactoSecundario;
 
 	@ManyToOne
@@ -51,6 +51,10 @@ public class RegistroRUC10 {
 	@ManyToOne
 	@JoinColumn(name = "IdEstado")
 	private EstadoRegistro estado;
+
+	@ManyToOne
+	@JoinColumn(name = "IdDistrito")
+	private Distrito distrito;
 
 	@Column(name = "IdSolicitud")
 	private String idSolicitud = "ninguno";

@@ -35,6 +35,7 @@ public class RucDTOCrear {
     private Integer idUsuarioSupervisor;
     private Integer idPlan;
     private Integer idPromocion;
+    private Integer idDistrito;
     private String observacion;
 
     // Datos del cliente
