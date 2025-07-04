@@ -190,7 +190,7 @@ public class RegistroRUC10Controller {
             e.printStackTrace();
             flash.addFlashAttribute("alert", Alert.sweetAlert("ERROR", "Se produjo un error", "error"));
             model.addAttribute("error", "Ocurrió un error al registrar");
-            return "/registros";
+            return "/registros/nuevo";
         }
 
         return "redirect:/registros";
@@ -306,7 +306,7 @@ public class RegistroRUC10Controller {
             e.printStackTrace();
             flash.addFlashAttribute("alert", Alert.sweetAlert("ERROR", "Se produjo un error", "error"));
             model.addAttribute("error", "Ocurrió un error al registrar");
-            return "/registros";
+            return "/registros/edicion";
 
         }
 
