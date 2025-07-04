@@ -8,6 +8,7 @@ import com.sistema.gpon.service.ReportService;
 import com.sistema.gpon.service.impl.*;
 import com.sistema.gpon.utils.Alert;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -70,6 +71,10 @@ public class RegistroRUC10Controller {
         model.addAttribute("lstEstados", _EstadoRegistro.listarEstado());
         model.addAttribute("filtro", new RegistroFilter());
         model.addAttribute("lstRegistros", _registroRUC10Service.listarRegistros());
+
+        HttpSession session = request.getSession();
+        Integer idRol = (Integer) session.getAttribute("idRol");
+        model.addAttribute("idRol", idRol);
 
         return "registros/index";
     }
