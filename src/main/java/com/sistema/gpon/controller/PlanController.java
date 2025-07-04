@@ -69,7 +69,7 @@ public class PlanController {
         }
 
         flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
-        return "redirect:/promociones";
+        return "redirect:/planes";
     }
 
     @GetMapping("/edicion/{id}")
