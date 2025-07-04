@@ -106,7 +106,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario autenticacion(Usuario filter) {
-        return usuarioRepository.findByCorreoAndContrasena(filter.getCorreo(), filter.getContrasena());
+    public Usuario autenticacion(Usuario usuario) {
+        return usuarioRepository.findByCorreoAndContrasena(usuario.getCorreo(), usuario.getContrasena());
     }
 }

@@ -14,5 +14,5 @@ public interface UsuarioService {
     ResultadoResponse modificarUsuario(Usuario usuario);
     List<Usuario> findByRolDescripcion(String descripcion);
     ResultadoResponse cambiarEstado(Integer Id);
-    Usuario autenticacion(Usuario filter);
+    Usuario autenticacion(Usuario usuario);
 }
