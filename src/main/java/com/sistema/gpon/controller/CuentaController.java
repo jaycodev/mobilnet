@@ -1,5 +1,7 @@
 package com.sistema.gpon.controller;
 
+import com.sistema.gpon.dto.UsuarioContrasenaDTO;
+import com.sistema.gpon.dto.UsuarioPerfilDTO;
 import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.repository.UsuarioRepository;
 import com.sistema.gpon.service.UsuarioService;
@@ -12,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 
 import javax.swing.text.Document;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -116,60 +119,115 @@ public class CuentaController {
 
         Integer idUsuario = (Integer) session.getAttribute("idUsuario");
 
-        if (idUsuario == null) {
-            flash.addFlashAttribute("errorInicio", Alert.sweetAlertError("Debe iniciar sesión para acceder al perfil"));
-            return "redirect:/cuenta/login";
-        }
-
         Usuario usuario = usuarioService.buscarPorId(idUsuario);
 
-        if (usuario == null) {
-            flash.addFlashAttribute("errorInicio", Alert.sweetAlertError("No se encontró el usuario"));
-            return "redirect:/cuenta/login";
-        }
+        UsuarioPerfilDTO perfilDTO = new UsuarioPerfilDTO();
+        perfilDTO.setCorreo(usuario.getCorreo());
+        perfilDTO.setNombre(usuario.getNombre());
+        perfilDTO.setApellido(usuario.getApellido());
 
-        model.addAttribute("usuario", usuario);
+        model.addAttribute("perfilDTO", perfilDTO);
+        model.addAttribute("contrasenaDTO", new UsuarioContrasenaDTO());
+
         return "cuenta/perfil";
     }
 
-    @PostMapping("/actualizar")
-    public String actualizarPerfil(@ModelAttribute Usuario formUsuario,
-                                   @RequestParam String contrasenaActual,
-                                   @RequestParam(required = false) String nuevaContrasena,
+    private void cargarFormularioCuenta(Model model, Usuario usuario, UsuarioPerfilDTO perfilDTO, UsuarioContrasenaDTO contrasenaDTO) {
+        if (perfilDTO == null) {
+            perfilDTO = new UsuarioPerfilDTO();
+            perfilDTO.setNombre(usuario.getNombre());
+            perfilDTO.setApellido(usuario.getApellido());
+            perfilDTO.setCorreo(usuario.getCorreo());
+        }
+
+        perfilDTO.setNombre(usuario.getNombre());
+        perfilDTO.setApellido(usuario.getApellido());
+
+        if (contrasenaDTO == null) {
+            contrasenaDTO = new UsuarioContrasenaDTO();
+        }
+
+        model.addAttribute("perfilDTO", perfilDTO);
+        model.addAttribute("contrasenaDTO", contrasenaDTO);
+    }
+
+    @PostMapping("/actualizar-perfil")
+    public String actualizarPerfil(@Valid @ModelAttribute("perfilDTO") UsuarioPerfilDTO dto,
+                                   BindingResult result,
                                    HttpSession session,
-                                   RedirectAttributes flash) {
+                                   Model model) {
+
         Integer idUsuario = (Integer) session.getAttribute("idUsuario");
+        Usuario usuario = usuarioService.buscarPorId(idUsuario);
 
-        if (idUsuario == null) {
-            flash.addFlashAttribute("errorInicio", Alert.sweetAlertError("Debe iniciar sesión para actualizar el perfil"));
-            return "redirect:/cuenta/login";
+        if (result.hasErrors()) {
+            cargarFormularioCuenta(model, usuario, dto, null);
+            return "cuenta/perfil";
         }
 
-        Usuario usuarioExistente = usuarioService.buscarPorId(idUsuario);
-
-        if (usuarioExistente == null) {
-            flash.addFlashAttribute("errorInicio", Alert.sweetAlertError("No se encontró el usuario"));
-            return "redirect:/cuenta/login";
+        if (usuario == null) {
+            model.addAttribute("alert", Alert.sweetAlertError("Usuario no encontrado"));
+            cargarFormularioCuenta(model, usuario, dto, null);
+            return "cuenta/perfil";
         }
 
-        if (!usuarioExistente.getContrasena().equals(contrasenaActual)) {
-            flash.addFlashAttribute("alert", Alert.sweetAlertError("La contraseña actual es incorrecta"));
-            return "redirect:/cuenta/perfil";
+        usuario.setCorreo(dto.getCorreo());
+        ResultadoResponse res = usuarioService.modificarUsuario(usuario);
+
+        if (!res.success) {
+            model.addAttribute("alert", Alert.sweetAlertError(res.mensaje));
+            cargarFormularioCuenta(model, usuario, dto, null);
+            return "cuenta/perfil";
         }
 
-        usuarioExistente.setCorreo(formUsuario.getCorreo());
-        if (nuevaContrasena != null && !nuevaContrasena.isBlank()) {
-            usuarioExistente.setContrasena(nuevaContrasena);
+        model.addAttribute("alert", Alert.sweetAlertSuccess("Perfil actualizado correctamente"));
+        cargarFormularioCuenta(model, usuario, dto, null);
+        return "cuenta/perfil";
+    }
+
+    @PostMapping("/actualizar-contrasena")
+    public String actualizarContrasena(@Valid @ModelAttribute("contrasenaDTO") UsuarioContrasenaDTO dto,
+                                       BindingResult result,
+                                       HttpSession session,
+                                       Model model) {
+
+        Integer idUsuario = (Integer) session.getAttribute("idUsuario");
+        Usuario usuario = usuarioService.buscarPorId(idUsuario);
+
+        if (usuario == null) {
+            model.addAttribute("alert", Alert.sweetAlertError("Usuario no encontrado"));
+            cargarFormularioCuenta(model, usuario, null, dto);
+            return "cuenta/perfil";
         }
 
-        ResultadoResponse resultado = usuarioService.modificarUsuario(usuarioExistente);
-
-        if (!resultado.success) {
-            flash.addFlashAttribute("alert", Alert.sweetAlertError(resultado.mensaje));
-            return "redirect:/cuenta/perfil";
+        if (result.hasErrors()) {
+            cargarFormularioCuenta(model, usuario, null, dto);
+            return "cuenta/perfil";
         }
 
-        flash.addFlashAttribute("alert", Alert.sweetAlertSuccess("Perfil actualizado correctamente"));
-        return "redirect:/cuenta/perfil";
+        if (!dto.getNuevaContrasena().equals(dto.getConfirmarNueva())) {
+            model.addAttribute("alert", Alert.sweetAlertError("La confirmación no coincide con la nueva contraseña"));
+            cargarFormularioCuenta(model, usuario, null, dto);
+            return "cuenta/perfil";
+        }
+
+        if (!usuario.getContrasena().equals(dto.getContrasenaActual())) {
+            model.addAttribute("alert", Alert.sweetAlertError("La contraseña actual es incorrecta"));
+            cargarFormularioCuenta(model, usuario, null, dto);
+            return "cuenta/perfil";
+        }
+
+        usuario.setContrasena(dto.getNuevaContrasena());
+        ResultadoResponse res = usuarioService.modificarUsuario(usuario);
+
+        if (!res.success) {
+            model.addAttribute("alert", Alert.sweetAlertError(res.mensaje));
+            cargarFormularioCuenta(model, usuario, null, dto);
+            return "cuenta/perfil";
+        }
+
+        model.addAttribute("alert", Alert.sweetAlertSuccess("Contraseña actualizada correctamente"));
+        cargarFormularioCuenta(model, usuario, null, dto);
+        return "cuenta/perfil";
     }
 }

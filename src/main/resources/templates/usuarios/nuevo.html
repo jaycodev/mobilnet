@@ -54,20 +54,6 @@
                     </div>
                 </div>
 
-                <!-- Contraseña -->
-                <div class="col-md-6 mb-3">
-                    <label for="contrasena" class="form-label">
-                        Contraseña
-                        <span class="text-danger">*</span>
-                    </label>
-                    <input type="password" th:field="*{contrasena}" class="form-control"
-                           th:classappend="${#fields.hasErrors('contrasena')} ? 'is-invalid'" placeholder="Ingrese una contraseña" required />
-                    <div class="invalid-feedback">
-                        <span th:if="${#fields.hasErrors('contrasena')}"
-                              th:text="${#fields.errors('contrasena')[0]}"></span>
-                    </div>
-                </div>
-
                 <!-- Rol -->
                 <div class="col-md-6 mb-3">
                     <label for="rol" class="form-label">
@@ -85,6 +71,29 @@
                     <div class="invalid-feedback">
                         <span th:if="${#fields.hasErrors('rol')}"
                               th:text="${#fields.errors('rol')[0]}"></span>
+                    </div>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label for="contrasena" class="form-label">
+                            Contraseña
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="password" th:field="*{contrasena}" class="form-control"
+                               th:classappend="${#fields.hasErrors('contrasena')} ? 'is-invalid'" placeholder="Ingrese una contraseña" required />
+                        <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('contrasena')}"
+                              th:text="${#fields.errors('contrasena')[0]}"></span>
+                        </div>
+                        <div class="form-check form-check-sm mt-1">
+                            <input class="form-check-input" type="checkbox"
+                                   style="transform: scale(0.8);"
+                                   onclick="togglePassword(this, 'contrasena')"
+                                   id="toggle-contrasena">
+                            <label class="form-label" for="toggle-contrasena">Mostrar contraseña</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,6 +129,13 @@
                 select.classList.remove('is-invalid');
             });
         });
+
+        function togglePassword(checkbox, fieldName) {
+            const input = document.querySelector(`input[name='${fieldName}']`);
+            if (input) {
+                input.type = checkbox.checked ? 'text' : 'password';
+            }
+        }
     </script>
 </th:block>
 </html>
