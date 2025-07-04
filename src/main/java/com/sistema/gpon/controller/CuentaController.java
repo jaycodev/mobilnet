@@ -33,8 +33,8 @@ public class CuentaController {
     }
 
     @PostMapping("/iniciarSesion")
-    public String iniciarSesionPagina(@ModelAttribute Usuario filter, HttpSession session, Model model, RedirectAttributes flash) {
-        Usuario usuarioIngresado = usuarioService.autenticacion(filter);
+    public String iniciarSesionPagina(@ModelAttribute Usuario usuario, HttpSession session, Model model, RedirectAttributes flash) {
+        Usuario usuarioIngresado = usuarioService.autenticacion(usuario);
 
         if (usuarioIngresado == null) {
             model.addAttribute("usuario", new Usuario());
