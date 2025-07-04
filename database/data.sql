@@ -138,38 +138,85 @@ INSERT INTO ContactoSecundario (NombreContacto, Dni, Telefono, Correo) VALUES
 ('Carmen Soto', '56756756', '955667788', 'carmen.soto@example.com');
 
 INSERT INTO Cronograma (UbicacionInstalacion, RangoInstalacion, FechaRegistro, FechaInstalacion) VALUES
-('Av. La Marina 123, San Miguel', 'tarde', '2025-06-10', '2025-06-12'),
-('Jr. Los Olivos 456, Surco', 'manana', '2025-06-11', '2025-06-10'),
-('Calle Ficticia 789, Miraflores', 'tarde', '2025-06-12', '2025-06-11'),
-('Pasaje Central 101, La Molina', 'tarde', '2025-06-12', '2025-06-12'),
-('Av. Siempre Viva 742, San Isidro', 'manana', '2025-06-11', '2025-06-11');
+('Av. La Marina 123, San Miguel', 'tarde', '2025-01-10', '2025-01-12'),
+('Jr. Los Olivos 456, Surco', 'manana', '2025-02-11', '2025-02-13'),
+('Calle Ficticia 789, Miraflores', 'tarde', '2025-03-12', '2025-03-14'),
+('Pasaje Central 101, La Molina', 'tarde', '2025-04-12', '2025-04-13'),
+('Av. Siempre Viva 742, San Isidro', 'manana', '2025-05-11', '2025-05-11'),
+('Calle Las Flores 100, Barranco', 'tarde', '2025-06-10', '2025-06-11');
+
 
 INSERT INTO RegistroRUC10 (
     IdUsuarioConsultor, IdUsuarioSupervisor, DniCliente,
     IdContactoPrincipal, IdContactoSecundario, IdPlan, IdPromocion, IdCronograma,
-    IdEstado, IdSolicitud, IdInstalacion, IdCarrito, Observacion
+    IdEstado, IdDistrito,
+    IdSolicitud, IdInstalacion, IdCarrito, Observacion
 ) VALUES
-(2, 4, '12345678',  1, 1, 1, 1, 1, 1, '1QWERTYUI', '763952718', 'CSE00130678226', 'Cliente confirmó instalación.'),
-(5, 8, '23456789',  2, 2, 2, 1, 2, 1, '1ASDFGHJK', '763952719', 'CSE00130678227', 'Cliente pidió instalación urgente.'),
-(7, 12, '34567890', 3, 3, 3, 1, 3, 7, '1ZXCVBNMA', '763952720', 'CSE00130678228', 'Dirección confirmada por teléfono.'),
-(10, 15,'45678901', 4, 4, 4, 1, 4, 1, '1QAZWSXED', '763952721', 'CSE00130678229', 'Dirección confirmada por Mensaje.'),
-(13, 18,'56789012', 5, 5, 5, 1, 5, 7, '1LKJHGFDS', '763952722', 'CSE00130678230', 'Cliente solicitó cambio de fecha.'),
-(1, 15, '67890123', 6, 1, 6, 1, 1, 3, '1POIUYTRE', '763952723', 'CSE00130678231', 'Cliente se contactará para confirmar.'),
-(3, 19, '78901234', 7, 2, 7, 1, 2, 2, '1MNBVCXZA', '763952724', 'CSE00130678232', 'Cliente con deuda anterior.'),
-(6, 12, '89012345', 8, 3, 7, 1, 3, 8, '1PLMOKNJI', '763952725', 'CSE00130678233', 'Sector sin cobertura total.'),
-(11, 15,'90123456', 9, 4, 9, 1, 4, 4, '1QWASZXED', '763952726', 'CSE00130678234', 'Instalación reagendada por ausencia.'),
-(14, 20,'01234567', 10, 5, 10, 1, 5, 2, '1RFVTGBYH', '763952727', 'CSE00130678235', 'Instalador asignado, pendiente visita.'),
-(2, 4,   '13579246', 1, 1, 10, 1, 1, 1, '1EDCXSWAQ', '763952728', 'CSE00130678236', 'Cliente requiere atención especial.'),
-(5, 8,   '24681357', 2, 2, 10, 1, 2, 5, '1TGBNHYUJ', '763952729', 'CSE00130678237', 'Número de contacto no disponible.'),
-(7, 12,  '35792468', 3, 3, 7, 1, 3, 1, '1IKMJNHTG', '763952730', 'CSE00130678238', 'Cliente en zona observada.'),
-(10, 15, '46813579', 4, 4, 4, 1, 4, 3, '1UJMHNBVF', '763952731', 'CSE00130678239', 'Promoción aplicada correctamente.');
-
-
-select * from Plan
-order by 1 desc;
-
-select p.* , COUNT(r.idRegistro) as Total_Registros 
-FROM Plan p 
-Left JOIN RegistroRUC10 r ON r.IdPlan = p.Idplan 
-group by p.IdPlan 
-order by Total_Registros desc
+(2, 4, '12345678', 1, 1, 1, 1, 1, 1, 1, 'ENE001', '763952700', 'CSE00010001', 'Instalación programada exitosamente.'),
+(3, 5, '23456789', 2, 2, 1, 1, 1, 2, 2, 'ENE002', '763952701', 'CSE00010002', 'Cliente solicitó cambio de horario.'),
+(4, 6, '34567890', 3, 3, 1, 1, 2, 3, 3, 'FEB001', '763952702', 'CSE00020001', 'Confirmado por llamada telefónica.'),
+(5, 7, '45678901', 4, 4, 1, 1, 2, 2, 4, 'FEB002', '763952703', 'CSE00020002', 'Cliente ausente, reprogramar.'),
+(6, 8, '56789012', 5, 5, 1, 1, 2, 1, 1, 'FEB003', '763952704', 'CSE00020003', 'Dirección modificada por cliente.'),
+(7, 9, '67890123', 1, 1, 1, 1, 3, 4, 5, 'MAR001', '763952705', 'CSE00030001', 'Instalador en camino.'),
+(8, 10, '78901234', 2, 2, 1, 1, 3, 5, 6, 'MAR002', '763952706', 'CSE00030002', 'Confirmación vía WhatsApp.'),
+(9, 11, '89012345', 3, 3, 1, 1, 3, 6, 7, 'MAR003', '763952707', 'CSE00030003', 'Cliente desea más información.'),
+(10, 12, '90123456', 4, 4, 1, 1, 4, 2, 8, 'ABR001', '763952708', 'CSE00040001', 'Cliente reagendó por emergencia.'),
+(11, 13, '01234567', 5, 5, 1, 1, 4, 1, 9, 'ABR002', '763952709', 'CSE00040002', 'Instalación cancelada.'),
+(12, 14, '13579246', 1, 1, 1, 1, 5, 3, 10, 'MAY001', '763952710', 'CSE00050001', 'Cliente respondió encuesta.'),
+(13, 15, '24681357', 2, 2, 1, 1, 5, 1, 11, 'MAY002', '763952711', 'CSE00050002', 'Todo conforme, instalación finalizada.'),
+(14, 16, '35792468', 3, 3, 1, 1, 6, 5, 12, 'JUN001', '763952712', 'CSE00060001', 'Cliente sin respuesta aún.'),
+(15, 17, '46813579', 4, 4, 1, 1, 6, 4, 13, 'JUN002', '763952713', 'CSE00060002', 'Sector con cobertura parcial.'),
+(16, 18, '57924680', 5, 5, 1, 1, 6, 1, 14, 'JUN003', '763952714', 'CSE00060003', 'Confirmado por correo electrónico.'),
+(2, 3, '68035791', 6, 1, 1, 1, 1, 7, 15, 'ENE003', '763952715', 'CSE00010003', 'Cliente requiere validación técnica.'),
+(5, 8, '79146802', 7, 2, 1, 1, 1, 8, 16, 'ENE004', '763952716', 'CSE00010004', 'Instalación completada satisfactoriamente.'),
+(7, 12, '80257913', 8, 3, 1, 1, 1, 9, 17, 'ENE005', '763952717', 'CSE00010005', 'Zona sin cobertura de fibra óptica.'),
+(10, 15, '91368024', 9, 4, 1, 1, 1, 6, 18, 'ENE006', '763952718', 'CSE00010006', 'Pago procesado correctamente.'),
+(13, 19, '02479135', 10, 5, 1, 1, 1, 4, 19, 'ENE007', '763952719', 'CSE00010007', 'Cliente migra desde otro proveedor.'),
+(18, 4, '11112222', 1, 1, 1, 1, 1, 5, 20, 'ENE008', '763952720', 'CSE00010008', 'Pendiente entrega de comprobante.'),
+(2, 6, '22223333', 2, 2, 1, 1, 1, 3, 21, 'ENE009', '763952721', 'CSE00010009', 'Documentación incompleta.'),
+(7, 9, '33334444', 3, 3, 1, 1, 1, 1, 22, 'ENE010', '763952722', 'CSE00010010', 'Coordinar nueva fecha de instalación.'),
+(5, 11, '44445555', 4, 4, 1, 1, 2, 2, 23, 'FEB004', '763952723', 'CSE00020004', 'Servicio anulado por cliente.'),
+(8, 14, '55556666', 5, 5, 1, 1, 2, 8, 24, 'FEB005', '763952724', 'CSE00020005', 'Servicio activado correctamente.'),
+(12, 17, '66667777', 6, 1, 1, 1, 2, 7, 25, 'FEB006', '763952725', 'CSE00020006', 'Requiere evaluación de infraestructura.'),
+(15, 20, '77778888', 7, 2, 1, 1, 2, 6, 26, 'FEB007', '763952726', 'CSE00020007', 'Facturación al día.'),
+(2, 5, '88889999', 8, 3, 1, 1, 2, 3, 27, 'FEB008', '763952727', 'CSE00020008', 'Cliente presenta observaciones técnicas.'),
+(6, 8, '99990000', 9, 4, 1, 1, 2, 5, 28, 'FEB009', '763952728', 'CSE00020009', 'Falta certificado de instalación.'),
+(10, 12, '00001111', 10, 5, 1, 1, 2, 9, 29, 'FEB010', '763952729', 'CSE00020010', 'Área sin disponibilidad de servicio.'),
+(13, 16, '10101010', 1, 1, 1, 1, 2, 4, 30, 'FEB011', '763952730', 'CSE00020011', 'Reemplaza servicio anterior.'),
+(18, 19, '20202020', 2, 2, 1, 1, 2, 1, 31, 'FEB012', '763952731', 'CSE00020012', 'Programación inicial confirmada.'),
+(3, 7, '30303030', 3, 3, 1, 1, 3, 7, 32, 'MAR004', '763952732', 'CSE00030004', 'Evaluación de factibilidad técnica.'),
+(9, 13, '40404040', 4, 4, 1, 1, 3, 8, 33, 'MAR005', '763952733', 'CSE00030005', 'Instalación finalizada exitosamente.'),
+(14, 18, '50505050', 5, 5, 1, 1, 3, 2, 34, 'MAR006', '763952734', 'CSE00030006', 'Cliente canceló el servicio.'),
+(2, 4, '60606060', 6, 1, 1, 1, 3, 9, 35, 'MAR007', '763952735', 'CSE00030007', 'Sin cobertura en la zona solicitada.'),
+(7, 11, '70707070', 7, 2, 1, 1, 3, 3, 36, 'MAR008', '763952736', 'CSE00030008', 'Revisión de documentos pendiente.'),
+(12, 15, '80808080', 8, 3, 1, 1, 3, 1, 37, 'MAR009', '763952737', 'CSE00030009', 'Instalación en proceso de coordinación.'),
+(16, 20, '90909090', 9, 4, 1, 1, 3, 6, 38, 'MAR010', '763952738', 'CSE00030010', 'Cuenta regularizada y activa.'),
+(5, 6, '11223344', 10, 5, 1, 1, 3, 4, 39, 'MAR011', '763952739', 'CSE00030011', 'Servicio de reemplazo activado.'),
+(8, 10, '12345678', 1, 1, 1, 1, 4, 5, 40, 'ABR003', '763952740', 'CSE00040003', 'Certificado de instalación pendiente.'),
+(11, 14, '23456789', 2, 2, 1, 1, 4, 8, 41, 'ABR004', '763952741', 'CSE00040004', 'Servicio operativo sin inconvenientes.'),
+(17, 19, '34567890', 3, 3, 1, 1, 4, 7, 42, 'ABR005', '763952742', 'CSE00040005', 'Validación técnica en progreso.'),
+(3, 9, '45678901', 4, 4, 1, 1, 4, 6, 43, 'ABR006', '763952743', 'CSE00040006', 'Servicio facturado correctamente.'),
+(6, 13, '56789012', 5, 5, 1, 1, 4, 3, 1, 'ABR007', '763952744', 'CSE00040007', 'Documentación requiere corrección.'),
+(15, 18, '67890123', 6, 1, 1, 1, 4, 9, 2, 'ABR008', '763952745', 'CSE00040008', 'Zona sin disponibilidad de red.'),
+(2, 7, '78901234', 7, 2, 1, 1, 4, 4, 3, 'ABR009', '763952746', 'CSE00040009', 'Migración desde competencia completada.'),
+(9, 12, '89012345', 8, 3, 1, 1, 4, 1, 4, 'ABR010', '763952747', 'CSE00040010', 'Agenda de instalación confirmada.'),
+(14, 16, '90123456', 9, 4, 1, 1, 4, 2, 5, 'ABR011', '763952748', 'CSE00040011', 'Solicitud anulada por duplicidad.'),
+(4, 8, '01234567', 10, 5, 1, 1, 5, 7, 6, 'MAY003', '763952749', 'CSE00050003', 'Inspección técnica programada.'),
+(10, 11, '13579246', 1, 1, 1, 1, 5, 8, 7, 'MAY004', '763952750', 'CSE00050004', 'Instalación completada exitosamente.'),
+(16, 17, '24681357', 2, 2, 1, 1, 5, 6, 8, 'MAY005', '763952751', 'CSE00050005', 'Servicio activado y facturado.'),
+(5, 20, '35792468', 3, 3, 1, 1, 5, 9, 9, 'MAY006', '763952752', 'CSE00050006', 'Sin cobertura fibra óptica disponible.'),
+(7, 4, '46813579', 4, 4, 1, 1, 5, 2, 10, 'MAY007', '763952753', 'CSE00050007', 'Cliente desistió del servicio.'),
+(11, 6, '57924680', 5, 5, 1, 1, 5, 4, 11, 'MAY008', '763952754', 'CSE00050008', 'Proceso de portabilidad en curso.'),
+(18, 9, '68035791', 6, 1, 1, 1, 5, 5, 12, 'MAY009', '763952755', 'CSE00050009', 'Comprobante de instalación faltante.'),
+(3, 13, '79146802', 7, 2, 1, 1, 5, 3, 13, 'MAY010', '763952756', 'CSE00050010', 'Observaciones técnicas registradas.'),
+(8, 15, '80257913', 8, 3, 1, 1, 5, 1, 14, 'MAY011', '763952757', 'CSE00050011', 'Instalación reagendada por cliente.'),
+(6, 10, '91368024', 9, 4, 1, 1, 6, 8, 15, 'JUN004', '763952758', 'CSE00060004', 'Servicio instalado y operativo.'),
+(12, 14, '02479135', 10, 5, 1, 1, 6, 7, 16, 'JUN005', '763952759', 'CSE00060005', 'Evaluación de infraestructura necesaria.'),
+(17, 19, '11112222', 1, 1, 1, 1, 6, 6, 17, 'JUN006', '763952760', 'CSE00060006', 'Pago confirmado y procesado.'),
+(4, 7, '22223333', 2, 2, 1, 1, 6, 2, 18, 'JUN007', '763952761', 'CSE00060007', 'Servicio anulado por duplicidad.'),
+(9, 11, '33334444', 3, 3, 1, 1, 6, 3, 19, 'JUN008', '763952762', 'CSE00060008', 'Documentación bajo revisión.'),
+(13, 16, '44445555', 4, 4, 1, 1, 6, 9, 20, 'JUN009', '763952763', 'CSE00060009', 'Área geográfica sin cobertura.'),
+(18, 20, '55556666', 5, 5, 1, 1, 6, 4, 21, 'JUN010', '763952764', 'CSE00060010', 'Cambio de proveedor completado.'),
+(2, 5, '66667777', 6, 1, 1, 1, 6, 1, 22, 'JUN011', '763952765', 'CSE00060011', 'Cita de instalación pendiente.'),
+(7, 8, '77778888', 7, 2, 1, 1, 6, 5, 23, 'JUN012', '763952766', 'CSE00060012', 'Falta certificado de instalación eléctrica.'),
+(15, 12, '88889999', 8, 3, 1, 1, 6, 8, 24, 'JUN013', '763952767', 'CSE00060013', 'Instalación ejecutada correctamente.');

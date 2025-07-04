@@ -89,6 +89,7 @@ CREATE TABLE RegistroRUC10 (
     IdPromocion INT,
     IdCronograma INT NOT NULL,
     IdEstado INT DEFAULT 1,
+    IdDistrito INT,
     IdSolicitud VARCHAR(255) DEFAULT 'ninguno',
     IdInstalacion VARCHAR(255)  DEFAULT 'ninguno',
     IdCarrito VARCHAR(255)  DEFAULT 'ninguno',
@@ -101,5 +102,6 @@ CREATE TABLE RegistroRUC10 (
     FOREIGN KEY (IdPlan) REFERENCES Plan(IdPlan),
     FOREIGN KEY (IdPromocion) REFERENCES Promocion(IdPromocion),
     FOREIGN KEY (IdCronograma) REFERENCES Cronograma(IdCronograma),
-    FOREIGN KEY (IdEstado) REFERENCES EstadoRegistro(IdEstado)
+    FOREIGN KEY (IdEstado) REFERENCES EstadoRegistro(IdEstado),
+    FOREIGN KEY (IdDistrito) REFERENCES Distrito(IdDistrito)
 );

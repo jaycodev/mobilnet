@@ -63,6 +63,9 @@ public class RucDTOActualizar {
     private Integer idPlan;
 
     private Integer idPromocion;
+
+    private Integer idDistrito;
+
     private String observacion;
 
     // Datos del cliente

@@ -39,6 +39,4 @@
                 fechaInstalacion = fechaRegistro.plusDays(4);
             }
         }
-
-
     }
