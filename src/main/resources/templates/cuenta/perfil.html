@@ -29,7 +29,7 @@
                             </div>
                             <div class="col-md-12 mt-3">
                                 <div class="form-group">
-                                    <label class="form-control-label">Correo electrónico</label>
+                                    <label for="correo" class="form-label">Correo electrónico</label>
                                     <input type="email" th:field="*{correo}" class="form-control"
                                            th:classappend="${#fields.hasErrors('correo')} ? 'is-invalid'"
                                            placeholder="correo@ejemplo.com" required/>
