@@ -20,4 +20,6 @@ public interface RegistroRUC10Repository extends JpaRepository<RegistroRUC10, In
     List<RegistroRUC10> findAllWithFilter(@Param("idEstado") Integer idEstado);
 
     int countByEstadoDescripcion(String descripcion);
+
+	 List<RegistroRUC10> findAllByOrderByIdRegistroDesc();
 }

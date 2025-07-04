@@ -4,6 +4,7 @@ import com.sistema.gpon.dto.RegistroFilter;
 import com.sistema.gpon.dto.RucDTOCrear;
 import com.sistema.gpon.dto.RucDTOActualizar;
 import com.sistema.gpon.model.*;
+import com.sistema.gpon.repository.RegistroRUC10Repository;
 import com.sistema.gpon.service.ReportService;
 import com.sistema.gpon.service.impl.*;
 import com.sistema.gpon.utils.Alert;
@@ -63,13 +64,18 @@ public class RegistroRUC10Controller {
     @Autowired
     private EstadoRegistroImpl _EstadoRegistro;
 
+    @Autowired
+    private RegistroRUC10Repository _Repository;
     @GetMapping({"", "/"})
     public String listado(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
         model.addAttribute("lstEstados", _EstadoRegistro.listarEstado());
         model.addAttribute("filtro", new RegistroFilter());
-        model.addAttribute("lstRegistros", _registroRUC10Service.listarRegistros());
+        model.addAttribute("lstRegistros", _registroRUC10Service.findAllByOrderByIdRegistroDesc());
+        System.out.println("Registros ordenados:");
+        _registroRUC10Service.findAllByOrderByIdRegistroDesc()
+                .forEach(r -> System.out.println(r.getIdRegistro()));
 
         return "registros/index";
     }

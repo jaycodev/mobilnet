@@ -26,7 +26,6 @@ public class RegistroRUC10 {
 
 	@ManyToOne
 	@JoinColumn(name = "DniCliente",
-//			 referencedColumnName = "DniCliente",
 			nullable = false)	private Cliente cliente;
 
 	@ManyToOne
