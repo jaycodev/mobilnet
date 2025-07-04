@@ -12,6 +12,7 @@ ZWZjOTE4OGU2O2Bjb250YWN0b1NlY3VuZGFyaW9gIEFTICwzMDAsMTUsMTc4YmUzNDktOTI2ZC00
 MjRhLWFlYjktMmVhYTIxZmE0Y2Q3Ow==]]>
 	</property>
 	<parameter name="id" class="java.lang.Integer"/>
+	<parameter name="LOGO" class="java.io.InputStream"/>
 	<queryString>
 		<![CDATA[SELECT DISTINCT
     CONCAT(c.nombre, ' ', c.apellido) AS nomCliente,
@@ -79,7 +80,7 @@ WHERE r.idRegistro = $P{id}
 		<band height="802" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="560" height="791" uuid="69bb6f55-d496-40b2-954f-07d083f7833f"/>
-				<imageExpression><![CDATA["C:/Users/USER/Pictures/GPON_WEB/sistema-registro-gpon/src/main/resources/static/Contrato (1).jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{LOGO}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="20" y="230" width="150" height="19" uuid="79f592d3-d4ce-4992-905e-251bb481f26b">

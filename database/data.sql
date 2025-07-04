@@ -49,6 +49,7 @@ INSERT INTO Cliente (DniCliente, Ruc, Nombre, Apellido, Telefono) VALUES
 ('80257913', '20234567892', 'Daniela', 'Paredes', '988901234'),
 ('91368024', '20345678913', 'Gonzalo', 'Castañeda', '999012345'),
 ('02479135', '20456789125', 'Natalia', 'Mendoza', '901123456');
+
 INSERT INTO Cliente (DniCliente, Ruc, Nombre, Apellido, Telefono) VALUES
 ('11112222', '20111122221', 'Carlos', 'Aguilar', '901100001'),
 ('22223333', '20222233332', 'Mónica', 'Reyes', '902200002'),
