@@ -12,5 +12,4 @@ public class SistemaRegistroGponApplication {
 	    com.sistema.gpon.config.DotenvLoader.loadEnv();
 		SpringApplication.run(SistemaRegistroGponApplication.class, args);
 	}
-
 }
