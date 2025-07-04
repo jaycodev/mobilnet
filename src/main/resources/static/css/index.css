@@ -99,3 +99,69 @@
 .steps-indicator .step.completed::after {
     background-color: var(--bs-primary);
 }
+
+/* Estilos personalizados para las flechas de ordenamiento compatibles con Argon */
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+    position: relative;
+    cursor: pointer;
+    padding-right: 30px !important;
+}
+
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: #8898aa;
+    font-weight: normal;
+}
+
+table.dataTable thead .sorting:after {
+    content: '↕';
+    color: #dee2e6;
+}
+
+table.dataTable thead .sorting_asc:after {
+    content: '↑';
+    color: #5e72e4;
+}
+
+table.dataTable thead .sorting_desc:after {
+    content: '↓';
+    color: #5e72e4;
+}
+
+table.dataTable thead .sorting:hover:after,
+table.dataTable thead .sorting_asc:hover:after,
+table.dataTable thead .sorting_desc:hover:after {
+    color: #5e72e4;
+}
+
+table.dataTable thead th {
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    color: #8898aa;
+}
+
+.dataTables_filter .input-group {
+    max-width: 300px;
+}
+
+.dataTables_paginate .paginate_button {
+    border-radius: 0.375rem;
+    margin: 0 2px;
+    transition: all 0.15s ease;
+}
+
+.dataTables_paginate .paginate_button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
