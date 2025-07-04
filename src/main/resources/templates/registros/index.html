@@ -42,14 +42,11 @@
                                 </a>
                             </form>
 
-                            <!-- Botones PDF/Excel -->
+                            <!-- Botón PDF -->
                             <div class="d-flex align-items-center gap-2 ms-auto flex-wrap">
                                 <a th:href="@{/registros/report/{id}(id=${filtro.idEstado})}" target="_blank" class="btn btn-danger btn-sm mb-0" >
                                     <i class="fa-solid fa-file-pdf me-1"></i> PDF
                                 </a>
-                                <button id="btn-exportar-excel" class="btn btn-success btn-sm mb-0">
-                                    <i class="fa-solid fa-file-excel me-1"></i> Excel
-                                </button>
                             </div>
                         </div>
                     </div>
