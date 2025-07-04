@@ -2,6 +2,9 @@ package com.sistema.gpon.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
+
 import org.hibernate.annotations.DynamicInsert;
 
 import jakarta.persistence.Column;
@@ -9,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,4 +41,8 @@ public class Plan {
 
 	@Column (name = "Activo", nullable = false)
 	private Boolean activo;
+	
+	
+	@OneToMany(mappedBy = "plan")
+	private List<RegistroRUC10> listRegistrosConPlanes; /*Obtengo la lista de Registros en Planes con su relacion*/
 }

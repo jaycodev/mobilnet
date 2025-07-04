@@ -72,7 +72,18 @@ INSERT INTO Cliente (DniCliente, Ruc, Nombre, Apellido, Telefono) VALUES
 ('90909090', '20909090909', 'Lidia', 'Montes', '990909090'),
 ('11223344', '20112233445', 'Raúl', 'Campos', '911223344');
 
-INSERT INTO Plan(Descripcion) VALUES ('Internet Fibra Optica 300Mbps');
+INSERT INTO Plan (Descripcion, Activo) VALUES
+('Plan Básico 30 Mbps', 1),
+('Plan Familiar 50 Mbps', 1),
+('Plan Avanzado 100 Mbps', 1),
+('Plan Gamer 200 Mbps', 1),
+('Plan Corporativo 300 Mbps', 1),
+('Plan Pyme 150 Mbps', 1),
+('Plan Plus 120 Mbps', 1),
+('Plan Estudiantil 40 Mbps', 1),
+('Plan Streaming 80 Mbps', 1),
+('Plan Premium 500 Mbps', 1);
+
 
 INSERT INTO Promocion(Descripcion) VALUES ('Descuento cargo fijo 30% x 3meses');
 
@@ -138,17 +149,27 @@ INSERT INTO RegistroRUC10 (
     IdContactoPrincipal, IdContactoSecundario, IdPlan, IdPromocion, IdCronograma,
     IdEstado, IdSolicitud, IdInstalacion, IdCarrito, Observacion
 ) VALUES
-(2, 4, '12345678', 1, 1, 1, 1, 1, 1, '1QWERTYUI', '763952718', 'CSE00130678226', 'Cliente confirmó instalación.'),
-(5, 8, '23456789', 2, 2, 1, 1, 2, 1, '1ASDFGHJK', '763952719', 'CSE00130678227', 'Cliente pidió instalación urgente.'),
-(7, 12, '34567890', 3, 3, 1, 1, 3, 7, '1ZXCVBNMA', '763952720', 'CSE00130678228', 'Dirección confirmada por teléfono.'),
-(10, 15, '45678901', 4, 4, 1, 1, 4, 1, '1QAZWSXED', '763952721', 'CSE00130678229', 'Dirección confirmada por Mensaje.'),
-(13, 18, '56789012', 5, 5, 1, 1, 5, 7, '1LKJHGFDS', '763952722', 'CSE00130678230', 'Cliente solicitó cambio de fecha.'),
-(1, 15, '67890123', 6, 1, 1, 1, 1, 3, '1POIUYTRE', '763952723', 'CSE00130678231', 'Cliente se contactará para confirmar.'),
-(3, 19, '78901234', 7, 2, 1, 1, 2, 2, '1MNBVCXZA', '763952724', 'CSE00130678232', 'Cliente con deuda anterior.'),
-(6, 12, '89012345', 8, 3, 1, 1, 3, 8, '1PLMOKNJI', '763952725', 'CSE00130678233', 'Sector sin cobertura total.'),
-(11, 15, '90123456', 9, 4, 1, 1, 4, 4, '1QWASZXED', '763952726', 'CSE00130678234', 'Instalación reagendada por ausencia.'),
-(14, 20, '01234567', 10, 5, 1, 1, 5, 2, '1RFVTGBYH', '763952727', 'CSE00130678235', 'Instalador asignado, pendiente visita.'),
-(2, 4, '13579246', 1, 1, 1, 1, 1, 1, '1EDCXSWAQ', '763952728', 'CSE00130678236', 'Cliente requiere atención especial.'),
-(5, 8, '24681357', 2, 2, 1, 1, 2, 5, '1TGBNHYUJ', '763952729', 'CSE00130678237', 'Número de contacto no disponible.'),
-(7, 12, '35792468', 3, 3, 1, 1, 3, 1, '1IKMJNHTG', '763952730', 'CSE00130678238', 'Cliente en zona observada.'),
-(10, 15, '46813579', 4, 4, 1, 1, 4, 3, '1UJMHNBVF', '763952731', 'CSE00130678239', 'Promoción aplicada correctamente.');
+(2, 4, '12345678',  1, 1, 1, 1, 1, 1, '1QWERTYUI', '763952718', 'CSE00130678226', 'Cliente confirmó instalación.'),
+(5, 8, '23456789',  2, 2, 2, 1, 2, 1, '1ASDFGHJK', '763952719', 'CSE00130678227', 'Cliente pidió instalación urgente.'),
+(7, 12, '34567890', 3, 3, 3, 1, 3, 7, '1ZXCVBNMA', '763952720', 'CSE00130678228', 'Dirección confirmada por teléfono.'),
+(10, 15,'45678901', 4, 4, 4, 1, 4, 1, '1QAZWSXED', '763952721', 'CSE00130678229', 'Dirección confirmada por Mensaje.'),
+(13, 18,'56789012', 5, 5, 5, 1, 5, 7, '1LKJHGFDS', '763952722', 'CSE00130678230', 'Cliente solicitó cambio de fecha.'),
+(1, 15, '67890123', 6, 1, 6, 1, 1, 3, '1POIUYTRE', '763952723', 'CSE00130678231', 'Cliente se contactará para confirmar.'),
+(3, 19, '78901234', 7, 2, 7, 1, 2, 2, '1MNBVCXZA', '763952724', 'CSE00130678232', 'Cliente con deuda anterior.'),
+(6, 12, '89012345', 8, 3, 7, 1, 3, 8, '1PLMOKNJI', '763952725', 'CSE00130678233', 'Sector sin cobertura total.'),
+(11, 15,'90123456', 9, 4, 9, 1, 4, 4, '1QWASZXED', '763952726', 'CSE00130678234', 'Instalación reagendada por ausencia.'),
+(14, 20,'01234567', 10, 5, 10, 1, 5, 2, '1RFVTGBYH', '763952727', 'CSE00130678235', 'Instalador asignado, pendiente visita.'),
+(2, 4,   '13579246', 1, 1, 10, 1, 1, 1, '1EDCXSWAQ', '763952728', 'CSE00130678236', 'Cliente requiere atención especial.'),
+(5, 8,   '24681357', 2, 2, 10, 1, 2, 5, '1TGBNHYUJ', '763952729', 'CSE00130678237', 'Número de contacto no disponible.'),
+(7, 12,  '35792468', 3, 3, 7, 1, 3, 1, '1IKMJNHTG', '763952730', 'CSE00130678238', 'Cliente en zona observada.'),
+(10, 15, '46813579', 4, 4, 4, 1, 4, 3, '1UJMHNBVF', '763952731', 'CSE00130678239', 'Promoción aplicada correctamente.');
+
+
+select * from Plan
+order by 1 desc;
+
+select p.* , COUNT(r.idRegistro) as Total_Registros 
+FROM Plan p 
+Left JOIN RegistroRUC10 r ON r.IdPlan = p.Idplan 
+group by p.IdPlan 
+order by Total_Registros desc
