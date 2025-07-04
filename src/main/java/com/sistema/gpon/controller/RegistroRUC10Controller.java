@@ -224,14 +224,14 @@ public class RegistroRUC10Controller {
                 plan.getIdPlan(), promocion.getIdPromocion(),
                 registroRUC10.getObservacion(), cliente.getDniCliente(),
                 cliente.getRuc(), cliente.getNombre(), cliente.getApellido(),
-                cliente.getTelefono(),registroRUC10.getEstado().getIdEstado(),registroRUC10.getIdSolicitud(),
-                registroRUC10.getIdInstalacion(),registroRUC10.getIdCarrito()
+                cliente.getTelefono(), registroRUC10.getEstado().getIdEstado(), registroRUC10.getIdSolicitud(),
+                registroRUC10.getIdInstalacion(), registroRUC10.getIdCarrito()
         );
         ruc10DTO.setFechaInstalacion(cronograma.getFechaInstalacion());
 
         model.addAttribute("ruc10DTO", ruc10DTO);
 
-        model.addAttribute("estados",estadosLista);
+        model.addAttribute("estados", estadosLista);
 
         return "registros/edicion";
     }
@@ -317,7 +317,7 @@ public class RegistroRUC10Controller {
     public ResponseEntity<byte[]> generarReporte(@PathVariable Integer id) {
         try {
             System.out.println("id: " + id);
-            byte[] reporte = reporteService.generarReportParametrs("ReportRegister", id);
+            byte[] reporte = reporteService.generarReportParametrs("registro_ruc10_general", id);
 
             if (reporte == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -332,6 +332,27 @@ public class RegistroRUC10Controller {
 
             return new ResponseEntity<>(reporte, headers, HttpStatus.OK);
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/contrato/{id}")
+    public ResponseEntity<byte[]> generarContrato(@PathVariable Integer id) {
+        try {
+            byte[] reporte = reporteService.generarReportParametrs("registro_ruc10_detalle", id);
+
+            if (reporte == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            String nombreArchivo = "registro_ruc10_" + id + ".pdf";
+            headers.add("Content-Disposition", "inline; filename=" + nombreArchivo);
+
+            return new ResponseEntity<>(reporte, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }

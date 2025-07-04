@@ -50,6 +50,28 @@ INSERT INTO Cliente (DniCliente, Ruc, Nombre, Apellido, Telefono) VALUES
 ('91368024', '20345678913', 'Gonzalo', 'Castañeda', '999012345'),
 ('02479135', '20456789125', 'Natalia', 'Mendoza', '901123456');
 
+INSERT INTO Cliente (DniCliente, Ruc, Nombre, Apellido, Telefono) VALUES
+('11112222', '20111122221', 'Carlos', 'Aguilar', '901100001'),
+('22223333', '20222233332', 'Mónica', 'Reyes', '902200002'),
+('33334444', '20333344443', 'Lucía', 'Salas', '903300003'),
+('44445555', '20444455554', 'Martín', 'Paredes', '904400004'),
+('55556666', '20555566665', 'Sandra', 'Lozano', '905500005'),
+('66667777', '20666677776', 'Jorge', 'Ibáñez', '906600006'),
+('77778888', '20777788887', 'Rosa', 'Vargas', '907700007'),
+('88889999', '20888899998', 'Luis', 'Gallardo', '908800008'),
+('99990000', '20999900009', 'Carmen', 'Mora', '909900009'),
+('00001111', '20000011110', 'Daniel', 'Guzmán', '900000010'),
+('10101010', '20101010101', 'Erika', 'Zapata', '910101010'),
+('20202020', '20202020202', 'Alonso', 'Quispe', '920202020'),
+('30303030', '20303030303', 'Fátima', 'Núñez', '930303030'),
+('40404040', '20404040404', 'Renzo', 'Delgado', '940404040'),
+('50505050', '20505050505', 'Pamela', 'Cruz', '950505050'),
+('60606060', '20606060606', 'Gerardo', 'Vásquez', '960606060'),
+('70707070', '20707070707', 'Tatiana', 'Cáceres', '970707070'),
+('80808080', '20808080808', 'Óscar', 'Arce', '980808080'),
+('90909090', '20909090909', 'Lidia', 'Montes', '990909090'),
+('11223344', '20112233445', 'Raúl', 'Campos', '911223344');
+
 INSERT INTO Plan(Descripcion) VALUES ('Internet Fibra Optica 300Mbps');
 
 INSERT INTO Promocion(Descripcion) VALUES ('Descuento cargo fijo 30% x 3meses');
@@ -82,8 +104,7 @@ INSERT INTO EstadoRegistro(Descripcion) VALUES
 ('Sin C.E.'),
 ('Pegado'),
 ('Sin disponibilidad'),
-('Sin cobertura'),
-('Deuda');
+('Sin cobertura');
 
 INSERT INTO ContactoPrincipal (NombreContacto, Dni, Telefono, Correo) VALUES
 ('Juan Pérez', '12345678', '987654321', 'juan.perez@example.com'),
