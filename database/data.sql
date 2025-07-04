@@ -102,7 +102,7 @@ INSERT INTO EstadoRegistro(Descripcion) VALUES
 ('Observado'),
 ('Alta por baja'),
 ('Sin C.E.'),
-('Pegado'),
+('Pagado'),
 ('Sin disponibilidad'),
 ('Sin cobertura');
 
