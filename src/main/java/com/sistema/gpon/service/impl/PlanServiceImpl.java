@@ -47,7 +47,11 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public List<Plan> listarFiltros(PlanFilter filtro) {
-		return planRepository.findAllWithFilter(filtro.getActivo());
+		if(Boolean.TRUE.equals(filtro.getMasRegistrado())) {
+			return planRepository.findPlanesMasRegistrados();
+		}else {
+			return planRepository.findAllWithFilter(filtro.getActivo());
+		}
 	}
 
 	@Override

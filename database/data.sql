@@ -72,7 +72,18 @@ INSERT INTO Cliente (DniCliente, Ruc, Nombre, Apellido, Telefono) VALUES
 ('90909090', '20909090909', 'Lidia', 'Montes', '990909090'),
 ('11223344', '20112233445', 'Raúl', 'Campos', '911223344');
 
-INSERT INTO Plan(Descripcion) VALUES ('Internet Fibra Optica 300Mbps');
+INSERT INTO Plan (Descripcion, Activo) VALUES
+('Plan Básico 30 Mbps', 1),
+('Plan Familiar 50 Mbps', 1),
+('Plan Avanzado 100 Mbps', 1),
+('Plan Gamer 200 Mbps', 1),
+('Plan Corporativo 300 Mbps', 1),
+('Plan Pyme 150 Mbps', 1),
+('Plan Plus 120 Mbps', 1),
+('Plan Estudiantil 40 Mbps', 1),
+('Plan Streaming 80 Mbps', 1),
+('Plan Premium 500 Mbps', 1);
+
 
 INSERT INTO Promocion(Descripcion) VALUES ('Descuento cargo fijo 30% x 3meses');
 
