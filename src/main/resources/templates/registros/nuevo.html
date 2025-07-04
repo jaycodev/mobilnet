@@ -399,14 +399,14 @@
 
                     <!-- Distrito -->
                     <div class="col-md-4 mb-3">
-                        <label for="nombreDistrito" class="form-label">
+                        <label for="idDistrito" class="form-label">
                             Distrito
                             <span class="text-danger">*</span>
                         </label>
-                        <select class="form-select" th:field="*{nombreDistrito}" required>
+                        <select class="form-select" th:field="*{idDistrito}" required>
                             <option value="">Seleccione un distrito</option>
                             <option th:each="d : ${distritos}"
-                                    th:value="${d.nombreDistrito}"
+                                    th:value="${d.idDistrito}"
                                     th:text="${d.nombreDistrito}">
                             </option>
                         </select>

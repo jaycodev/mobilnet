@@ -1,9 +1,13 @@
 package com.sistema.gpon.service.impl;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import com.sistema.gpon.dto.DistritoCantidadDTO;
 import com.sistema.gpon.dto.RegistroFilter;
+import com.sistema.gpon.dto.RegistroPorMesDTO;
 import com.sistema.gpon.dto.UsuarioFilter;
 import com.sistema.gpon.model.Cliente;
 import com.sistema.gpon.model.Usuario;
@@ -60,7 +64,17 @@ public class RegistroRUC10ServiceImpl implements RegistroRUC10Service {
     }
 
     @Override
-    public int countEstado(String estado) {
+    public long contarEstado(String estado) {
         return registroRUC10Repository.countByEstadoDescripcion(estado);
+    }
+
+    @Override
+    public List<RegistroPorMesDTO> contarRegistrosPorMes() {
+        return registroRUC10Repository.contarRegistrosPorMes();
+    }
+
+    @Override
+    public List<DistritoCantidadDTO> contarRegistrosPorDistrito() {
+        return registroRUC10Repository.contarRegistrosPorDistrito();
     }
 }
