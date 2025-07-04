@@ -63,9 +63,4 @@ public class RegistroRUC10ServiceImpl implements RegistroRUC10Service {
     public int countEstado(String estado) {
         return registroRUC10Repository.countByEstadoDescripcion(estado);
     }
-
-    @Override
-    public List<RegistroRUC10> findAllByOrderByIdRegistroDesc() {
-        return registroRUC10Repository.findAllByOrderByIdRegistroDesc();
-    }
 }

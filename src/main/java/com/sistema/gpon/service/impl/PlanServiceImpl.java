@@ -47,7 +47,6 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public List<Plan> listarFiltros(PlanFilter filtro) {
-
 		return planRepository.findAllWithFilter(filtro.getActivo());
 	}
 
