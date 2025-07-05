@@ -106,10 +106,10 @@ public class RegistroRUC10Controller {
     }
 
     private void cargarDatosSelects(Model model) {
-        model.addAttribute("consultores", usuarioService.findByRolDescripcion("Consultor"));
-        model.addAttribute("supervisores", usuarioService.findByRolDescripcion("Supervisor"));
-        model.addAttribute("promociones", promocionService.listarPromociones());
-        model.addAttribute("planes", planService.listarPlanes());
+        model.addAttribute("consultores", usuarioService.findByRolDescripcion("Consultor").stream().filter(usuario -> usuario.getActivo()==true));
+        model.addAttribute("supervisores", usuarioService.findByRolDescripcion("Supervisor").stream().filter(usuario -> usuario.getActivo()==true));
+        model.addAttribute("promociones", promocionService.listarPromociones().stream().filter(promocion -> promocion.getActivo()==true));
+        model.addAttribute("planes", planService.listarPlanes().stream().filter(plan -> plan.getActivo()==true));
         model.addAttribute("sectores", sectorService.listarSectores());
         model.addAttribute("distritos", distritoService.listarDistritos());
     }
