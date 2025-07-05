@@ -28,7 +28,6 @@ INSERT INTO Usuario (IdRol, Nombre, Apellido, Correo, Contrasena, Activo) VALUES
 (3, 'Gonzalo', 'Castañeda', 'gonzalo.castaneda@example.com', 'gcast2024', FALSE),
 (4, 'Natalia', 'Mendoza', 'natalia.mendoza@example.com', 'nataliaM', TRUE);
 
-
 INSERT INTO Cliente (DniCliente, Ruc, Nombre, Apellido, Telefono, Activo) VALUES
 ('12345678', '20123456789', 'Juan', 'Pérez', '987654321', TRUE),
 ('23456789', '20456789123', 'María', 'Gómez', '912345678', TRUE),
