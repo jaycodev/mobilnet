@@ -91,24 +91,16 @@ public class RegistroRUC10Controller {
     @GetMapping("/detalle/{id}")
     public String detalle(HttpServletRequest request, Model model, @PathVariable int id) {
         RegistroRUC10 registroRUC10 = _registroRUC10Service.buscarPorId(id);
-        Cronograma cronograma = _CronogramaService.buscarPorId(registroRUC10.getCronograma().getIdCronograma());
-        Cliente cliente = _ClienteService.buscarPorId(registroRUC10.getCliente().getDniCliente());
-        ContactoPrincipal contactoPrincipal = _ContactoPrincipalService.buscarPorId(registroRUC10.getContactoPrincipal().getIdContactoPrincipal());
-        ContactoSecundario contactoSecundario = _ContactoSecundarioService.buscarPorId(registroRUC10.getContactoSecundario().getIdContactoSecundario());
-        Usuario consultor = _usuarioService.buscarPorId(registroRUC10.getUsuarioConsultor().getIdUsuario());
-        Usuario supervisor = _usuarioService.buscarPorId(registroRUC10.getUsuarioSupervisor().getIdUsuario());
-        Plan plan = _planService.buscarPorId(registroRUC10.getPlan().getIdPlan());
-        Promocion promocion = _promocionService.buscarPorId(registroRUC10.getPromocion().getIdPromocion());
 
         model.addAttribute("registro", registroRUC10);
-        model.addAttribute("cronograma", cronograma);
-        model.addAttribute("cliente", cliente);
-        model.addAttribute("contactoPrincipal", contactoPrincipal);
-        model.addAttribute("contactoSecundario", contactoSecundario);
-        model.addAttribute("consultor", consultor);
-        model.addAttribute("supervisor", supervisor);
-        model.addAttribute("plan", plan);
-        model.addAttribute("promocion", promocion);
+        model.addAttribute("cronograma", registroRUC10.getCronograma());
+        model.addAttribute("cliente", registroRUC10.getCliente());
+        model.addAttribute("contactoPrincipal", registroRUC10.getContactoPrincipal());
+        model.addAttribute("contactoSecundario", registroRUC10.getContactoSecundario());
+        model.addAttribute("consultor", registroRUC10.getUsuarioConsultor());
+        model.addAttribute("supervisor", registroRUC10.getUsuarioSupervisor());
+        model.addAttribute("plan", registroRUC10.getPlan());
+        model.addAttribute("promocion", registroRUC10.getPromocion());
 
         return "registros/detalle";
     }
@@ -181,7 +173,13 @@ public class RegistroRUC10Controller {
             rucDTO.setContactoPrincipal(contactoPrincipal);
             rucDTO.setContactoSecundario(contactoSecundario);
             rucDTO.setPlan(_planService.buscarPorId(ruc10DTO.getIdPlan()));
-            rucDTO.setPromocion(_promocionService.buscarPorId(ruc10DTO.getIdPromocion()));
+
+            if (ruc10DTO.getIdPromocion() != null && ruc10DTO.getIdPromocion() != -1) {
+                rucDTO.setPromocion(_promocionService.buscarPorId(ruc10DTO.getIdPromocion()));
+            } else {
+                rucDTO.setPromocion(null);
+            }
+
             rucDTO.setCronograma(cronograma);
             rucDTO.setCliente(cliente);
             rucDTO.setEstado(_EstadoRegistro.buscarPorId(1));
@@ -214,7 +212,11 @@ public class RegistroRUC10Controller {
         Usuario consultor = _usuarioService.buscarPorId(registroRUC10.getUsuarioConsultor().getIdUsuario());
         Usuario supervisor = _usuarioService.buscarPorId(registroRUC10.getUsuarioSupervisor().getIdUsuario());
         Plan plan = _planService.buscarPorId(registroRUC10.getPlan().getIdPlan());
-        Promocion promocion = _promocionService.buscarPorId(registroRUC10.getPromocion().getIdPromocion());
+
+        Promocion promocion = null;
+        if (registroRUC10.getPromocion() != null) {
+            promocion = _promocionService.buscarPorId(registroRUC10.getPromocion().getIdPromocion());
+        }
 
         List<EstadoRegistro> estadosLista = _EstadoRegistro.listarEstado();
 
@@ -227,7 +229,7 @@ public class RegistroRUC10Controller {
                 cronograma.getRangoInstalacion(), cronograma.getUbicacionInstalacion(),
                 cronograma.getFechaInstalacion(),
                 consultor.getIdUsuario(), supervisor.getIdUsuario(),
-                plan.getIdPlan(), promocion.getIdPromocion(), registroRUC10.getDistrito().getIdDistrito(),
+                plan.getIdPlan(), (promocion != null && promocion.getIdPromocion() != null) ? promocion.getIdPromocion() : -1, registroRUC10.getDistrito().getIdDistrito(),
                 registroRUC10.getObservacion(), cliente.getDniCliente(),
                 cliente.getRuc(), cliente.getNombre(), cliente.getApellido(),
                 cliente.getTelefono(), registroRUC10.getEstado().getIdEstado(), registroRUC10.getIdSolicitud(),

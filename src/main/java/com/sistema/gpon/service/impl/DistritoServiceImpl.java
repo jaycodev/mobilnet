@@ -2,6 +2,7 @@ package com.sistema.gpon.service.impl;
 
 import java.util.List;
 
+import com.sistema.gpon.model.Cliente;
 import com.sistema.gpon.service.DistritoService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,10 +29,7 @@ public class DistritoServiceImpl implements DistritoService {
 	}
 
 	@Override
-	public Distrito buscarPorId(Integer idDistrito) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Distrito buscarPorId(Integer idDistrito) { return distritoRepository.findById(idDistrito).orElseThrow(null); }
 
 	@Override
 	public Distrito actualizarDistrito(Distrito distrito) {
