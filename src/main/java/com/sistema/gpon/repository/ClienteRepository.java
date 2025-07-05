@@ -12,9 +12,12 @@ import java.util.List;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, String> {
+	List<Cliente> findAllByOrderByDniClienteDesc();
+
 	@Query("""
-		    SELECT c FROM Cliente c
-		    WHERE (:activo IS NULL OR c.activo = :activo)
-		""")
+		SELECT c FROM Cliente c
+		WHERE (:activo IS NULL OR c.activo = :activo)
+		ORDER BY c.dniCliente DESC
+	""")
 	List<Cliente> findAllWithFilter(@Param("activo") Boolean activo);
 }
