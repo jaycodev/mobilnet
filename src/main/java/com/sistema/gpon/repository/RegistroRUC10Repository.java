@@ -14,12 +14,14 @@ import java.util.List;
 
 @Repository
 public interface RegistroRUC10Repository extends JpaRepository<RegistroRUC10, Integer> {
-    @Query("""
-		    SELECT r FROM RegistroRUC10 r
-		    WHERE (:idEstado IS NULL OR r.estado.idEstado = :idEstado)
-		    ORDER BY r.idRegistro DESC
-		""")
-    List<RegistroRUC10> findAllWithFilter(@Param("idEstado") Integer idEstado);
+	List<RegistroRUC10> findAllByOrderByIdRegistroDesc();
+
+	@Query("""
+		SELECT r FROM RegistroRUC10 r
+		WHERE (:idEstado IS NULL OR r.estado.idEstado = :idEstado)
+		ORDER BY r.idRegistro DESC
+	""")
+	List<RegistroRUC10> findAllWithFilter(@Param("idEstado") Integer idEstado);
 
 	@Query("SELECT COUNT(r) FROM RegistroRUC10 r WHERE r.estado.descripcion = :descripcion")
 	long countByEstadoDescripcion(@Param("descripcion") String descripcion);

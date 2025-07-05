@@ -42,7 +42,6 @@ public class Plan {
 	@Column (name = "Activo", nullable = false)
 	private Boolean activo;
 	
-	
 	@OneToMany(mappedBy = "plan")
-	private List<RegistroRUC10> listRegistrosConPlanes; /*Obtengo la lista de Registros en Planes con su relacion*/
+	private List<RegistroRUC10> listRegistrosConPlanes;
 }

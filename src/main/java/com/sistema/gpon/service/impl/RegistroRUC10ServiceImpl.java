@@ -32,7 +32,7 @@ public class RegistroRUC10ServiceImpl implements RegistroRUC10Service {
 
     @Override
     public List<RegistroRUC10> listarRegistros() {
-        return registroRUC10Repository.findAll();
+        return registroRUC10Repository.findAllByOrderByIdRegistroDesc();
     }
 
     @Override

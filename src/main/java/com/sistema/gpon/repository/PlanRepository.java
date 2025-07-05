@@ -12,19 +12,20 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlanRepository extends JpaRepository<Plan, Integer> {
-	@Query("""
-		    SELECT p FROM Plan p
-		    WHERE (:activo IS NULL OR p.activo = :activo)
-		""")
-	List<Plan> findAllWithFilter(@Param("activo") Boolean activo);
-	
-	
-	@Query("""
-		    SELECT p FROM Plan p
-		  LEFT JOIN p.listRegistrosConPlanes r
-		  GROUP BY p.idPlan, p.descripcion, p.activo
-		  ORDER BY COUNT(r) DESC
-		""")
-List<Plan> findPlanesMasRegistrados();
+	List<Plan> findAllByOrderByIdPlanDesc();
 
+	@Query("""
+		SELECT p FROM Plan p
+		WHERE (:activo IS NULL OR p.activo = :activo)
+		ORDER BY p.idPlan DESC
+	""")
+	List<Plan> findAllWithFilter(@Param("activo") Boolean activo);
+
+	@Query("""
+		    SELECT p FROM Plan p
+			LEFT JOIN p.listRegistrosConPlanes r
+			GROUP BY p.idPlan, p.descripcion, p.activo
+			ORDER BY COUNT(r) DESC
+		""")
+	List<Plan> findPlanesMasRegistrados();
 }

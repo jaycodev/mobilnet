@@ -6,9 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlanFilter {
-
-    
-    private String allFiltros; /*se usara para evaluar los distitnso filtrados en la lista */
+    private String allFiltros;
     
     public Boolean getActivo() {
     	if ("true".equalsIgnoreCase(allFiltros)) {
@@ -21,15 +19,6 @@ public class PlanFilter {
     
     public Boolean getMasRegistrado() {
     	return "masRegistrado".equalsIgnoreCase(allFiltros);
-    }
-
-
-    public String getAllFiltros() {
-        return allFiltros;
-    }
-
-    public void setAllFiltros(String allFiltros) {
-        this.allFiltros = allFiltros;
     }
 }
 

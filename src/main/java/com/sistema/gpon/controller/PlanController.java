@@ -42,7 +42,6 @@ public class PlanController {
 
     @GetMapping("/filtrado")
     public String filtrado(@ModelAttribute PlanFilter filtro, Model model) {
-    	
         model.addAttribute("filtro", filtro);
         model.addAttribute("lstPlanes", planService.listarFiltros(filtro));
 
