@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ContactoPrincipalImpl implements ContactoPrincipalService {
+public class ContactoPrincipalServiceImpl implements ContactoPrincipalService {
 
     @Autowired
     private ContactoPrimarioRepository _contactoPrimarioRepository;

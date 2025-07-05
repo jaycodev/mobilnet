@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class EstadoRegistroImpl implements EstadoRegistroService {
+public class EstadoRegistroServiceImpl implements EstadoRegistroService {
 
     @Autowired
     private EstadoRepository estadoRepository;
@@ -21,7 +20,7 @@ public class EstadoRegistroImpl implements EstadoRegistroService {
     }
 
     @Override
-    public List<EstadoRegistro> listarEstado() {
+    public List<EstadoRegistro> listarEstados() {
         return estadoRepository.findAll();
     }
 

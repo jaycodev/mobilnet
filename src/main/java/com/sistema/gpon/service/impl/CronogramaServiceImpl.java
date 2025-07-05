@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CronogramaImpl implements CronogramaService {
+public class CronogramaServiceImpl implements CronogramaService {
 
     @Autowired
     private CronogramaRepository cronogramaRepository;

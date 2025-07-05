@@ -5,16 +5,12 @@ import com.sistema.gpon.service.ContactoSecundarioService;
 
 import java.util.List;
 
-import com.sistema.gpon.model.ContactoSecundario;
 import com.sistema.gpon.repository.ContactoSecundarioRepository;
-import com.sistema.gpon.service.ContactoSecundarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class ContactoSecundarioImpl implements ContactoSecundarioService {
+public class ContactoSecundarioServiceImpl implements ContactoSecundarioService {
 
     @Autowired
     private ContactoSecundarioRepository contactoSecundarioRepository;
