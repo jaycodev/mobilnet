@@ -1,6 +1,5 @@
 package com.sistema.gpon.repository;
 
-import com.sistema.gpon.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.sistema.gpon.model.Cliente;

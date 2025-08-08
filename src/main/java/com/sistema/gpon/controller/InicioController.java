@@ -1,7 +1,6 @@
 package com.sistema.gpon.controller;
 
 import com.sistema.gpon.service.RegistroRUC10Service;
-import com.sistema.gpon.service.impl.RegistroRUC10ServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,7 @@ public class InicioController {
     @Autowired
     RegistroRUC10Service service;
 
-    @GetMapping({"", "/"})
+    @GetMapping({ "", "/" })
     public String index(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 

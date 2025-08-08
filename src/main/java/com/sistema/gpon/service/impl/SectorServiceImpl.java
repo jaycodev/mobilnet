@@ -11,37 +11,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SectorServiceImpl implements SectorService {
-	
-    @Autowired
-    private SectorRepository sectorRepository;
 
-	@Override
-	public Sector crearSector(Sector sector) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	@Autowired
+	private SectorRepository sectorRepository;
 
 	@Override
 	public List<Sector> listarSectores() {
-		// TODO Auto-generated method stub
 		return sectorRepository.findAll();
-	}
-
-	@Override
-	public Sector buscarPorId(Integer idSector) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Sector modificarSector(Sector sector) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean eliminarSector(Integer idSector) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

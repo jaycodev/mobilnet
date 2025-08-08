@@ -1,10 +1,7 @@
 package com.sistema.gpon.controller;
 
-import com.sistema.gpon.dto.ClienteFilter;
 import com.sistema.gpon.dto.PlanFilter;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sistema.gpon.service.PlanService;
-import com.sistema.gpon.service.impl.ClienteServiceImpl;
 import com.sistema.gpon.utils.Alert;
 import com.sistema.gpon.utils.ResultadoResponse;
 import com.sistema.gpon.model.*;
@@ -31,7 +27,7 @@ public class PlanController {
     @Autowired
     private PlanService planService;
 
-    @GetMapping({"", "/"})
+    @GetMapping({ "", "/" })
     public String listado(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
@@ -56,7 +52,7 @@ public class PlanController {
 
     @PostMapping("/registrar")
     public String registrarPlan(@Validated @ModelAttribute Plan plan, BindingResult bindingResult, Model model,
-                                RedirectAttributes flash) {
+            RedirectAttributes flash) {
         if (bindingResult.hasErrors()) {
             return "planes/nuevo";
         }
@@ -81,7 +77,7 @@ public class PlanController {
 
     @PostMapping("/guardar")
     public String guardar(@Validated @ModelAttribute Plan plan, BindingResult bindingResult, Model model,
-                          RedirectAttributes flash) {
+            RedirectAttributes flash) {
         if (bindingResult.hasErrors()) {
             return "planes/edicion";
         }

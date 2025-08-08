@@ -1,8 +1,5 @@
 package com.sistema.gpon.controller;
 
-import java.util.List;
-
-import com.sistema.gpon.dto.PlanFilter;
 import com.sistema.gpon.dto.PromocionFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import com.sistema.gpon.model.Promocion;
 import com.sistema.gpon.service.PromocionService;
 import com.sistema.gpon.utils.Alert;
@@ -30,7 +26,7 @@ public class PromocionController {
     @Autowired
     private PromocionService promocionService;
 
-    @GetMapping({"", "/"})
+    @GetMapping({ "", "/" })
     public String listado(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
@@ -54,7 +50,8 @@ public class PromocionController {
     }
 
     @PostMapping("/registrar")
-    public String registrar(@Validated @ModelAttribute Promocion Promocion, BindingResult bindingResult, Model model, RedirectAttributes flash) {
+    public String registrar(@Validated @ModelAttribute Promocion Promocion, BindingResult bindingResult, Model model,
+            RedirectAttributes flash) {
         if (bindingResult.hasErrors()) {
             return "promociones/nuevo";
         }
@@ -79,7 +76,7 @@ public class PromocionController {
 
     @PostMapping("/guardar")
     public String guardar(@Validated @ModelAttribute Promocion promocion, BindingResult bindingResult, Model model,
-                          RedirectAttributes flash) {
+            RedirectAttributes flash) {
         if (bindingResult.hasErrors()) {
             return "promociones/edicion";
         }

@@ -1,7 +1,6 @@
 package com.sistema.gpon.service;
 
 import com.sistema.gpon.model.ContactoPrincipal;
-import com.sistema.gpon.model.Distrito;
 
 import java.util.List;
 

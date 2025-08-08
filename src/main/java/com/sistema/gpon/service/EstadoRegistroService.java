@@ -1,6 +1,5 @@
 package com.sistema.gpon.service;
 
-import com.sistema.gpon.model.Distrito;
 import com.sistema.gpon.model.EstadoRegistro;
 
 import java.util.List;
