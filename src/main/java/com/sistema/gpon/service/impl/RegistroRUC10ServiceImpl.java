@@ -1,18 +1,12 @@
 package com.sistema.gpon.service.impl;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import com.sistema.gpon.dto.DistritoCantidadDTO;
 import com.sistema.gpon.dto.RegistroFilter;
 import com.sistema.gpon.dto.RegistroPorMesDTO;
-import com.sistema.gpon.dto.UsuarioFilter;
-import com.sistema.gpon.model.Cliente;
-import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.service.RegistroRUC10Service;
-import com.sistema.gpon.utils.ResultadoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

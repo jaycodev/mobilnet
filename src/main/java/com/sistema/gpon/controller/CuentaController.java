@@ -3,16 +3,12 @@ package com.sistema.gpon.controller;
 import com.sistema.gpon.dto.UsuarioContrasenaDTO;
 import com.sistema.gpon.dto.UsuarioPerfilDTO;
 import com.sistema.gpon.model.Usuario;
-import com.sistema.gpon.repository.UsuarioRepository;
 import com.sistema.gpon.service.UsuarioService;
-import com.sistema.gpon.service.impl.UsuarioServiceImpl;
 import com.sistema.gpon.utils.Alert;
 import com.sistema.gpon.utils.ResultadoResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-
-import javax.swing.text.Document;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +32,8 @@ public class CuentaController {
     }
 
     @PostMapping("/iniciarSesion")
-    public String iniciarSesionPagina(@ModelAttribute Usuario usuario, HttpSession session, Model model, RedirectAttributes flash) {
+    public String iniciarSesionPagina(@ModelAttribute Usuario usuario, HttpSession session, Model model,
+            RedirectAttributes flash) {
         Usuario usuarioIngresado = usuarioService.autenticacion(usuario);
 
         if (usuarioIngresado == null) {
@@ -95,7 +92,8 @@ public class CuentaController {
         session.setAttribute("rolUsuario", usuarioIngresado.getRol().getDescripcion());
         session.setAttribute("idRol", usuarioIngresado.getRol().getIdRol());
 
-        String alert = Alert.sweetAlertSuccess("¡Te damos la bienvenida a Mobilnet, " + usuarioIngresado.getNombre() + "!");
+        String alert = Alert
+                .sweetAlertSuccess("¡Te damos la bienvenida a Mobilnet, " + usuarioIngresado.getNombre() + "!");
         flash.addFlashAttribute("alert", alert);
 
         return "redirect:/";
@@ -126,7 +124,8 @@ public class CuentaController {
         return "cuenta/perfil";
     }
 
-    private void cargarFormularioCuenta(Model model, Usuario usuario, UsuarioPerfilDTO perfilDTO, UsuarioContrasenaDTO contrasenaDTO) {
+    private void cargarFormularioCuenta(Model model, Usuario usuario, UsuarioPerfilDTO perfilDTO,
+            UsuarioContrasenaDTO contrasenaDTO) {
         if (perfilDTO == null) {
             perfilDTO = new UsuarioPerfilDTO();
             perfilDTO.setNombre(usuario.getNombre());
@@ -147,9 +146,9 @@ public class CuentaController {
 
     @PostMapping("/actualizar-perfil")
     public String actualizarPerfil(@Valid @ModelAttribute("perfilDTO") UsuarioPerfilDTO dto,
-                                   BindingResult result,
-                                   HttpSession session,
-                                   Model model) {
+            BindingResult result,
+            HttpSession session,
+            Model model) {
 
         Integer idUsuario = (Integer) session.getAttribute("idUsuario");
         Usuario usuario = usuarioService.buscarPorId(idUsuario);
@@ -181,9 +180,9 @@ public class CuentaController {
 
     @PostMapping("/actualizar-contrasena")
     public String actualizarContrasena(@Valid @ModelAttribute("contrasenaDTO") UsuarioContrasenaDTO dto,
-                                       BindingResult result,
-                                       HttpSession session,
-                                       Model model) {
+            BindingResult result,
+            HttpSession session,
+            Model model) {
 
         Integer idUsuario = (Integer) session.getAttribute("idUsuario");
         Usuario usuario = usuarioService.buscarPorId(idUsuario);

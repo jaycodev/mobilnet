@@ -2,7 +2,6 @@ package com.sistema.gpon.service.impl;
 
 import java.util.List;
 
-import com.sistema.gpon.model.Cliente;
 import com.sistema.gpon.service.UsuarioService;
 import com.sistema.gpon.utils.ResultadoResponse;
 
@@ -101,7 +100,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new ResultadoResponse(false, "Ocurrió un error al cambiar el estado del usuario: " + ex.getMessage());
+            return new ResultadoResponse(false,
+                    "Ocurrió un error al cambiar el estado del usuario: " + ex.getMessage());
         }
     }
 

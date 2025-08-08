@@ -5,7 +5,6 @@ import com.sistema.gpon.dto.RucDTOCrear;
 import com.sistema.gpon.dto.RucDTOActualizar;
 import com.sistema.gpon.model.*;
 import com.sistema.gpon.service.*;
-import com.sistema.gpon.service.impl.*;
 import com.sistema.gpon.utils.Alert;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -64,7 +63,7 @@ public class RegistroRUC10Controller {
     @Autowired
     private EstadoRegistroService estadoRegistroService;
 
-    @GetMapping({"", "/"})
+    @GetMapping({ "", "/" })
     public String listado(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
@@ -124,7 +123,8 @@ public class RegistroRUC10Controller {
 
     @PostMapping("/registrar")
     @Transactional
-    public String registrar(@Validated @ModelAttribute("ruc10DTO") RucDTOCrear ruc10DTO, BindingResult bindingResult, Model model, RedirectAttributes flash) {
+    public String registrar(@Validated @ModelAttribute("ruc10DTO") RucDTOCrear ruc10DTO, BindingResult bindingResult,
+            Model model, RedirectAttributes flash) {
         cargarDatosSelects(model);
 
         if (bindingResult.hasErrors()) {
@@ -148,13 +148,12 @@ public class RegistroRUC10Controller {
 
             Cronograma cronograma = new Cronograma();
             cronograma.setUbicacionInstalacion(
-                            "NRO." + ruc10DTO.getNumero() + " " +
+                    "NRO." + ruc10DTO.getNumero() + " " +
                             "DPTO/INT " + ruc10DTO.getInterior() + " " +
                             ruc10DTO.getObservacion() + " " +
                             "(" +
                             "LIMA-" + ruc10DTO.getDepartamento() + "-" + ruc10DTO.getProvincia() +
-                            ")"
-            );
+                            ")");
             cronograma.setRangoInstalacion(ruc10DTO.getRangoInstalacion());
             cronograma = cronogramaService.crearCronograma(cronograma);
 
@@ -207,8 +206,10 @@ public class RegistroRUC10Controller {
         RegistroRUC10 registroRUC10 = registroRUC10Service.buscarPorId(id);
         Cronograma cronograma = cronogramaService.buscarPorId(registroRUC10.getCronograma().getIdCronograma());
         Cliente cliente = clienteService.buscarPorId(registroRUC10.getCliente().getDniCliente());
-        ContactoPrincipal contactoPrincipal = contactoPrincipalService.buscarPorId(registroRUC10.getContactoPrincipal().getIdContactoPrincipal());
-        ContactoSecundario contactoSecundario = contactoSecundarioService.buscarPorId(registroRUC10.getContactoSecundario().getIdContactoSecundario());
+        ContactoPrincipal contactoPrincipal = contactoPrincipalService
+                .buscarPorId(registroRUC10.getContactoPrincipal().getIdContactoPrincipal());
+        ContactoSecundario contactoSecundario = contactoSecundarioService
+                .buscarPorId(registroRUC10.getContactoSecundario().getIdContactoSecundario());
         Usuario consultor = usuarioService.buscarPorId(registroRUC10.getUsuarioConsultor().getIdUsuario());
         Usuario supervisor = usuarioService.buscarPorId(registroRUC10.getUsuarioSupervisor().getIdUsuario());
         Plan plan = planService.buscarPorId(registroRUC10.getPlan().getIdPlan());
@@ -229,12 +230,13 @@ public class RegistroRUC10Controller {
                 cronograma.getRangoInstalacion(), cronograma.getUbicacionInstalacion(),
                 cronograma.getFechaInstalacion(),
                 consultor.getIdUsuario(), supervisor.getIdUsuario(),
-                plan.getIdPlan(), (promocion != null && promocion.getIdPromocion() != null) ? promocion.getIdPromocion() : -1, registroRUC10.getDistrito().getIdDistrito(),
+                plan.getIdPlan(),
+                (promocion != null && promocion.getIdPromocion() != null) ? promocion.getIdPromocion() : -1,
+                registroRUC10.getDistrito().getIdDistrito(),
                 registroRUC10.getObservacion(), cliente.getDniCliente(),
                 cliente.getRuc(), cliente.getNombre(), cliente.getApellido(),
                 cliente.getTelefono(), registroRUC10.getEstado().getIdEstado(), registroRUC10.getIdSolicitud(),
-                registroRUC10.getIdInstalacion(), registroRUC10.getIdCarrito()
-        );
+                registroRUC10.getIdInstalacion(), registroRUC10.getIdCarrito());
         ruc10DTO.setFechaInstalacion(cronograma.getFechaInstalacion());
 
         model.addAttribute("ruc10DTO", ruc10DTO);
@@ -245,7 +247,8 @@ public class RegistroRUC10Controller {
 
     @PostMapping("/guardar")
     @Transactional
-    public String guardar(@Validated @ModelAttribute("ruc10DTO") RucDTOActualizar ruc10DTO, BindingResult bindingResult, Model model, RedirectAttributes flash) {
+    public String guardar(@Validated @ModelAttribute("ruc10DTO") RucDTOActualizar ruc10DTO, BindingResult bindingResult,
+            Model model, RedirectAttributes flash) {
         cargarDatosSelects(model);
 
         if (bindingResult.hasErrors()) {

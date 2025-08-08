@@ -3,8 +3,6 @@ package com.sistema.gpon.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -62,7 +60,7 @@ public class RegistroRUC10 {
 	@Column(name = "IdInstalacion")
 	private String idInstalacion = "ninguno";
 
-	@Column(name = "IdCarrito" )
+	@Column(name = "IdCarrito")
 	private String idCarrito = "ninguno";
 
 	@Column(name = "Observacion")

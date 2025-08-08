@@ -2,7 +2,6 @@ package com.sistema.gpon.repository;
 
 import com.sistema.gpon.dto.DistritoCantidadDTO;
 import com.sistema.gpon.dto.RegistroPorMesDTO;
-import com.sistema.gpon.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.sistema.gpon.model.RegistroRUC10;

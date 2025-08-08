@@ -2,10 +2,7 @@ package com.sistema.gpon.service.impl;
 
 import java.util.List;
 
-import com.sistema.gpon.dto.PlanFilter;
 import com.sistema.gpon.dto.PromocionFilter;
-import com.sistema.gpon.model.Cliente;
-import com.sistema.gpon.model.Plan;
 import com.sistema.gpon.service.PromocionService;
 import com.sistema.gpon.utils.ResultadoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +24,8 @@ public class PromocionServiceImpl implements PromocionService {
 
 			Promocion registrado = promocionRepository.save(promocion);
 
-			String mensaje = String.format("La promoción (Cod. %s) ha sido registrada exitosamente.", registrado.getIdPromocion());
+			String mensaje = String.format("La promoción (Cod. %s) ha sido registrada exitosamente.",
+					registrado.getIdPromocion());
 
 			return new ResultadoResponse(true, mensaje);
 
@@ -57,7 +55,8 @@ public class PromocionServiceImpl implements PromocionService {
 		try {
 			Promocion actualizado = promocionRepository.save(promocion);
 
-			String mensaje = String.format("Los datos de la promoción (Cod. %s) han sido actualizados correctamente.", actualizado.getIdPromocion());
+			String mensaje = String.format("Los datos de la promoción (Cod. %s) han sido actualizados correctamente.",
+					actualizado.getIdPromocion());
 
 			return new ResultadoResponse(true, mensaje);
 
@@ -78,12 +77,14 @@ public class PromocionServiceImpl implements PromocionService {
 		try {
 			Promocion registrado = promocionRepository.save(promocion);
 
-			String mensaje = String.format("La promoción (Cod. %s) ha sido %s correctamente.", registrado.getIdPromocion(), texto);
+			String mensaje = String.format("La promoción (Cod. %s) ha sido %s correctamente.",
+					registrado.getIdPromocion(), texto);
 			return new ResultadoResponse(true, mensaje);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return new ResultadoResponse(false, "Ocurrió un error al cambiar el estado de la promoción: " + ex.getMessage());
+			return new ResultadoResponse(false,
+					"Ocurrió un error al cambiar el estado de la promoción: " + ex.getMessage());
 		}
 	}
 }

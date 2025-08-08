@@ -1,15 +1,11 @@
 package com.sistema.gpon.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.sistema.gpon.dto.DistritoCantidadDTO;
 import com.sistema.gpon.dto.RegistroFilter;
 import com.sistema.gpon.dto.RegistroPorMesDTO;
-import com.sistema.gpon.dto.UsuarioFilter;
 import com.sistema.gpon.model.RegistroRUC10;
-import com.sistema.gpon.model.Usuario;
-import com.sistema.gpon.utils.ResultadoResponse;
 
 public interface RegistroRUC10Service {
     RegistroRUC10 crearRegistro(RegistroRUC10 registro);

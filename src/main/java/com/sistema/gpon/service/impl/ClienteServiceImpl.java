@@ -3,9 +3,6 @@ package com.sistema.gpon.service.impl;
 import java.util.List;
 
 import com.sistema.gpon.dto.ClienteFilter;
-import com.sistema.gpon.dto.UsuarioFilter;
-import com.sistema.gpon.model.Promocion;
-import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.service.ClienteService;
 import com.sistema.gpon.utils.ResultadoResponse;
 import org.springframework.beans.factory.annotation.Autowired;

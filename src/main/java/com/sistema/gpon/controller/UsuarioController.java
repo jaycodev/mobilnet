@@ -1,9 +1,6 @@
 package com.sistema.gpon.controller;
 
-import java.util.List;
-
 import com.sistema.gpon.dto.UsuarioFilter;
-import com.sistema.gpon.model.Rol;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +30,7 @@ public class UsuarioController {
 	@Autowired
 	private RolService rolesService;
 
-	@GetMapping({"", "/"})
+	@GetMapping({ "", "/" })
 	public String listado(HttpServletRequest request, Model model) {
 		model.addAttribute("uri", request.getRequestURI());
 
@@ -61,9 +58,12 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/registrar")
-	public String registrar(@Validated @ModelAttribute Usuario usuario, BindingResult result, Model model, RedirectAttributes flash) {
-		if (usuario.getContrasena() == null || !usuario.getContrasena().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+=<>?{}\\[\\]-]).{8,}$")) {
-			result.rejectValue("contrasena", "error.usuario", "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un símbolo");
+	public String registrar(@Validated @ModelAttribute Usuario usuario, BindingResult result, Model model,
+			RedirectAttributes flash) {
+		if (usuario.getContrasena() == null || !usuario.getContrasena()
+				.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+=<>?{}\\[\\]-]).{8,}$")) {
+			result.rejectValue("contrasena", "error.usuario",
+					"La contraseña debe tener al menos una mayúscula, una minúscula, un número y un símbolo");
 		}
 
 		if (result.hasErrors()) {
@@ -93,7 +93,7 @@ public class UsuarioController {
 
 	@PostMapping("/guardar")
 	public String guardar(@Validated @ModelAttribute Usuario usuario, BindingResult bindingResult, Model model,
-						  RedirectAttributes flash) {
+			RedirectAttributes flash) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("roles", rolesService.listarRoles());
 			return "usuarios/edicion";

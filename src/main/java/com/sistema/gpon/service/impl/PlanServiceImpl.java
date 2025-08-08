@@ -1,13 +1,8 @@
 package com.sistema.gpon.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.sistema.gpon.dto.ClienteFilter;
 import com.sistema.gpon.dto.PlanFilter;
-import com.sistema.gpon.model.Cliente;
-import com.sistema.gpon.model.Promocion;
-import com.sistema.gpon.model.Usuario;
 import com.sistema.gpon.service.PlanService;
 import com.sistema.gpon.utils.ResultadoResponse;
 
@@ -30,7 +25,8 @@ public class PlanServiceImpl implements PlanService {
 
             Plan registrado = planRepository.save(plan);
 
-            String mensaje = String.format("El plan (Cod. %s) ha sido registrado exitosamente.", registrado.getIdPlan());
+            String mensaje = String.format("El plan (Cod. %s) ha sido registrado exitosamente.",
+                    registrado.getIdPlan());
 
             return new ResultadoResponse(true, mensaje);
 
@@ -64,7 +60,8 @@ public class PlanServiceImpl implements PlanService {
         try {
             Plan actualizado = planRepository.save(plan);
 
-            String mensaje = String.format("Los datos del plan (Cod. %s) han sido actualizados correctamente.", actualizado.getIdPlan());
+            String mensaje = String.format("Los datos del plan (Cod. %s) han sido actualizados correctamente.",
+                    actualizado.getIdPlan());
 
             return new ResultadoResponse(true, mensaje);
 
@@ -85,7 +82,8 @@ public class PlanServiceImpl implements PlanService {
         try {
             Plan registrado = planRepository.save(plan);
 
-            String mensaje = String.format("El plan (Cod. %s) ha sido %s correctamente.", registrado.getIdPlan(), texto);
+            String mensaje = String.format("El plan (Cod. %s) ha sido %s correctamente.", registrado.getIdPlan(),
+                    texto);
             return new ResultadoResponse(true, mensaje);
 
         } catch (Exception ex) {
