@@ -13,14 +13,13 @@ import java.util.List;
 public class SessionFilter implements Filter {
 
     private static final List<String> PUBLIC_ALWAYS = List.of(
-            "/acceso-denegado", "/css/", "/assets/", "/webjars/"
-    );
+            "/acceso-denegado", "/css/", "/assets/", "/webjars/");
 
     private static final List<String> PUBLIC_WHEN_NOT_LOGGED = List.of(
-            "/cuenta/login", "/cuenta/iniciarSesion"
-    );
+            "/cuenta/login", "/cuenta/iniciarSesion");
 
-    private static final List<String> RUTAS_ADMIN = List.of("/registros", "/clientes", "/planes", "/promociones", "/usuarios");
+    private static final List<String> RUTAS_ADMIN = List.of("/registros", "/clientes", "/planes", "/promociones",
+            "/usuarios");
     private static final List<String> RUTAS_BACKOFFICE = List.of("/registros", "/clientes", "/planes", "/promociones");
     private static final List<String> RUTAS_CONSULTOR = List.of("/registros", "/clientes");
     private static final List<String> RUTAS_SUPERVISOR = List.of("/registros", "/clientes");
@@ -58,7 +57,7 @@ public class SessionFilter implements Filter {
             return;
         }
 
-        if (isLoggedIn) {
+        if (isLoggedIn && session != null) {
             Integer idRol = (Integer) session.getAttribute("idRol");
 
             if (idRol != null && !tieneAccesoPorRol(idRol, uri)) {
@@ -71,16 +70,14 @@ public class SessionFilter implements Filter {
     }
 
     private boolean tieneAccesoPorRol(int idRol, String uri) {
-        if (
-            uri.equals("/") ||
-            uri.startsWith("/cuenta/perfil") ||
-            uri.startsWith("/cuenta/actualizar-perfil") ||
-            uri.startsWith("/cuenta/actualizar-contrasena") ||
-            uri.equals("/cuenta/cerrarSesion") ||
-            uri.startsWith("/fragments/") ||
-            uri.equals("/acceso-denegado") ||
-            uri.equals("")
-        ) {
+        if (uri.equals("/") ||
+                uri.startsWith("/cuenta/perfil") ||
+                uri.startsWith("/cuenta/actualizar-perfil") ||
+                uri.startsWith("/cuenta/actualizar-contrasena") ||
+                uri.equals("/cuenta/cerrarSesion") ||
+                uri.startsWith("/fragments/") ||
+                uri.equals("/acceso-denegado") ||
+                uri.equals("")) {
             return true;
         }
 
