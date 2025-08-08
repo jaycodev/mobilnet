@@ -1,4 +1,4 @@
-USE registro_gpon_db;
+USE mobilnet_db;
 
 INSERT INTO Rol(Descripcion) VALUES
 ('BackOffice'),

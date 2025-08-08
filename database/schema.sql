@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS registro_gpon_db;
-CREATE DATABASE registro_gpon_db;
-USE registro_gpon_db;
+DROP DATABASE IF EXISTS mobilnet_db;
+CREATE DATABASE mobilnet_db;
+USE mobilnet_db;
 
 CREATE TABLE Rol (
     IdRol INT PRIMARY KEY AUTO_INCREMENT,

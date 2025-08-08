@@ -8,11 +8,11 @@
 		<version>3.5.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.sistema.gpon</groupId>
-	<artifactId>sistema-registro-gpon</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>sistema-registro-gpon</name>
-	<description>Sistema web para el registro de redes GPON</description>
+	<groupId>com.mobilnet</groupId>
+	<artifactId>mobilnet</artifactId>
+	<version>1.0.0</version>
+	<name>mobilnet</name>
+	<description>Web system for registering GPON networks</description>
 	<url/>
 	<licenses>
 		<license/>
