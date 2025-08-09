@@ -1,103 +1,101 @@
 package com.mobilnet.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mobilnet.dto.PlanFilter;
-import com.mobilnet.model.*;
-import com.mobilnet.service.PlanService;
+import com.mobilnet.dto.ClientFilter;
+import com.mobilnet.model.Client;
+import com.mobilnet.service.ClientService;
 import com.mobilnet.utils.Alert;
 import com.mobilnet.utils.ResultResponse;
 
 @Controller
-@RequestMapping("/planes")
-public class PlanController {
+@RequestMapping("/clientes")
+public class ClientController {
 
     @Autowired
-    private PlanService service;
+    private ClientService service;
 
     @GetMapping({ "", "/" })
     public String list(HttpServletRequest request, Model model) {
         model.addAttribute("uri", request.getRequestURI());
 
-        model.addAttribute("filtro", new PlanFilter());
-        model.addAttribute("lstPlanes", service.list());
-        return "planes/index";
+        model.addAttribute("filtro", new ClientFilter());
+        model.addAttribute("lstClientes", service.list());
+        return "clientes/index";
     }
 
     @GetMapping("/filtrado")
-    public String filtered(@ModelAttribute PlanFilter filter, Model model) {
+    public String filtered(@ModelAttribute ClientFilter filter, Model model) {
         model.addAttribute("filtro", filter);
-        model.addAttribute("lstPlanes", service.listWithFilters(filter));
+        model.addAttribute("lstClientes", service.listWithFilters(filter));
 
-        return "planes/index";
+        return "clientes/index";
     }
 
     @GetMapping("/nuevo")
     public String create(Model model) {
-        model.addAttribute("plan", new Plan());
-        return "planes/nuevo";
+        model.addAttribute("cliente", new Client());
+
+        return "clientes/nuevo";
     }
 
     @PostMapping("/registrar")
-    public String register(@Validated @ModelAttribute Plan plan, BindingResult bindingResult, Model model,
+    public String register(@Validated @ModelAttribute Client client, BindingResult bindingResult, Model model,
             RedirectAttributes flash) {
         if (bindingResult.hasErrors()) {
-            return "planes/nuevo";
+            return "clientes/nuevo";
         }
 
-        ResultResponse response = service.create(plan);
+        ResultResponse response = service.create(client);
 
         if (!response.success) {
             model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
-            return "planes/nuevo";
+            return "clientes/nuevo";
         }
 
         flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
-        return "redirect:/planes";
+        return "redirect:/clientes";
     }
 
     @GetMapping("/edicion/{id}")
-    public String edit(@PathVariable Integer id, Model model) {
-        Plan plan = service.findById(id);
-        model.addAttribute("plan", plan);
-        return "planes/edicion";
+    public String edit(@PathVariable String id, Model model) {
+        Client cliente = service.findById(id);
+        model.addAttribute("cliente", cliente);
+
+        return "clientes/edicion";
     }
 
     @PostMapping("/guardar")
-    public String save(@Validated @ModelAttribute Plan plan, BindingResult bindingResult, Model model,
+    public String save(@Validated @ModelAttribute Client client, BindingResult bindingResult, Model model,
             RedirectAttributes flash) {
         if (bindingResult.hasErrors()) {
-            return "planes/edicion";
+            return "clientes/edicion";
         }
 
-        ResultResponse response = service.update(plan);
+        ResultResponse response = service.update(client);
 
         if (!response.success) {
             model.addAttribute("alert", Alert.sweetAlertError(response.mensaje));
-            return "planes/edicion";
+            return "clientes/edicion";
         }
 
         flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
-        return "redirect:/planes";
+        return "redirect:/clientes";
     }
 
     @PostMapping("/cambiar-estado/{id}")
-    public String changeStatus(@PathVariable Integer id, RedirectAttributes flash) {
+    public String changeStatus(@PathVariable String id, RedirectAttributes flash) {
+
         ResultResponse response = service.changeStatus(id);
 
         flash.addFlashAttribute("alert", Alert.sweetAlertSuccess(response.mensaje));
-        return "redirect:/planes";
+        return "redirect:/clientes";
     }
 }

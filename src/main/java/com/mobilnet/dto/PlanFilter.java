@@ -6,19 +6,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlanFilter {
-    private String allFiltros;
-    
-    public Boolean getActivo() {
-    	if ("true".equalsIgnoreCase(allFiltros)) {
-    		return true;
-    	}else if ("false".equalsIgnoreCase(allFiltros)) {
-    		return false;
-    	}
-    	return null;
-    }
-    
-    public Boolean getMasRegistrado() {
-    	return "masRegistrado".equalsIgnoreCase(allFiltros);
-    }
-}
+	private String allFilters;
 
+	public Boolean getActive() {
+		if ("true".equalsIgnoreCase(allFilters)) {
+			return true;
+		} else if ("false".equalsIgnoreCase(allFilters)) {
+			return false;
+		}
+		return null;
+	}
+
+	public Boolean getMostRegistered() {
+		return "mostRegistered".equalsIgnoreCase(allFilters);
+	}
+}

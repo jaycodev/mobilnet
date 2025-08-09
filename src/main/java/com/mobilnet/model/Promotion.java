@@ -1,21 +1,14 @@
 package com.mobilnet.model;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
-import java.util.List;
-
-import org.hibernate.annotations.DynamicInsert;
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Entity
-@Table(name = "plans")
+@Table(name = "promotions")
 @Data
-@DynamicInsert
 @NoArgsConstructor
-public class Plan {
+public class Promotion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +21,4 @@ public class Plan {
 
 	@Column(nullable = false)
 	private Boolean isActive;
-
-	@OneToMany(mappedBy = "plan")
-	private List<Ruc10Record> ruc10Records;
 }

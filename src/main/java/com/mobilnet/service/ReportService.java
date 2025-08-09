@@ -17,7 +17,7 @@ public class ReportService {
     @Autowired
     private DataSource dataSource;
 
-    public byte[] generarReportParametrs(String reportName, int idRegistro) throws JRException, SQLException {
+    public byte[] generateReportWithParameters(String reportName, int recordId) throws JRException, SQLException {
         try {
             InputStream inputStream = this.getClass().getResourceAsStream("/reports/" + reportName + ".jrxml");
 
@@ -36,7 +36,7 @@ public class ReportService {
             JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
 
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("id", idRegistro);
+            parametros.put("id", recordId);
             parametros.put("LOGO", logoStream);
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, dataSource.getConnection());

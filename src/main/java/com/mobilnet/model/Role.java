@@ -4,15 +4,16 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "sectors")
-@Data
+@Table(name = "roles")
+@Getter
+@Setter
 @NoArgsConstructor
-public class Sector {
+public class Role {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column(nullable = false)
-	private String name;
+	private String description;
 }

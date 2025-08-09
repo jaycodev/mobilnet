@@ -1,12 +1,12 @@
 USE mobilnet_db;
 
-INSERT INTO Rol(Descripcion) VALUES
+INSERT INTO roles(description) VALUES
 ('BackOffice'),
 ('Consultor'),
 ('Supervisor'),
 ('Administrador');
 
-INSERT INTO Usuario (IdRol, Nombre, Apellido, Correo, Contrasena, Activo) VALUES
+INSERT INTO users (role_id, first_name, last_name, email, password, is_active) VALUES
 (1, 'Juan', 'Pérez', 'juan.perez@example.com', 'clave123', TRUE),
 (2, 'María', 'Gómez', 'maria.gomez@example.com', 'mariag2023', TRUE),
 (1, 'Carlos', 'Ramírez', 'carlos.ramirez@example.com', 'passw0rd', FALSE),
@@ -28,7 +28,7 @@ INSERT INTO Usuario (IdRol, Nombre, Apellido, Correo, Contrasena, Activo) VALUES
 (3, 'Gonzalo', 'Castañeda', 'gonzalo.castaneda@example.com', 'gcast2024', FALSE),
 (4, 'Natalia', 'Mendoza', 'natalia.mendoza@example.com', 'nataliaM', TRUE);
 
-INSERT INTO Cliente (DniCliente, Ruc, Nombre, Apellido, Telefono, Activo) VALUES
+INSERT INTO clients (dni, ruc, first_name, last_name, phone, is_active) VALUES
 ('12345678', '20123456789', 'Juan', 'Pérez', '987654321', TRUE),
 ('23456789', '20456789123', 'María', 'Gómez', '912345678', TRUE),
 ('34567890', '20567891234', 'Carlos', 'Ramírez', '923456789', FALSE),
@@ -70,7 +70,7 @@ INSERT INTO Cliente (DniCliente, Ruc, Nombre, Apellido, Telefono, Activo) VALUES
 ('90909090', '20909090909', 'Lidia', 'Montes', '990909090', TRUE),
 ('11223344', '20112233445', 'Raúl', 'Campos', '911223344', TRUE);
 
-INSERT INTO Plan (Descripcion, Activo) VALUES
+INSERT INTO plans (description, is_active) VALUES
 ('Plan Básico 30 Mbps', TRUE),
 ('Plan Familiar 50 Mbps', TRUE),
 ('Plan Avanzado 100 Mbps', TRUE),
@@ -82,7 +82,7 @@ INSERT INTO Plan (Descripcion, Activo) VALUES
 ('Plan Streaming 80 Mbps', FALSE),
 ('Plan Premium 500 Mbps', TRUE);
 
-INSERT INTO Promocion (Descripcion, Activo) VALUES 
+INSERT INTO promotions (description, is_active) VALUES 
 ('Descuento cargo fijo 30% x 3 meses', TRUE),
 ('Descuento cargo fijo 50% x 2 meses', TRUE),
 ('Primer mes gratis', FALSE),
@@ -104,7 +104,7 @@ INSERT INTO Promocion (Descripcion, Activo) VALUES
 ('Instalación express gratuita', FALSE),
 ('Campaña especial GPON: 3 meses con 40% off', TRUE);
 
-INSERT INTO Distrito (NombreDistrito) VALUES
+INSERT INTO districts (name) VALUES
 ('Ancón'), ('Ate'), ('Barranco'), ('Breña'), ('Carabayllo'),
 ('Chaclacayo'), ('Chorrillos'), ('Cieneguilla'), ('Comas'), ('El Agustino'),
 ('Independencia'), ('Jesús María'), ('La Molina'), ('La Victoria'), ('Lima'),
@@ -116,7 +116,7 @@ INSERT INTO Distrito (NombreDistrito) VALUES
 ('Santa Rosa'), ('Santiago de Surco'), ('Surquillo'), ('Villa El Salvador'),
 ('Villa María del Triunfo');
 
-INSERT INTO Sector (NombreSector) VALUES
+INSERT INTO sectors (name) VALUES
 ('Cercado de Lima'), ('La Molina'), ('Miraflores'), ('San Borja'), ('San Isidro'),
 ('San Miguel'), ('Santiago de Surco'), ('Modern San Isidro'), ('Barrio de Surco'),
 ('Centro Histórico (Rímac)'), ('Puente Piedra'), ('Villa El Salvador'),
@@ -124,7 +124,7 @@ INSERT INTO Sector (NombreSector) VALUES
 ('Chorrillos'), ('Los Olivos'), ('San Martín de Porres'), ('El Agustino'),
 ('Pueblo Libre'), ('Magdalena del Mar'), ('San Juan de Miraflores'), ('Barranco');
 
-INSERT INTO EstadoRegistro(Descripcion) VALUES
+INSERT INTO record_states(description) VALUES
 ('Pendiente instalación'),
 ('Anulado'),
 ('Observado'),
@@ -135,7 +135,7 @@ INSERT INTO EstadoRegistro(Descripcion) VALUES
 ('Instalado'),
 ('Sin cobertura');
 
-INSERT INTO ContactoPrincipal (NombreContacto, Dni, Telefono, Correo) VALUES
+INSERT INTO main_contacts (name, dni, phone, email) VALUES
 ('Juan Pérez', '12345678', '987654321', 'juan.perez@example.com'),
 ('María Gómez', '23456789', '912345678', 'maria.gomez@example.com'),
 ('Carlos Ramírez', '34567890', '923456789', 'carlos.ramirez@example.com'),
@@ -147,14 +147,14 @@ INSERT INTO ContactoPrincipal (NombreContacto, Dni, Telefono, Correo) VALUES
 ('Jorge Cruz', '90123456', '989012345', 'jorge.cruz@example.com'),
 ('Elena Vega', '01234567', '900123456', 'elena.vega@example.com');
 
-INSERT INTO ContactoSecundario (NombreContacto, Dni, Telefono, Correo) VALUES
+INSERT INTO secondary_contacts (name, dni, phone, email) VALUES
 ('Rosa Ruiz', '12312312', '911223344', 'rosa.ruiz@example.com'),
 ('Mario Silva', '23423423', '922334455', 'mario.silva@example.com'),
 ('Diana López', '34534534', '933445566', 'diana.lopez@example.com'),
 ('Ricardo Torres', '45645645', '944556677', 'ricardo.torres@example.com'),
 ('Carmen Soto', '56756756', '955667788', 'carmen.soto@example.com');
 
-INSERT INTO Cronograma (UbicacionInstalacion, RangoInstalacion, FechaRegistro, FechaInstalacion) VALUES
+INSERT INTO schedules (installation_location, installation_range, registration_date, installation_date) VALUES
 ('Av. La Marina 123, San Miguel', 'tarde', '2025-01-10', '2025-01-12'),
 ('Jr. Los Olivos 456, Surco', 'manana', '2025-02-11', '2025-02-13'),
 ('Calle Ficticia 789, Miraflores', 'tarde', '2025-03-12', '2025-03-14'),
@@ -162,11 +162,11 @@ INSERT INTO Cronograma (UbicacionInstalacion, RangoInstalacion, FechaRegistro, F
 ('Av. Siempre Viva 742, San Isidro', 'manana', '2025-05-11', '2025-05-11'),
 ('Calle Las Flores 100, Barranco', 'tarde', '2025-06-10', '2025-06-11');
 
-INSERT INTO RegistroRUC10 (
-    IdUsuarioConsultor, IdUsuarioSupervisor, DniCliente,
-    IdContactoPrincipal, IdContactoSecundario, IdPlan, IdPromocion, IdCronograma,
-    IdEstado, IdDistrito,
-    IdSolicitud, IdInstalacion, IdCarrito, Observacion
+INSERT INTO ruc10_records (
+    consultant_user_id, supervisor_user_id, client_dni,
+    main_contact_id, secondary_contact_id, plan_id, promotion_id, schedule_id,
+    state_id, district_id,
+    request_id, installation_id, cart_id, observation
 ) VALUES
 (2, 4, '12345678', 1, 1, 3, 1, 1, 1, 1, 'ENE001', '763952700', 'CSE00010001', 'Instalación programada exitosamente.'),
 (3, 5, '23456789', 2, 2, 7, 1, 1, 2, 2, 'ENE002', '763952701', 'CSE00010002', 'Cliente solicitó cambio de horario.'),
