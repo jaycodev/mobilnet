@@ -9,7 +9,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 public class MobilnetApplication {
 
 	public static void main(String[] args) {
-		com.mobilnet.config.DotenvLoader.loadEnv();
 		SpringApplication.run(MobilnetApplication.class, args);
 	}
 }

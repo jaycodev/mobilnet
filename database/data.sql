@@ -26,7 +26,11 @@ INSERT INTO users (role_id, first_name, last_name, email, password, is_active) V
 (1, 'Sebastián', 'Ibarra', 'sebastian.ibarra@example.com', 'sibarra!', TRUE),
 (2, 'Daniela', 'Paredes', 'daniela.paredes@example.com', 'danielaP', TRUE),
 (3, 'Gonzalo', 'Castañeda', 'gonzalo.castaneda@example.com', 'gcast2024', FALSE),
-(4, 'Natalia', 'Mendoza', 'natalia.mendoza@example.com', 'nataliaM', TRUE);
+(4, 'Natalia', 'Mendoza', 'natalia.mendoza@example.com', 'nataliaM', TRUE),
+(1, 'Demo', 'BackOffice', 'demo.backoffice@example.com', 'demo123', TRUE),
+(2, 'Demo', 'Consultor', 'demo.consultor@example.com', 'demo123', TRUE),
+(3, 'Demo', 'Supervisor', 'demo.supervisor@example.com', 'demo123', TRUE),
+(4, 'Demo', 'Administrador', 'demo.admin@example.com', 'demo123', TRUE);
 
 INSERT INTO clients (dni, ruc, first_name, last_name, phone, is_active) VALUES
 ('12345678', '20123456789', 'Juan', 'Pérez', '987654321', TRUE),
