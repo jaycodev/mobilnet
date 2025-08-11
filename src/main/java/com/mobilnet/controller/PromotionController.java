@@ -45,7 +45,7 @@ public class PromotionController {
 
     @GetMapping("/nuevo")
     public String create(Model model) {
-        model.addAttribute("promocion", new Promotion());
+        model.addAttribute("promotion", new Promotion());
         return "promociones/nuevo";
     }
 
@@ -70,7 +70,7 @@ public class PromotionController {
     @GetMapping("/edicion/{id}")
     public String edit(@PathVariable Integer id, Model model) {
         Promotion promotion = service.findById(id);
-        model.addAttribute("promocion", promotion);
+        model.addAttribute("promotion", promotion);
         return "promociones/edicion";
     }
 

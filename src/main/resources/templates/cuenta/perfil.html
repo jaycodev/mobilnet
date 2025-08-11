@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="fragments/layout :: layoutBase('Cuenta', 'Perfil', ~{::contenido}, ~{::scripts})">
+    th:replace="fragments/layout :: layoutBase('Cuenta', 'Perfil', ~{::contenido}, ~{::scripts})">
 <th:block th:fragment="contenido">
     <div class="row">
         <div class="col-md-8">
@@ -18,24 +18,24 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Nombre(s)</label>
-                                    <input class="form-control" type="text" th:field="*{nombre}" readonly disabled>
+                                    <input class="form-control" type="text" th:field="*{firstName}" readonly disabled>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Apellido(s)</label>
-                                    <input class="form-control" type="text" th:field="*{apellido}" readonly disabled>
+                                    <input class="form-control" type="text" th:field="*{lastName}" readonly disabled>
                                 </div>
                             </div>
                             <div class="col-md-12 mt-3">
                                 <div class="form-group">
-                                    <label for="correo" class="form-label">Correo electrónico</label>
-                                    <input type="email" th:field="*{correo}" class="form-control"
-                                           th:classappend="${#fields.hasErrors('correo')} ? 'is-invalid'"
-                                           placeholder="correo@ejemplo.com" required/>
+                                    <label for="email" class="form-label">Correo electrónico</label>
+                                    <input type="email" th:field="*{email}" class="form-control"
+                                        th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                                        placeholder="correo@ejemplo.com" required />
                                     <div class="invalid-feedback">
-										<span th:if="${#fields.hasErrors('correo')}"
-                                              th:text="${#fields.errors('correo')[0]}"></span>
+                                        <span th:if="${#fields.hasErrors('email')}"
+                                            th:text="${#fields.errors('email')[0]}"></span>
                                     </div>
                                 </div>
                             </div>
@@ -59,19 +59,19 @@
                             <!-- Contraseña actual -->
                             <div class="col-md-4 mt-3">
                                 <div class="form-group">
-                                    <label for="contrasenaActual" class="form-label">Contraseña actual</label>
-                                    <input type="password" th:field="*{contrasenaActual}" class="form-control"
-                                           th:classappend="${#fields.hasErrors('contrasenaActual')} ? ' is-invalid'"
-                                           placeholder="Contraseña actual" required/>
-                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('contrasenaActual')}">
-                                        <span th:text="${#fields.errors('contrasenaActual')[0]}"></span>
+                                    <label for="currentPassword" class="form-label">Contraseña actual</label>
+                                    <input type="password" th:field="*{currentPassword}" class="form-control"
+                                        th:classappend="${#fields.hasErrors('currentPassword')} ? ' is-invalid'"
+                                        placeholder="Contraseña actual" required />
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('currentPassword')}">
+                                        <span th:text="${#fields.errors('currentPassword')[0]}"></span>
                                     </div>
                                     <div class="form-check form-check-sm mt-1">
-                                        <input class="form-check-input" type="checkbox"
-                                               style="transform: scale(0.8);"
-                                               onclick="togglePassword(this, 'contrasenaActual')"
-                                               id="toggle-contrasena-actual">
-                                        <label class="form-label" for="toggle-contrasena-actual">Mostrar contraseña</label>
+                                        <input class="form-check-input" type="checkbox" style="transform: scale(0.8);"
+                                            onclick="togglePassword(this, 'currentPassword')"
+                                            id="toggle-current-password">
+                                        <label class="form-label" for="toggle-current-password">Mostrar
+                                            contraseña</label>
                                     </div>
                                 </div>
                             </div>
@@ -79,19 +79,17 @@
                             <!-- Nueva contraseña -->
                             <div class="col-md-4 mt-3">
                                 <div class="form-group">
-                                    <label for="nuevaContrasena" class="form-label">Nueva contraseña</label>
-                                    <input type="password" th:field="*{nuevaContrasena}" class="form-control"
-                                           th:classappend="${#fields.hasErrors('nuevaContrasena')} ? ' is-invalid'"
-                                           placeholder="Nueva contraseña" required/>
-                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('nuevaContrasena')}">
-                                        <span th:text="${#fields.errors('nuevaContrasena')[0]}"></span>
+                                    <label for="newPassword" class="form-label">Nueva contraseña</label>
+                                    <input type="password" th:field="*{newPassword}" class="form-control"
+                                        th:classappend="${#fields.hasErrors('newPassword')} ? ' is-invalid'"
+                                        placeholder="Nueva contraseña" required />
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('newPassword')}">
+                                        <span th:text="${#fields.errors('newPassword')[0]}"></span>
                                     </div>
                                     <div class="form-check form-check-sm mt-1">
-                                        <input class="form-check-input" type="checkbox"
-                                               style="transform: scale(0.8);"
-                                               onclick="togglePassword(this, 'nuevaContrasena')"
-                                               id="toggle-nueva-contrasena">
-                                        <label class="form-label" for="toggle-nueva-contrasena">Mostrar contraseña</label>
+                                        <input class="form-check-input" type="checkbox" style="transform: scale(0.8);"
+                                            onclick="togglePassword(this, 'newPassword')" id="toggle-new-password">
+                                        <label class="form-label" for="toggle-new-password">Mostrar contraseña</label>
                                     </div>
                                 </div>
                             </div>
@@ -99,19 +97,20 @@
                             <!-- Confirmar nueva contraseña -->
                             <div class="col-md-4 mt-3">
                                 <div class="form-group">
-                                    <label for="confirmarNueva" class="form-label">Confirmar nueva contraseña</label>
-                                    <input type="password" th:field="*{confirmarNueva}" class="form-control"
-                                           th:classappend="${#fields.hasErrors('confirmarNueva')} ? ' is-invalid'"
-                                           placeholder="Confirmar nueva contraseña" required/>
-                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmarNueva')}">
-                                        <span th:text="${#fields.errors('confirmarNueva')[0]}"></span>
+                                    <label for="confirmNewPassword" class="form-label">Confirmar nueva
+                                        contraseña</label>
+                                    <input type="password" th:field="*{confirmNewPassword}" class="form-control"
+                                        th:classappend="${#fields.hasErrors('confirmNewPassword')} ? ' is-invalid'"
+                                        placeholder="Confirmar nueva contraseña" required />
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmNewPassword')}">
+                                        <span th:text="${#fields.errors('confirmNewPassword')[0]}"></span>
                                     </div>
                                     <div class="form-check form-check-sm mt-1">
-                                        <input class="form-check-input" type="checkbox"
-                                               style="transform: scale(0.8);"
-                                               onclick="togglePassword(this, 'confirmarNueva')"
-                                               id="toggle-confirmar-nueva">
-                                        <label class="form-label" for="toggle-confirmar-nueva">Mostrar contraseña</label>
+                                        <input class="form-check-input" type="checkbox" style="transform: scale(0.8);"
+                                            onclick="togglePassword(this, 'confirmNewPassword')"
+                                            id="toggle-confirm-new-password">
+                                        <label class="form-label" for="toggle-confirm-new-password">Mostrar
+                                            contraseña</label>
                                     </div>
                                 </div>
                             </div>
@@ -134,8 +133,8 @@
                 </div>
                 <div class="card-body pt-0">
                     <div class="text-center mt-4">
-                        <h5 th:text="${perfilDTO.nombre} + ' ' + ${perfilDTO.apellido}"></h5>
-                        <div class="h6 font-weight-300" th:text="${perfilDTO.correo}"></div>
+                        <h5 th:text="${perfilDTO.firstName} + ' ' + ${perfilDTO.lastName}"></h5>
+                        <div class="h6 font-weight-300" th:text="${perfilDTO.email}"></div>
                     </div>
                 </div>
             </div>
@@ -153,4 +152,5 @@
         }
     </script>
 </th:block>
+
 </html>

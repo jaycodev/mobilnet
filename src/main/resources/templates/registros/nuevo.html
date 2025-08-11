@@ -46,15 +46,15 @@
 
                     <!-- Consultor -->
                     <div class="col-md-6 mb-3">
-                        <label for="idUsuarioConsultor" class="form-label">
+                        <label for="consultantUserId" class="form-label">
                             Consultor
                             <span class="text-danger">*</span>
                         </label>
-                        <select th:field="*{idUsuarioConsultor}" class="form-select" required>
+                        <select th:field="*{consultantUserId}" class="form-select" required>
                             <option value="">Seleccione un consultor</option>
                             <option th:each="c : ${consultores}"
-                                    th:value="${c.idUsuario}"
-                                    th:text="${c.nombre + ' ' + c.apellido}">
+                                    th:value="${c.id}"
+                                    th:text="${c.firstName + ' ' + c.lastName}">
                             </option>
                         </select>
                         <div class="invalid-feedback">Debe seleccionar un consultor</div>
@@ -62,15 +62,15 @@
 
                     <!-- Supervisor -->
                     <div class="col-md-6 mb-3">
-                        <label for="idUsuarioSupervisor" class="form-label">
+                        <label for="supervisorUserId" class="form-label">
                             Supervisor
                             <span class="text-danger">*</span>
                         </label>
-                        <select th:field="*{idUsuarioSupervisor}" class="form-select" required>
+                        <select th:field="*{supervisorUserId}" class="form-select" required>
                             <option value="">Seleccione un supervisor</option>
                             <option th:each="s : ${supervisores}"
-                                    th:value="${s.idUsuario}"
-                                    th:text="${s.nombre + ' ' + s.apellido}">
+                                    th:value="${s.id}"
+                                    th:text="${s.firstName + ' ' + s.lastName}">
                             </option>
                         </select>
                         <div class="invalid-feedback">Debe seleccionar un supervisor</div>
@@ -102,11 +102,11 @@
 
                     <!-- DNI -->
                     <div class="col-md-4 mb-3">
-                        <label for="dniCliente" class="form-label">
+                        <label for="clientDni" class="form-label">
                             DNI
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="text" inputmode="numeric" th:field="*{dniCliente}"
+                        <input type="text" inputmode="numeric" th:field="*{clientDni}"
                                class="form-control" required pattern="\d{8}" minlength="8" maxlength="8"
                                placeholder="Ingrese un DNI válido (8 dígitos)" />
                         <div class="invalid-feedback">El DNI debe tener 8 dígitos numéricos</div>
@@ -114,30 +114,30 @@
 
                     <!-- Nombre(s) -->
                     <div class="col-md-4 mb-3">
-                        <label for="nombreCliente" class="form-label">
+                        <label for="clientFirstName" class="form-label">
                             Nombre(s) <span class="text-danger">*</span>
                         </label>
-                        <input type="text" th:field="*{nombreCliente}" class="form-control"
+                        <input type="text" th:field="*{clientFirstName}" class="form-control"
                                placeholder="Ingrese un(os) nombre(s)" required minlength="2" />
                         <div class="invalid-feedback">El nombre es obligatorio</div>
                     </div>
 
                     <!-- Apellido(s) -->
                     <div class="col-md-4 mb-3">
-                        <label for="apellidoCliente" class="form-label">
+                        <label for="clientLastName" class="form-label">
                             Apellido(s) <span class="text-danger">*</span>
                         </label>
-                        <input type="text" th:field="*{apellidoCliente}" class="form-control"
+                        <input type="text" th:field="*{clientLastName}" class="form-control"
                                placeholder="Ingrese un(os) apellido(s)" required minlength="2" />
                         <div class="invalid-feedback">El apellido es obligatorio</div>
                     </div>
 
                     <!-- Teléfono -->
                     <div class="col-md-6 mb-3">
-                        <label for="telefonoCliente" class="form-label">
+                        <label for="clientPhone" class="form-label">
                             Teléfono <span class="text-danger">*</span>
                         </label>
-                        <input type="text" th:field="*{telefonoCliente}" class="form-control"
+                        <input type="text" th:field="*{clientPhone}" class="form-control"
                                placeholder="Ingrese un teléfono" required pattern="\d{9}"
                                minlength="9" maxlength="9" inputmode="numeric" />
                         <div class="invalid-feedback">El teléfono debe tener 9 dígitos</div>
@@ -145,10 +145,10 @@
 
                     <!-- RUC -->
                     <div class="col-md-6 mb-3">
-                        <label for="rucCliente" class="form-label">
+                        <label for="clientRuc" class="form-label">
                             RUC <span class="text-danger">*</span>
                         </label>
-                        <input type="text" inputmode="numeric" th:field="*{rucCliente}" class="form-control"
+                        <input type="text" inputmode="numeric" th:field="*{clientRuc}" class="form-control"
                                placeholder="Ingrese un RUC válido" required pattern="\d{11}"
                                minlength="11" maxlength="11" />
                         <div class="invalid-feedback">El RUC debe tener 11 dígitos numéricos</div>
@@ -180,21 +180,21 @@
 
                     <!-- Nombre contacto -->
                     <div class="col-md-6 mb-3">
-                        <label for="nombreContacto" class="form-label">
+                        <label for="mainContactName" class="form-label">
                             Nombre contacto
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="text" th:field="*{nombreContacto}" class="form-control"
+                        <input type="text" th:field="*{mainContactName}" class="form-control"
                                placeholder="Ingrese un nombre" required minlength="2" />
                         <div class="invalid-feedback">El nombre del contacto principal es obligatorio</div>
                     </div>
 
                     <!-- DNI -->
                     <div class="col-md-6 mb-3">
-                        <label for="dniContacto" class="form-label">
+                        <label for="mainContactDni" class="form-label">
                             DNI <span class="text-danger">*</span>
                         </label>
-                        <input type="text" inputmode="numeric" th:field="*{dniContacto}"
+                        <input type="text" inputmode="numeric" th:field="*{mainContactDni}"
                                class="form-control" required pattern="\d{8}" minlength="8" maxlength="8"
                                placeholder="Ingrese un DNI válido (8 dígitos)" />
                         <div class="invalid-feedback">El DNI del contacto debe tener 8 dígitos numéricos</div>
@@ -202,11 +202,11 @@
 
                     <!-- Correo electrónico -->
                     <div class="col-md-6 mb-3">
-                        <label for="correoContacto" class="form-label">
+                        <label for="mainContactEmail" class="form-label">
                             Correo electrónico
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="email" th:field="*{correoContacto}" class="form-control"
+                        <input type="email" th:field="*{mainContactEmail}" class="form-control"
                                placeholder="correo@ejemplo.com" required
                                pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" />
                         <div class="invalid-feedback">El correo del contacto es obligatorio</div>
@@ -214,11 +214,11 @@
 
                     <!-- Teléfono -->
                     <div class="col-md-6 mb-3">
-                        <label for="telefonoContacto" class="form-label">
+                        <label for="mainContactPhone" class="form-label">
                             Teléfono
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="text" th:field="*{telefonoContacto}" class="form-control"
+                        <input type="text" th:field="*{mainContactPhone}" class="form-control"
                                placeholder="Ingrese un teléfono" required pattern="\d{9}"
                                minlength="9" maxlength="9" inputmode="numeric" />
                         <div class="invalid-feedback">El teléfono del contacto debe tener 9 dígitos</div>
@@ -250,21 +250,21 @@
 
                     <!-- Nombre completo -->
                     <div class="col-md-6 mb-3">
-                        <label for="nombreContactoSec" class="form-label">
+                        <label for="secondaryContactName" class="form-label">
                             Nombre completo
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="text" th:field="*{nombreContactoSec}" class="form-control"
+                        <input type="text" th:field="*{secondaryContactName}" class="form-control"
                                placeholder="Ingrese un nombre" required minlength="2" />
                         <div class="invalid-feedback">El nombre es obligatorio</div>
                     </div>
 
                     <!-- DNI -->
                     <div class="col-md-6 mb-3">
-                        <label for="dniContactoSec" class="form-label">
+                        <label for="secondaryContactDni" class="form-label">
                             DNI <span class="text-danger">*</span>
                         </label>
-                        <input type="text" inputmode="numeric" th:field="*{dniContactoSec}"
+                        <input type="text" inputmode="numeric" th:field="*{secondaryContactDni}"
                                class="form-control" required pattern="\d{8}" minlength="8" maxlength="8"
                                placeholder="Ingrese un DNI válido (8 dígitos)" />
                         <div class="invalid-feedback">El DNI del contacto debe tener 8 dígitos numéricos</div>
@@ -272,11 +272,11 @@
 
                     <!-- Correo electrónico -->
                     <div class="col-md-6 mb-3">
-                        <label for="correoContactoSec" class="form-label">
+                        <label for="secondaryContactEmail" class="form-label">
                             Correo electrónico
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="email" th:field="*{correoContactoSec}" class="form-control"
+                        <input type="email" th:field="*{secondaryContactEmail}" class="form-control"
                                placeholder="correo@ejemplo.com" required
                                pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" />
                         <div class="invalid-feedback">El correo del contacto secundario es obligatorio</div>
@@ -284,10 +284,10 @@
 
                     <!-- Teléfono -->
                     <div class="col-md-6 mb-3">
-                        <label for="telefonoContactoSec" class="form-label">
+                        <label for="secondaryContactPhone" class="form-label">
                             Teléfono <span class="text-danger">*</span>
                         </label>
-                        <input type="text" th:field="*{telefonoContactoSec}" class="form-control"
+                        <input type="text" th:field="*{secondaryContactPhone}" class="form-control"
                                placeholder="Ingrese un teléfono" required pattern="\d{9}"
                                minlength="9" maxlength="9" inputmode="numeric" />
                         <div class="invalid-feedback">El teléfono del contacto secundario debe tener 9 dígitos</div>
@@ -319,15 +319,15 @@
 
                     <!-- Plan -->
                     <div class="col-md-6 mb-3">
-                        <label for="idPlan" class="form-label">
+                        <label for="planId" class="form-label">
                             Plan
                             <span class="text-danger">*</span>
                         </label>
-                        <select class="form-select" th:field="*{idPlan}" required>
+                        <select class="form-select" th:field="*{planId}" required>
                             <option value="">Seleccione un plan</option>
                             <option th:each="p : ${planes}"
-                                    th:value="${p.idPlan}"
-                                    th:text="${p.descripcion}">
+                                    th:value="${p.id}"
+                                    th:text="${p.description}">
                             </option>
                         </select>
                         <div class="invalid-feedback">Debe seleccionar un plan</div>
@@ -335,14 +335,14 @@
 
                     <!-- Promoción -->
                     <div class="col-md-6 mb-3">
-                        <label for="idPromocion" class="form-label">
+                        <label for="promotionId" class="form-label">
                             Promoción
                         </label>
-                        <select th:field="*{idPromocion}" class="form-select">
+                        <select th:field="*{promotionId}" class="form-select">
                             <option value="-1">Ninguna</option>
                             <option th:each="p : ${promociones}"
-                                    th:value="${p.idPromocion}"
-                                    th:text="${p.descripcion}">
+                                    th:value="${p.id}"
+                                    th:text="${p.description}">
                             </option>
                         </select>
                     </div>
@@ -373,11 +373,11 @@
 
                     <!-- Departamento -->
                     <div class="col-md-4 mb-3">
-                        <label for="departamento" class="form-label">
+                        <label for="department" class="form-label">
                             Departamento
                             <span class="text-danger">*</span>
                         </label>
-                        <select class="form-select" th:field="*{departamento}" required>
+                        <select class="form-select" th:field="*{department}" required>
                             <option value="">Seleccione un departamento</option>
                             <option value="Lima">Lima</option>
                         </select>
@@ -386,11 +386,11 @@
 
                     <!-- Provincia -->
                     <div class="col-md-4 mb-3">
-                        <label for="provincia" class="form-label">
+                        <label for="province" class="form-label">
                             Provincia
                             <span class="text-danger">*</span>
                         </label>
-                        <select class="form-select" th:field="*{provincia}" required>
+                        <select class="form-select" th:field="*{province}" required>
                             <option value="">Seleccione una provincia</option>
                             <option value="Lima">Lima</option>
                         </select>
@@ -399,15 +399,15 @@
 
                     <!-- Distrito -->
                     <div class="col-md-4 mb-3">
-                        <label for="idDistrito" class="form-label">
+                        <label for="districtId" class="form-label">
                             Distrito
                             <span class="text-danger">*</span>
                         </label>
-                        <select class="form-select" th:field="*{idDistrito}" required>
+                        <select class="form-select" th:field="*{districtId}" required>
                             <option value="">Seleccione un distrito</option>
                             <option th:each="d : ${distritos}"
-                                    th:value="${d.idDistrito}"
-                                    th:text="${d.nombreDistrito}">
+                                    th:value="${d.id}"
+                                    th:text="${d.name}">
                             </option>
                         </select>
                         <div class="invalid-feedback">Debe seleccionar un distrito</div>
@@ -415,15 +415,15 @@
 
                     <!-- Sector -->
                     <div class="col-md-4 mb-3">
-                        <label for="nombreSector" class="form-label">
+                        <label for="sectorName" class="form-label">
                             Sector
                             <span class="text-danger">*</span>
                         </label>
-                        <select class="form-select" th:field="*{nombreSector}" required>
+                        <select class="form-select" th:field="*{sectorName}" required>
                             <option value="">Seleccione un sector</option>
                             <option th:each="s : ${sectores}"
-                                    th:value="${s.idSector}"
-                                    th:text="${s.nombreSector}">
+                                    th:value="${s.id}"
+                                    th:text="${s.name}">
                             </option>
                         </select>
                         <div class="invalid-feedback">Debe seleccionar un sector</div>
@@ -431,20 +431,20 @@
 
                     <!-- Referencia -->
                     <div class="col-md-4 mb-3">
-                        <label for="referencia" class="form-label">
+                        <label for="reference" class="form-label">
                             Referencia
                         </label>
-                        <input type="text" class="form-control" th:field="*{referencia}"
+                        <input type="text" class="form-control" th:field="*{reference}"
                                placeholder="Ej. A espaldas del parque" />
                     </div>
 
                     <!-- N° -->
                     <div class="col-md-4 mb-3">
-                        <label for="numero" class="form-label">
+                        <label for="number" class="form-label">
                             N°
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" th:field="*{numero}"
+                        <input type="text" class="form-control" th:field="*{number}"
                                placeholder="Ej. 123" required pattern="\d+" />
                         <div class="invalid-feedback">El número es obligatorio</div>
                     </div>
@@ -461,11 +461,11 @@
 
                     <!-- Rango Horario -->
                     <div class="col-md-3 mb-3">
-                        <label for="rangoInstalacion" class="form-label">
+                        <label for="installationRange" class="form-label">
                             Rango horario
                             <span class="text-danger">*</span>
                         </label>
-                        <select class="form-select" th:field="*{rangoInstalacion}" required>
+                        <select class="form-select" th:field="*{installationRange}" required>
                             <option value="">Seleccione un rango</option>
                             <option value="manana">09:00 a 13:00 hr</option>
                             <option value="tarde">13:00 a 18:00 hr</option>
@@ -475,10 +475,10 @@
 
                     <!-- Observaciones -->
                     <div class="col-md-6 mb-3">
-                        <label for="observacion" class="form-label">
+                        <label for="observation" class="form-label">
                             Observaciones
                         </label>
-                        <input type="text" class="form-control" th:field="*{observacion}"
+                        <input type="text" class="form-control" th:field="*{observation}"
                                placeholder="Ingrese observaciones (opcional)" />
                     </div>
                 </div>

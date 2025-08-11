@@ -41,7 +41,7 @@ public class ClientController {
 
     @GetMapping("/nuevo")
     public String create(Model model) {
-        model.addAttribute("cliente", new Client());
+        model.addAttribute("client", new Client());
 
         return "clientes/nuevo";
     }
@@ -66,8 +66,8 @@ public class ClientController {
 
     @GetMapping("/edicion/{id}")
     public String edit(@PathVariable String id, Model model) {
-        Client cliente = service.findById(id);
-        model.addAttribute("cliente", cliente);
+        Client client = service.findById(id);
+        model.addAttribute("client", client);
 
         return "clientes/edicion";
     }

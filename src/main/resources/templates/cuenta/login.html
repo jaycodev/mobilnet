@@ -26,13 +26,13 @@
                             <form th:action="@{/cuenta/iniciarSesion}" method="post" th:object="${usuario}">
                                 <div class="mb-3">
                                     <input type="email" class="form-control form-control-lg" placeholder="Correo electrónico"
-                                           aria-label="Email" th:field="*{correo}">
+                                           aria-label="Email" th:field="*{email}">
                                 </div>
 
                                 <div class="mb-3">
                                     <input type="password" class="form-control form-control-lg"
                                            placeholder="Contraseña" aria-label="Password"
-                                           th:field="*{contrasena}" id="contrasenaInput">
+                                           th:field="*{password}" id="contrasenaInput">
                                     <div class="form-check mt-2">
                                         <input class="form-check-input" type="checkbox"
                                                onclick="togglePassword(this, 'contrasenaInput')"

@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="fragments/layout :: layoutBase('Clientes', 'Nuevo', ~{::contenido}, ~{::scripts})">
+    th:replace="fragments/layout :: layoutBase('Clientes', 'Nuevo', ~{::contenido}, ~{::scripts})">
 
 <th:block th:fragment="contenido">
-
     <div class="card shadow-sm p-4">
         <h5 class="mb-4">
             <i class="fa-solid fa-plus me-1"></i>
             Nuevo cliente
         </h5>
 
-        <form th:action="@{/clientes/registrar}" method="post" th:object="${cliente}" novalidate>
+        <form th:action="@{/clientes/registrar}" method="post" th:object="${client}" novalidate>
             <div class="row">
                 <!-- DNI -->
                 <div class="col-md-6 mb-3">
-                    <label for="dniCliente" class="form-label">
+                    <label for="dni" class="form-label">
                         DNI <span class="text-danger">*</span>
                     </label>
-                    <input type="number" th:field="*{dniCliente}" class="form-control"
-                           th:classappend="${#fields.hasErrors('dniCliente')} ? 'is-invalid'" placeholder="Ingrese un DNI" required />
-                    <div class="invalid-feedback" th:errors="*{dniCliente}"></div>
+                    <input type="number" th:field="*{dni}" class="form-control"
+                        th:classappend="${#fields.hasErrors('dni')} ? 'is-invalid'" placeholder="Ingrese un DNI"
+                        required />
+                    <div class="invalid-feedback" th:errors="*{dni}"></div>
                 </div>
 
                 <!-- RUC -->
@@ -28,43 +28,47 @@
                         RUC <span class="text-danger">*</span>
                     </label>
                     <input type="number" th:field="*{ruc}" class="form-control"
-                           th:classappend="${#fields.hasErrors('ruc')} ? 'is-invalid'" placeholder="Ingrese un RUC" required />
+                        th:classappend="${#fields.hasErrors('ruc')} ? 'is-invalid'" placeholder="Ingrese un RUC"
+                        required />
                     <div class="invalid-feedback" th:errors="*{ruc}"></div>
                 </div>
 
                 <!-- Nombre(s) -->
                 <div class="col-md-6 mb-3">
-                    <label for="nombre" class="form-label">
+                    <label for="firstName" class="form-label">
                         Nombre(s) <span class="text-danger">*</span>
                     </label>
-                    <input type="text" th:field="*{nombre}" class="form-control"
-                           th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'" placeholder="Ingrese un(os) nombre(s)" required />
-                    <div class="invalid-feedback" th:errors="*{nombre}"></div>
+                    <input type="text" th:field="*{firstName}" class="form-control"
+                        th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"
+                        placeholder="Ingrese un(os) nombre(s)" required />
+                    <div class="invalid-feedback" th:errors="*{firstName}"></div>
                 </div>
 
                 <!-- Apellido(s) -->
                 <div class="col-md-6 mb-3">
-                    <label for="apellido" class="form-label">
+                    <label for="lastName" class="form-label">
                         Apellido(s) <span class="text-danger">*</span>
                     </label>
-                    <input type="text" th:field="*{apellido}" class="form-control"
-                           th:classappend="${#fields.hasErrors('apellido')} ? 'is-invalid'" placeholder="Ingrese un(os) apellido(s)" required />
-                    <div class="invalid-feedback" th:errors="*{apellido}"></div>
+                    <input type="text" th:field="*{lastName}" class="form-control"
+                        th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"
+                        placeholder="Ingrese un(os) apellido(s)" required />
+                    <div class="invalid-feedback" th:errors="*{lastName}"></div>
                 </div>
 
                 <!-- Teléfono -->
                 <div class="col-md-6 mb-3">
-                    <label for="telefono" class="form-label">
+                    <label for="phone" class="form-label">
                         Teléfono <span class="text-danger">*</span>
                     </label>
-                    <input type="number" th:field="*{telefono}" class="form-control"
-                           th:classappend="${#fields.hasErrors('telefono')} ? 'is-invalid'" placeholder="Ingrese un teléfono" required />
-                    <div class="invalid-feedback" th:errors="*{telefono}"></div>
+                    <input type="number" th:field="*{phone}" class="form-control"
+                        th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'" placeholder="Ingrese un teléfono"
+                        required />
+                    <div class="invalid-feedback" th:errors="*{phone}"></div>
                 </div>
             </div>
 
-            <!-- Estado (oculto)-->
-            <input type="hidden" th:field="*{activo}" />
+            <!-- Estado (oculto) -->
+            <input type="hidden" th:field="*{isActive}" />
 
             <!-- Botones -->
             <div class="d-flex justify-content-end">
@@ -97,4 +101,5 @@
         });
     </script>
 </th:block>
+
 </html>

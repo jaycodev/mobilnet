@@ -33,16 +33,14 @@
                     <div class="row">
                         <div class="col-md-6 mb-2">
                             <strong>Consultor:</strong>
-                            <p class="mb-0" th:text="|${consultor.nombre} ${consultor.apellido}|"></p>
+                            <p class="mb-0" th:text="|${consultor.firstName} ${consultor.lastName}|"></p>
                         </div>
                         <div class="col-md-6 mb-2">
                             <strong>Supervisor:</strong>
-                            <p class="mb-0" th:text="|${supervisor.nombre} ${supervisor.apellido}|"></p>
+                            <p class="mb-0" th:text="|${supervisor.firstName} ${supervisor.lastName}|"></p>
                         </div>
                     </div>
                 </div>
-
-
 
                 <!-- cronograma -->
                 <!-- Cronograma (sin paginación) -->
@@ -63,11 +61,11 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td><span class="badge bg-secondary text-white" th:text="${cronograma.idCronograma}"></span></td>
-                            <td th:text="${cronograma.ubicacionInstalacion}"></td>
-                            <td th:text="${cronograma.rangoInstalacion}"></td>
-                            <td th:text="${#temporals.format(cronograma.fechaRegistro, 'dd/MM/yyyy')}"></td>
-                            <td th:text="${#temporals.format(cronograma.fechaInstalacion, 'dd/MM/yyyy')}"></td>
+                            <td><span class="badge bg-secondary text-white" th:text="${cronograma.id}"></span></td>
+                            <td th:text="${cronograma.installationLocation}"></td>
+                            <td th:text="${cronograma.installationRange}"></td>
+                            <td th:text="${#temporals.format(cronograma.registrationDate, 'dd/MM/yyyy')}"></td>
+                            <td th:text="${#temporals.format(cronograma.installationDate, 'dd/MM/yyyy')}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -93,15 +91,15 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td><span class="badge bg-info text-white" th:text="${cliente.dniCliente}"></span></td>
-                            <td th:text="${cliente.dniCliente}"></td>
+                            <td><span class="badge bg-info text-white" th:text="${cliente.dni}"></span></td>
+                            <td th:text="${cliente.dni}"></td>
                             <td th:text="${cliente.ruc}"></td>
-                            <td th:text="${cliente.nombre}"></td>
-                            <td th:text="${cliente.apellido}"></td>
-                            <td th:text="${cliente.telefono}"></td>
+                            <td th:text="${cliente.firstName}"></td>
+                            <td th:text="${cliente.lastName}"></td>
+                            <td th:text="${cliente.phone}"></td>
                             <td>
-                                <span th:text="${cliente.activo ? 'Activo' : 'Inactivo'}"
-                                      th:classappend="${cliente.activo} ? 'text-success' : 'text-danger'"></span>
+                                <span th:text="${cliente.isActive ? 'Activo' : 'Inactivo'}"
+                                      th:classappend="${cliente.isActive} ? 'text-success' : 'text-danger'"></span>
                             </td>
                         </tr>
                         </tbody>
@@ -126,11 +124,11 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td><span class="badge bg-warning text-dark" th:text="${contactoPrincipal.idContactoPrincipal}"></span></td>
-                            <td th:text="${contactoPrincipal.nombreContacto}"></td>
+                            <td><span class="badge bg-warning text-dark" th:text="${contactoPrincipal.id}"></span></td>
+                            <td th:text="${contactoPrincipal.name}"></td>
                             <td th:text="${contactoPrincipal.dni}"></td>
-                            <td th:text="${contactoPrincipal.correo}"></td>
-                            <td th:text="${contactoPrincipal.telefono}"></td>
+                            <td th:text="${contactoPrincipal.email}"></td>
+                            <td th:text="${contactoPrincipal.phone}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -154,11 +152,11 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td><span class="badge bg-danger text-white" th:text="${contactoSecundario.idContactoSecundario}"></span></td>
-                            <td th:text="${contactoSecundario.nombreContacto}"></td>
+                            <td><span class="badge bg-danger text-white" th:text="${contactoSecundario.id}"></span></td>
+                            <td th:text="${contactoSecundario.name}"></td>
                             <td th:text="${contactoSecundario.dni}"></td>
-                            <td th:text="${contactoSecundario.correo}"></td>
-                            <td th:text="${contactoSecundario.telefono}"></td>
+                            <td th:text="${contactoSecundario.email}"></td>
+                            <td th:text="${contactoSecundario.phone}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -167,9 +165,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Script para DataTable (solo aplicado a cronograma) -->
-<!--    <div th:replace="fragments/datatable-script :: datatableScript('tabla-cronograma')"></div>-->
-
 </th:block>
 </html>

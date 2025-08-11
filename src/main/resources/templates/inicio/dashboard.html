@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="fragments/layout :: layoutBase('Inicio', 'Dashboard', ~{::contenido}, ~{::scripts})">
+    th:replace="fragments/layout :: layoutBase('Inicio', 'Dashboard', ~{::contenido}, ~{::scripts})">
 
 <th:block th:fragment="contenido">
     <div class="row">
@@ -14,7 +14,7 @@
                                 <p class="text-sm mb-0 text-uppercase font-weight-bold text-danger">Anulados</p>
                                 <h5 class="font-weight-bolder text-dark" th:text="${anulados}">0</h5>
                                 <p class="mb-0 text-muted text-sm">
-                                    Registros cancelados por error o desistimiento del cliente.
+                                    Registros cancelados por error.
                                 </p>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                                 <p class="text-sm mb-0 text-uppercase font-weight-bold text-warning">Pendientes</p>
                                 <h5 class="font-weight-bolder text-dark" th:text="${pendientes}">0</h5>
                                 <p class="mb-0 text-muted text-sm">
-                                    Clientes en espera de programación para la instalación.
+                                    Clientes en espera de programación.
                                 </p>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                                 <p class="text-sm mb-0 text-uppercase font-weight-bold text-primary">Observados</p>
                                 <h5 class="font-weight-bolder text-dark" th:text="${observados}">0</h5>
                                 <p class="mb-0 text-muted text-sm">
-                                    Casos con detalles pendientes o incidencias en el proceso.
+                                    Casos con detalles pendientes.
                                 </p>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
                     <div class="carousel-inner border-radius-lg h-100">
                         <!-- Slide 1 -->
                         <div class="carousel-item h-100 active position-relative"
-                             style="background-image: url('/assets/img/carousel-1.jpg'); background-size: cover;">
+                            style="background-image: url('/assets/img/carousel-1.jpg'); background-size: cover;">
                             <div class="carousel-overlay-gradient"></div>
                             <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                                 <div class="icon icon-shape icon-sm bg-dark text-center border-radius-md mb-3">
@@ -140,7 +140,7 @@
 
                         <!-- Slide 2 -->
                         <div class="carousel-item h-100 position-relative"
-                             style="background-image: url('/assets/img/carousel-2.png'); background-size: cover;">
+                            style="background-image: url('/assets/img/carousel-2.png'); background-size: cover;">
                             <div class="carousel-overlay-gradient"></div>
                             <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                                 <div class="icon icon-shape icon-sm bg-dark text-center border-radius-md mb-3">
@@ -153,7 +153,7 @@
 
                         <!-- Slide 3 -->
                         <div class="carousel-item h-100 position-relative"
-                             style="background-image: url('/assets/img/carousel-3.png'); background-size: cover;">
+                            style="background-image: url('/assets/img/carousel-3.png'); background-size: cover;">
                             <div class="carousel-overlay-gradient"></div>
                             <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                                 <div class="icon icon-shape icon-sm bg-dark text-center border-radius-md mb-3">
@@ -166,13 +166,15 @@
                     </div>
 
                     <!-- Botón anterior -->
-                    <button class="carousel-control-prev me-3" type="button" data-bs-target="#carouselMobinet" data-bs-slide="prev">
+                    <button class="carousel-control-prev me-3" type="button" data-bs-target="#carouselMobinet"
+                        data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(1);"></span>
                         <span class="visually-hidden">Anterior</span>
                     </button>
 
                     <!-- Botón siguiente -->
-                    <button class="carousel-control-next me-3" type="button" data-bs-target="#carouselMobinet" data-bs-slide="next">
+                    <button class="carousel-control-next me-3" type="button" data-bs-target="#carouselMobinet"
+                        data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(1);"></span>
                         <span class="visually-hidden">Siguiente</span>
                     </button>
@@ -198,16 +200,15 @@
                                     <div class="d-flex px-2 py-1 align-items-center">
                                         <div class="ms-1">
                                             <p class="text-xs font-weight-bold mb-0">Distrito</p>
-                                            <h6 class="text-sm mb-0"
-                                                th:text="${registrosPorDistrito[i].nombreDistrito}">San Miguel</h6>
+                                            <h6 class="text-sm mb-0" th:text="${registrosPorDistrito[i].districtName}">
+                                                San Miguel</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td th:if="${i < registrosPorDistrito.size()}">
                                     <div class="text-center">
                                         <p class="text-xs font-weight-bold mb-0">Cantidad</p>
-                                        <h6 class="text-sm mb-0"
-                                            th:text="${registrosPorDistrito[i].cantidad}">4</h6>
+                                        <h6 class="text-sm mb-0" th:text="${registrosPorDistrito[i].quantity}">4</h6>
                                     </div>
                                 </td>
 
@@ -216,15 +217,15 @@
                                         <div class="ms-1">
                                             <p class="text-xs font-weight-bold mb-0">Distrito</p>
                                             <h6 class="text-sm mb-0"
-                                                th:text="${registrosPorDistrito[i + 1].nombreDistrito}">Miraflores</h6>
+                                                th:text="${registrosPorDistrito[i + 1].districtName}">Miraflores</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td th:if="${i + 1 < registrosPorDistrito.size()}">
                                     <div class="text-center">
                                         <p class="text-xs font-weight-bold mb-0">Cantidad</p>
-                                        <h6 class="text-sm mb-0"
-                                            th:text="${registrosPorDistrito[i + 1].cantidad}">6</h6>
+                                        <h6 class="text-sm mb-0" th:text="${registrosPorDistrito[i + 1].quantity}">6
+                                        </h6>
                                     </div>
                                 </td>
                             </tr>
@@ -239,12 +240,12 @@
 <th:block th:fragment="scripts">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script th:inline="javascript">
-        let datosPorMes = /*[[${datosPorMes}]]*/ [];
-        let labels = datosPorMes.map(d => {
-            const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-            return meses[d.mes - 1];
+        let dataPerMonth = /*[[${datosPorMes}]]*/[];
+        let labels = dataPerMonth.map(d => {
+            const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+            return months[d.month - 1];
         });
-        let valores = datosPorMes.map(d => d.cantidad);
+        let values = dataPerMonth.map(d => d.quantity);
     </script>
 
     <script>
@@ -267,7 +268,7 @@
                     borderColor: "#5e72e4",
                     backgroundColor: gradientStroke1,
                     fill: true,
-                    data: valores,
+                    data: values,
                     maxBarThickness: 6
                 }],
             },
@@ -309,4 +310,5 @@
         });
     </script>
 </th:block>
+
 </html>

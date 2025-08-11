@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="fragments/layout :: layoutBase('Registros RUC1O', 'Listado', ~{::contenido}, ~{::scripts})">
+    th:replace="fragments/layout :: layoutBase('Registros RUC1O', 'Listado', ~{::contenido}, ~{::scripts})">
 
 <th:block th:fragment="contenido">
     <div class="row">
@@ -23,16 +23,19 @@
                     <div class="col-12">
                         <div class="d-flex flex-wrap align-items-center gap-2">
                             <!-- Formulario de filtros -->
-                            <form method="get" th:action="@{/registros/filtrado}" th:object="${filtro}" class="d-flex flex-wrap align-items-center gap-2 mb-0">
+                            <form method="get" th:action="@{/registros/filtrado}" th:object="${filtro}"
+                                class="d-flex flex-wrap align-items-center gap-2 mb-0">
 
                                 <!-- Select de estados -->
                                 <div class="input-group input-group-sm" style="width: auto;">
                                     <span class="input-group-text border-secondary">
                                         <i id="estado-registro-icon" class="fa-solid fa-filter text-secondary"></i>
                                     </span>
-                                    <select id="estado-registro-select" class="form-select border-secondary" th:field="*{idEstado}" onchange="this.form.submit()">
+                                    <select id="estado-registro-select" class="form-select border-secondary"
+                                        th:field="*{stateId}" onchange="this.form.submit()">
                                         <option value="">Todos</option>
-                                        <option th:each="item : ${lstEstados}" th:value="${item.idEstado}" th:text="${item.descripcion}"></option>
+                                        <option th:each="item : ${lstEstados}" th:value="${item.id}"
+                                            th:text="${item.description}"></option>
                                     </select>
                                 </div>
 
@@ -44,7 +47,8 @@
 
                             <!-- Botón PDF -->
                             <div class="d-flex align-items-center gap-2 ms-auto flex-wrap">
-                                <a th:href="@{/registros/report/{id}(id=${filtro.idEstado})}" target="_blank" class="btn btn-danger btn-sm mb-0" >
+                                <a th:href="@{/registros/report/{id}(id=${filtro.stateId})}" target="_blank"
+                                    class="btn btn-danger btn-sm mb-0">
                                     <i class="fa-solid fa-file-pdf me-1"></i> PDF
                                 </a>
                             </div>
@@ -56,77 +60,110 @@
                     <table id="tabla-registros" class="table align-items-center mb-0">
                         <thead>
                             <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Código</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Cliente</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Consultor</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Supervisor</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Estado</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Cod. solicitud</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Cod. instalación</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Cod. carrito</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Código
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">
+                                    Cliente
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">
+                                    Consultor
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">
+                                    Supervisor
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">
+                                    Estado
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">
+                                    Cod. solicitud
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">
+                                    Cod. instalación
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">
+                                    Cod. carrito
+                                </th>
                                 <th class="text-secondary opacity-7"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="x : ${lstRegistros}">
                                 <td class="ps-4">
-                                    <span class="badge border text-dark" th:text="${x.idRegistro}"></span>
+                                    <span class="badge border text-dark" th:text="${x.id}"></span>
                                 </td>
                                 <td class="ps-0">
-                                    <p class="text-sm text-dark mb-0" th:text="${x.cliente.nombre + ' ' + x.cliente.apellido}"></p>
+                                    <p class="text-sm text-dark mb-0"
+                                        th:text="${x.client.firstName + ' ' + x.client.lastName}"></p>
                                 </td>
                                 <td class="ps-0">
-                                    <p class="text-sm text-dark mb-0" th:text="${x.usuarioConsultor.nombre + ' ' + x.usuarioConsultor.apellido}"></p>
+                                    <p class="text-sm text-dark mb-0"
+                                        th:text="${x.consultantUser.firstName + ' ' + x.consultantUser.lastName}"></p>
                                 </td>
                                 <td class="ps-0">
-                                    <p class="text-sm text-dark mb-0" th:text="${x.usuarioSupervisor.nombre + ' ' + x.usuarioSupervisor.apellido}"></p>
+                                    <p class="text-sm text-dark mb-0"
+                                        th:text="${x.supervisorUser.firstName + ' ' + x.supervisorUser.lastName}"></p>
                                 </td>
                                 <td class="ps-0">
                                     <span class="badge border text-dark text-capitalize">
-                                        <i th:switch="${x.estado.idEstado}">
-                                            <i th:case="1" class="fas fa-hourglass-half me-1 text-warning" title="Pendiente instalación"></i>
+                                        <i th:switch="${x.state.id}">
+                                            <i th:case="1" class="fas fa-hourglass-half me-1 text-warning"
+                                                title="Pendiente instalación">
+                                            </i>
                                             <i th:case="2" class="fas fa-ban me-1 text-danger" title="Anulado"></i>
                                             <i th:case="3" class="fas fa-eye me-1 text-primary" title="Observado"></i>
-                                            <i th:case="4" class="fas fa-exchange-alt me-1 text-info" title="Alta por baja"></i>
-                                            <i th:case="5" class="fas fa-inbox me-1 text-secondary" title="Sin C.E."></i>
-                                            <i th:case="6" class="fas fa-thumbtack me-1 text-success" title="Pagado"></i>
-                                            <i th:case="7" class="fas fa-times-circle me-1 text-dark" title="Sin disponibilidad"></i>
-                                            <i th:case="8" class="fas fa-check-circle me-1 text-success" title="Instalado"></i>
-                                            <i th:case="9" class="fas fa-signal me-1 text-muted" title="Sin cobertura"></i>
+                                            <i th:case="4" class="fas fa-exchange-alt me-1 text-info"
+                                                title="Alta por baja">
+                                            </i>
+                                            <i th:case="5" class="fas fa-inbox me-1 text-secondary" title="Sin C.E.">
+                                            </i>
+                                            <i th:case="6" class="fas fa-thumbtack me-1 text-success" title="Pagado">
+                                            </i>
+                                            <i th:case="7" class="fas fa-times-circle me-1 text-dark"
+                                                title="Sin disponibilidad">
+                                            </i>
+                                            <i th:case="8" class="fas fa-check-circle me-1 text-success"
+                                                title="Instalado">
+                                            </i>
+                                            <i th:case="9" class="fas fa-signal me-1 text-muted" title="Sin cobertura">
+                                            </i>
                                         </i>
-                                        <span th:text="${x.estado.descripcion}"></span>
+                                        <span th:text="${x.state.description}"></span>
                                     </span>
                                 </td>
                                 <td class="ps-0">
-                                    <span class="badge border text-dark text-capitalize" th:text="${x.idSolicitud}"></span>
+                                    <span class="badge border text-dark text-capitalize"
+                                        th:text="${x.requestId}"></span>
                                 </td>
                                 <td class="ps-0">
-                                    <span class="badge border text-dark text-capitalize" th:text="${x.idInstalacion}"></span>
+                                    <span class="badge border text-dark text-capitalize"
+                                        th:text="${x.installationId}"></span>
                                 </td>
                                 <td class="ps-0">
-                                    <span class="badge border text-dark text-capitalize" th:text="${x.idCarrito}"></span>
+                                    <span class="badge border text-dark text-capitalize" th:text="${x.cartId}"></span>
                                 </td>
                                 <td class="ps-0">
                                     <div class="dropdown dropstart">
-                                        <button class="btn btn-sm mb-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn btn-sm mb-0" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
                                         <ul class="dropdown-menu shadow-sm border-0 rounded-3 p-2">
                                             <li th:if="${idRol == 1 or idRol == 4}">
                                                 <a class="dropdown-item d-flex align-items-center gap-2 text-primary rounded"
-                                                   th:href="@{/registros/edicion/{id}(id=${x.idRegistro})}">
+                                                    th:href="@{/registros/edicion/{id}(id=${x.id})}">
                                                     <i class="fa-solid fa-pen"></i> Editar
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item d-flex align-items-center gap-2 text-secondary rounded" th:href="@{/registros/detalle/{id}(id=${x.idRegistro})}">
+                                                <a class="dropdown-item d-flex align-items-center gap-2 text-secondary rounded"
+                                                    th:href="@{/registros/detalle/{id}(id=${x.id})}">
                                                     <i class="fa-solid fa-circle-info"></i> Detalle
                                                 </a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item d-flex align-items-center gap-2 text-success rounded"
-                                                   target="_blank"
-                                                   th:href="@{/registros/contrato/{id}(id=${x.idRegistro})}">
+                                                    target="_blank" th:href="@{/registros/contrato/{id}(id=${x.id})}">
                                                     <i class="fa-solid fa-file-contract"></i> Generar contrato
                                                 </a>
                                             </li>
@@ -149,7 +186,7 @@
 
 <th:block th:fragment="scripts">
     <!-- Initialize DataTable with custom styles -->
-    <th:block th:replace="fragments/datatable-script :: datatableScript('tabla-registros')"/>
+    <th:block th:replace="fragments/datatable-script :: datatableScript('tabla-registros')" />
 
     <!-- Dynamic icon for EstadoRegistro filter -->
     <script>
@@ -196,4 +233,5 @@
         document.addEventListener("DOMContentLoaded", actualizarIconoEstadoRegistro);
     </script>
 </th:block>
+
 </html>

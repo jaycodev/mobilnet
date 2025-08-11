@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class UserFilter {
     private Integer roleId;
-    private Boolean active;
+    private Boolean isActive;
 }

@@ -8,33 +8,33 @@
             Editar promoción
         </h5>
 
-        <form th:action="@{/promociones/guardar}" method="post" th:object="${promocion}" novalidate>
+        <form th:action="@{/promociones/guardar}" method="post" th:object="${promotion}" novalidate>
             <div class="row">
                 <!-- Código (oculto y deshabilitado) -->
-                <input type="hidden" th:field="*{idPromocion}" />
+                <input type="hidden" th:field="*{id}" />
                 <div class="col-md-6 mb-3">
-                    <label for="idPromocionVisible" class="form-label">
+                    <label for="id" class="form-label">
                         Código
                     </label>
-                    <input type="number" th:value="*{idPromocion}" class="form-control" id="idPromocionVisible" disabled />
+                    <input type="number" th:value="*{id}" class="form-control" disabled />
                 </div>
 
                 <!-- Descripción -->
                 <div class="col-md-6 mb-3">
-                    <label for="descripcion" class="form-label">
+                    <label for="description" class="form-label">
                         Descripción
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text" th:field="*{descripcion}" class="form-control"
-                           th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'" placeholder="Ej. 2x1 en instalación fibra" required />
+                    <input type="text" th:field="*{description}" class="form-control"
+                           th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'" placeholder="Ej. 2x1 en instalación fibra" required />
                     <div class="invalid-feedback">
-                        <span th:if="${#fields.hasErrors('descripcion')}"
-                              th:text="${#fields.errors('descripcion')[0]}"></span>
+                        <span th:if="${#fields.hasErrors('description')}"
+                              th:text="${#fields.errors('description')[0]}"></span>
                     </div>
                 </div>
             </div>
 
-            <input type="hidden" th:field="*{activo}" />
+            <input type="hidden" th:field="*{isActive}" />
 
             <!-- Botones -->
             <div class="d-flex justify-content-end">

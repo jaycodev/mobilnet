@@ -38,7 +38,7 @@ public class PromotionService {
     }
 
     public List<Promotion> listWithFilters(PromotionFilter filter) {
-        return promotionRepository.findAllWithFilter(filter.getActive());
+        return promotionRepository.findAllWithFilter(filter.getIsActive());
     }
 
     public Promotion findById(Integer promotionId) {

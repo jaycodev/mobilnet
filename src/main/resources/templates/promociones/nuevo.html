@@ -10,24 +10,24 @@
             Nueva promoción
         </h5>
 
-        <form th:action="@{/promociones/registrar}" method="post" th:object="${promocion}" novalidate>
+        <form th:action="@{/promociones/registrar}" method="post" th:object="${promotion}" novalidate>
             <div class="row">
                 <!-- Descripción -->
                 <div class="col-md-12 mb-3">
-                    <label for="descripcion" class="form-label">
+                    <label for="description" class="form-label">
                         Descripción
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text" th:field="*{descripcion}" class="form-control"
-                           th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'" placeholder="Ej. 2x1 en instalación fibra" required />
+                    <input type="text" th:field="*{description}" class="form-control"
+                           th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'" placeholder="Ej. 2x1 en instalación fibra" required />
                     <div class="invalid-feedback">
-                        <span th:if="${#fields.hasErrors('descripcion')}"
-                              th:text="${#fields.errors('descripcion')[0]}"></span>
+                        <span th:if="${#fields.hasErrors('description')}"
+                              th:text="${#fields.errors('description')[0]}"></span>
                     </div>
                 </div>
             </div>
 
-            <input type="hidden" th:field="*{activo}" />
+            <input type="hidden" th:field="*{isActive}" />
 
             <!-- Botones -->
             <div class="d-flex justify-content-end">

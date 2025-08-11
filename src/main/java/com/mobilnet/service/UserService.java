@@ -40,7 +40,7 @@ public class UserService {
     }
 
     public List<User> listWithFilters(UserFilter filter) {
-        return userRepository.findAllWithFilter(filter.getRoleId(), filter.getActive());
+        return userRepository.findAllWithFilter(filter.getRoleId(), filter.getIsActive());
     }
 
     public ResultResponse update(User user) {

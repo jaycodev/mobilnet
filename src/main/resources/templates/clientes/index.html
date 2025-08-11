@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="fragments/layout :: layoutBase('Clientes', 'Listado', ~{::contenido}, ~{::scripts})">
+    th:replace="fragments/layout :: layoutBase('Clientes', 'Listado', ~{::contenido}, ~{::scripts})">
 
 <th:block th:fragment="contenido">
     <div class="row">
@@ -23,14 +23,16 @@
                     <div class="col-12">
                         <div class="d-flex flex-wrap align-items-center gap-2">
                             <!-- Formulario de filtros -->
-                            <form method="get" th:action="@{/clientes/filtrado}" th:object="${filtro}" class="d-flex flex-wrap align-items-center gap-2 mb-0">
+                            <form method="get" th:action="@{/clientes/filtrado}" th:object="${filtro}"
+                                class="d-flex flex-wrap align-items-center gap-2 mb-0">
 
                                 <!-- Select de estados -->
                                 <div class="input-group input-group-sm" style="width: auto;">
-									<span class="input-group-text border-secondary">
-										<i id="estado-icon" class="fa-solid fa-filter text-secondary"></i>
-									</span>
-                                    <select id="estado-select" class="form-select border-secondary" th:field="*{activo}" onchange="actualizarIconoEstado(); this.form.submit()" style="width: 130px;">
+                                    <span class="input-group-text border-secondary">
+                                        <i id="estado-icon" class="fa-solid fa-filter text-secondary"></i>
+                                    </span>
+                                    <select id="estado-select" class="form-select border-secondary" th:field="*{activo}"
+                                        onchange="actualizarIconoEstado(); this.form.submit()" style="width: 130px;">
                                         <option value="">Todos</option>
                                         <option value="true">Activo</option>
                                         <option value="false">Inactivo</option>
@@ -59,58 +61,63 @@
                 <div class="card-body px-0 pt-0 pb-2">
                     <table id="tabla-clientes" class="table align-items-center mb-0">
                         <thead>
-                        <tr>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">DNI</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">RUC</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Nombre(s)</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Apellido(s)</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Teléfono</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">Activo</th>
-                            <th class="text-secondary opacity-7"></th>
-                        </tr>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">DNI</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">RUC
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">
+                                    Nombre(s)</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">
+                                    Apellido(s)</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">
+                                    Teléfono</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0">
+                                    Activo</th>
+                                <th class="text-secondary opacity-7"></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="cliente : ${lstClientes}">
-                            <td class="ps-4">
-                                <span class="badge badge-sm border text-dark" th:text="${cliente.dniCliente}"></span>
-                            </td>
-                            <td class="ps-0">
-                                <span class="badge badge-sm border text-dark" th:text="${cliente.ruc}"></span>
-                            </td>
-                            <td class="ps-0">
-                                <p class="text-sm text-dark mb-0" th:text="${cliente.nombre}"></p>
-                            </td>
-                            <td class="ps-0">
-                                <p class="text-sm text-dark mb-0" th:text="${cliente.apellido}"></p>
-                            </td>
-                            <td class="ps-0">
-                                <p class="text-sm text-dark mb-0" th:text="${cliente.telefono}"></p>
-                            </td>
-                            <td class="ps-0">
-                                <form method="post"
-                                      th:action="@{/clientes/cambiar-estado/{id}(id=${cliente.dniCliente})}">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="form-switch">
-                                            <input class="form-check-input" type="checkbox"
-                                                   th:checked="${cliente.activo}" onchange="this.form.submit()">
+                            <tr th:each="cliente : ${lstClientes}">
+                                <td class="ps-4">
+                                    <span class="badge badge-sm border text-dark" th:text="${cliente.dni}"></span>
+                                </td>
+                                <td class="ps-0">
+                                    <span class="badge badge-sm border text-dark" th:text="${cliente.ruc}"></span>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${cliente.firstName}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${cliente.lastName}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <p class="text-sm text-dark mb-0" th:text="${cliente.phone}"></p>
+                                </td>
+                                <td class="ps-0">
+                                    <form method="post" th:action="@{/clientes/cambiar-estado/{id}(id=${cliente.dni})}">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="form-switch">
+                                                <input class="form-check-input" type="checkbox"
+                                                    th:checked="${cliente.isActive}" onchange="this.form.submit()">
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
 
-                                <span class="d-none export-estado" th:text="${cliente.activo} ? 'Sí' : 'No'"></span>
-                            </td>
-                            <td class="ps-0">
-                                <a th:href="@{'/clientes/edicion/' + ${cliente.dniCliente}}"
-                                   class="btn btn-sm text-primary me-1 mb-0" title="Editar">
-                                    <i class="fa-solid fa-pen"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr th:if="${#lists.isEmpty(lstClientes)}">
-                            <td colspan="7" class="text-center text-secondary">
-                                No hay clientes registrados.
-                            </td>
-                        </tr>
+                                    <span class="d-none export-estado"
+                                        th:text="${cliente.isActive} ? 'Sí' : 'No'"></span>
+                                </td>
+                                <td class="ps-0">
+                                    <a th:href="@{'/clientes/edicion/' + ${cliente.dni}}"
+                                        class="btn btn-sm text-primary me-1 mb-0" title="Editar">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(lstClientes)}">
+                                <td colspan="7" class="text-center text-secondary">
+                                    No hay clientes registrados.
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -121,7 +128,7 @@
 
 <th:block th:fragment="scripts">
     <!-- Initialize DataTable with custom styles -->
-    <th:block th:replace="fragments/datatable-script :: datatableScript('tabla-clientes')"/>
+    <th:block th:replace="fragments/datatable-script :: datatableScript('tabla-clientes')" />
 
     <!-- Dynamic icon based on status filter selection -->
     <script>
@@ -362,4 +369,5 @@
         // ================== End Export to Excel ==================
     </script>
 </th:block>
+
 </html>

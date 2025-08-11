@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PromotionFilter {
-    private Boolean active;
+    private Boolean isActive;
 }

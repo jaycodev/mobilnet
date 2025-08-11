@@ -53,7 +53,7 @@ public class UserController {
 	@GetMapping("/nuevo")
 	public String create(Model model) {
 		model.addAttribute("roles", roleService.list());
-		model.addAttribute("usuario", new User());
+		model.addAttribute("user", new User());
 		return "usuarios/nuevo";
 	}
 
@@ -62,7 +62,7 @@ public class UserController {
 			RedirectAttributes flash) {
 		if (user.getPassword() == null || !user.getPassword()
 				.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+=<>?{}\\[\\]-]).{8,}$")) {
-			bindingResult.rejectValue("contrasena", "error.usuario",
+			bindingResult.rejectValue("password", "error.usuario",
 					"La contraseña debe tener al menos una mayúscula, una minúscula, un número y un símbolo");
 		}
 
@@ -87,7 +87,7 @@ public class UserController {
 	public String edit(@PathVariable Integer id, Model model) {
 		model.addAttribute("roles", roleService.list());
 		User user = userService.findById(id);
-		model.addAttribute("usuario", user);
+		model.addAttribute("user", user);
 		return "usuarios/edicion";
 	}
 

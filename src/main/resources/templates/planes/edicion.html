@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  th:replace="fragments/layout :: layoutBase('Planes', 'Editar', ~{::contenido}, ~{::scripts})">
+	th:replace="fragments/layout :: layoutBase('Planes', 'Editar', ~{::contenido}, ~{::scripts})">
 
 <th:block th:fragment="contenido">
 	<div class="card shadow-sm p-4">
@@ -11,29 +11,30 @@
 
 		<form th:action="@{/planes/guardar}" method="post" th:object="${plan}" novalidate>
 			<div class="row">
-				<input type="hidden" th:field="*{idPlan}"/>
+				<input type="hidden" th:field="*{id}" />
 				<div class="col-md-6 mb-3">
-					<label for="idPromocionVisible" class="form-label">
+					<label for="id" class="form-label">
 						Código
 					</label>
-					<input type="number" th:value="*{idPlan}" class="form-control" id="idPlan" readonly/>
+					<input type="number" th:value="*{id}" class="form-control" readonly />
 				</div>
 
 				<div class="col-md-6 mb-3">
-					<label for="descripcion" class="form-label">
+					<label for="description" class="form-label">
 						Descripción
 						<span class="text-danger">*</span>
 					</label>
-					<input type="text" th:field="*{descripcion}" class="form-control"
-						   th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'" placeholder="Ej. 300 Mbps. Fibra Optica" required />
+					<input type="text" th:field="*{description}" class="form-control"
+						th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
+						placeholder="Ej. 300 Mbps. Fibra Optica" required />
 					<div class="invalid-feedback">
-                        <span th:if="${#fields.hasErrors('descripcion')}"
-							  th:text="${#fields.errors('descripcion')[0]}"></span>
+						<span th:if="${#fields.hasErrors('description')}"
+							th:text="${#fields.errors('description')[0]}"></span>
 					</div>
 				</div>
 			</div>
 
-			<input type="hidden" th:field="*{activo}" />
+			<input type="hidden" th:field="*{isActive}" />
 
 			<div class="d-flex justify-content-end">
 				<a th:href="@{/planes}" class="btn btn-secondary me-1 mb-0">
@@ -53,16 +54,17 @@
 <th:block th:fragment="scripts">
 	<script>
 		document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', () => {
-                input.classList.remove('is-invalid');
-            });
-        });
+			input.addEventListener('input', () => {
+				input.classList.remove('is-invalid');
+			});
+		});
 
-        document.querySelectorAll('select').forEach(select => {
-            select.addEventListener('change', () => {
-                select.classList.remove('is-invalid');
-            });
-        });
+		document.querySelectorAll('select').forEach(select => {
+			select.addEventListener('change', () => {
+				select.classList.remove('is-invalid');
+			});
+		});
 	</script>
 </th:block>
+
 </html>
