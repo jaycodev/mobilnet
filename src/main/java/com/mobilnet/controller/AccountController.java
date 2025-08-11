@@ -27,7 +27,9 @@ public class AccountController {
 
     @GetMapping("/login")
     public String login(Model model) {
-        model.addAttribute("usuario", new User());
+        User usuario = new User();
+        usuario.setEmail("demo.admin@example.com");
+        model.addAttribute("usuario", usuario);
         return "cuenta/login";
     }
 
@@ -86,7 +88,8 @@ public class AccountController {
         }
 
         session.setAttribute("idUsuario", loggedUser.getId());
-        session.setAttribute("nombresCompletos", String.format("%s %s", loggedUser.getFirstName(), loggedUser.getPassword()));
+        session.setAttribute("nombresCompletos",
+                String.format("%s %s", loggedUser.getFirstName(), loggedUser.getPassword()));
         session.setAttribute("cuenta", loggedUser.getFirstName());
         session.setAttribute("rolUsuario", loggedUser.getRole().getDescription());
         session.setAttribute("idRol", rol);
