@@ -1,5 +1,3 @@
-<h1 align="center">📡 Mobilnet</h1>
-
 <div align="center">
   <a href="https://mobilnet.onrender.com">
     <img src="https://github.com/jaycodev/mobilnet/blob/main/images/readme.jpg" alt="Mobilnet Preview">
