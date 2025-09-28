@@ -8,8 +8,8 @@
 <div align="center">
 
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat&logo=springboot&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-6f42c1?logo=bootstrap&logoColor=white&style=flat)
+![MySQL](https://img.shields.io/badge/MySQL-3f6f93?style=flat&logo=mysql&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-702cf5?logo=bootstrap&logoColor=white&style=flat)
 
 </div>
 
