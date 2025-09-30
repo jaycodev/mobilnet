@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS mobilnet_db;
-CREATE DATABASE mobilnet_db;
-USE mobilnet_db;
+DROP DATABASE IF EXISTS mobilnet;
+CREATE DATABASE mobilnet;
+USE mobilnet;
 
 CREATE TABLE roles (
     id INT PRIMARY KEY AUTO_INCREMENT,

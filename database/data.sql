@@ -1,4 +1,4 @@
-USE mobilnet_db;
+USE mobilnet;
 
 INSERT INTO roles(description) VALUES
 ('BackOffice'),
