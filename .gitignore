@@ -1,80 +1,61 @@
-# ---------------------
-# Maven
-# ---------------------
+# ─── Build output ─────────────────────────────
 /target/
-!.mvn/wrapper/maven-wrapper.jar
-.mvn/timing.properties
+build/
 
 # ─── Spring Boot local config ─────────────────
 /src/main/resources/application-local.properties
 
-# ---------------------
-# Logs
-# ---------------------
-logs/
+# ─── Logs ─────────────────────────────────────
 *.log
 
-# ---------------------
-# IDEs
-# ---------------------
-
-## VS Code
-.vscode/
-
-## Eclipse / Spring Tool Suite
+# ─── Compiled class files ─────────────────────
 *.class
-*.swp
-.project
-.classpath
-.settings/
-.apt_generated/
-.factorypath
-.antlr_generated/
-.springBeans
-.sts4-cache
 
-## IntelliJ IDEA
-.idea/
-*.iws
-*.iml
-*.ipr
-out/
-
-## NetBeans
-nbproject/private/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
-
-# ---------------------
-# OS-specific
-# ---------------------
+# ─── System files ─────────────────────────────
 .DS_Store
 Thumbs.db
 
-# ---------------------
-# Tomcat / Jetty (JSP compilados)
-# ---------------------
-work/
-.metadata/
-*.war
-*.ear
-*.tmp
+# ─── Editor/IDE files ─────────────────────────
 
-# ---------------------
-# Spring Boot DevTools
-# ---------------------
-.spring-boot-devtools.properties
+## IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
 
-# ---------------------
-# Variables de entorno
-# ---------------------
+## Eclipse
+.settings/
+.classpath
+.project
+
+## STS (Spring Tool Suite)
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+
+## NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+## VS Code
+.vscode/*
+!.vscode/settings.json
+
+# ─── Swap/temporary files ─────────────────────
+*.swp
+*.swo
+
+# ─── Maven wrapper ────────────────────────────
+.mvn/wrapper/maven-wrapper.jar
+/mvnw.cmd
+/mvnw
+
+# ─── Node/npm (si frontend va en monorepo) ────
+/node_modules/
+
+# ─── Dotenv files ─────────────────────────────
 .env
-.env.*
-
-# ---------------------
-# Documentos innecesarios
-# ---------------------
-HELP.md
-README-local.md
